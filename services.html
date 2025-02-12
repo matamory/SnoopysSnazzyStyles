@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>SSS Services</title>
+  <link href="style/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <section>
+        <h1><a href="index.html">Home</a></h1>
+        <h2>Submit a New Service</h2>
+        <form id="serviceForm" action="submitService" method="GET">
+            <fieldset>
+                <label>
+                    Service Name:<br>
+                    <input type="text" name="employeeID" required="required" id="ServiceName"/>
+                    <br>
+                </label>
+                <label>
+                    Service Duration in Minutes:<br>
+                    <input type="number" name="start" required="required" id="servDur"/>
+                    min <br>
+                </label>
+                <label>
+                    Service Price:<br>
+                    <input type="number" name="end" required="required" id="servPrice"/>
+                </label>
+                
+            </fieldset>
+            <button type="submit">Submit Order</button>
+        </form>
+    </section>
+    <section>
+        <h2>Services</h2>
+        <table id="scheduleTable">
+            <tr>
+                <th>
+                    Service
+                </th>
+                <th>
+                    Duration
+                </th>
+                <th>
+                    Price
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    Nail Trim
+                </td>
+                <td>
+                    30 min
+                </td>
+                <td>
+                    $20
+                </td>
+            </tr>
+        </table>
+    </section>
+   
+</body>
+
+</html>
