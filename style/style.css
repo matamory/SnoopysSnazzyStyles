@@ -11,9 +11,9 @@ h2{
 }
 
 table {
-    width: 50%;
     border-collapse: collapse;
-    margin-left: 5%;
+    width: auto;
+    table-layout: auto;
 }
 
 tr:nth-child(even) {background-color: #f2f2f2;}
