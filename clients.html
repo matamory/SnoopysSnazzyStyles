@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clients</title>
+  <title>Review/Add Clients</title>
   <link href="style/style.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -28,8 +28,8 @@
                 <h3>Add a new client:</h3>
                 <form id="clientForm" action="submitClient" method="POST">
                 <fieldset>
-                    <label>Client's Name:</label> <input type="text" name="clientname" id="clientName" size = "34" maxLength = "120" required placeholder="name" /><br><br>
-                    <label>Phone number:</label> <input type="text" name="age" id="dogAge"max= "999" required placeholder="years, months"/><br><br>
+                    <label>Client's Name:</label> <input type="text" name="clientName" id="clientName" size = "34" maxLength = "120" required placeholder="first and last name" /><br><br>
+                    <label>Phone number:</label> <input type="text" name="phone" id="clientPhone"max= "999" required placeholder="(000)-000-0000"/><br><br>
                     <label>Preferred contact method:</label>
                         <input type="radio" id="phone" name="contactMethod" value="call"><label for="call">Call</label>
                         <input type="radio" id="text" name="contactMethod" value="text"><label for="text">Text</label><br><br>
@@ -49,6 +49,8 @@
                     <th>Phone Number</th>
                     <th>Contact Method</th>
                     <th>Email</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr> 
                 <tr>
                     <td>1</td>
@@ -56,6 +58,9 @@
                     <td>(222)-221-2222</td>
                     <td>Text</td>
                     <td>nzingafu@gmail.com</td>
+                    <td><button>Edit</button></td>
+                    <td><button>Delete</button></td>
+
                 </tr>
                 <tr>
                     <td>2</td>
@@ -63,6 +68,9 @@
                     <td>(444)-444-4444</td>
                     <td>Call</td>
                     <td>patyon@gmail.com</td>
+                    <td><button>Edit</button></td>
+                    <td><button>Delete</button></td>
+
                 </tr>
                 <tr>
                     <td>3</td>
@@ -70,6 +78,8 @@
                     <td>(333)-333-3333</td>
                     <td>Text</td>
                     <td>karunayar@gmail.com</td>
+                    <td><button>Edit</button></td>
+                    <td><button>Delete</button></td>
                 </tr>
             </table>
         </section>

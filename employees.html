@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Employees</title>
+  <title>Review/Add Employees</title>
   <link href="style/style.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -27,94 +27,63 @@
                 <h3>Add a New Employee</h3>
                 <form id="scheduleForm" action="submitEmployee" method="GET">
                     <fieldset>
-                        <label>
-                            Employee Name:<br>
-                            <input type="text" name="employeeName" required="required" id="employeeName"/>
-                            <br>
-                        </label>
-                        <label>
-                            Wage:<br>
-                            <input type="number" name="employeewage" required="required" id="employeewage"/>
-                            <br>
-                        </label>
-                        <label>
-                            Years Experience:<br>
-                            <input type="number" name="employeeexperience" required="required" id="employeeexperience"/>
-                            <br>
-                        </label>
-                        <label>
-                            Phone Number:<br>
-                            <input type="tel" name="employeePhone" required="required" id="employeePhone"/>
-                            <br>
-                        </label>
-                        <label>
-                            Email:<br>
-                            <input type="email" name="employeeEmail" required="required" id="employeeEmail"/>
-                            <br>
-                        </label>
-                        <label>
-                            Address:<br>
-                            <input type="text" name="employeeAddress" required="required" id="employeeAddress"/>
-                            <br>
-                        </label>
-                        <label>
-                            Active:<br>
-                            <input type="checkbox" name="employeeisActive" required="required" id="employeeisActive"/>
-                            <br>
-                        </label>
-                        
+                        <label>Employee Name: <input type="text" name="employeeName" required="required" id="employeeName" placeholder="first and last name"/><br><br></label>
+                        <label>Wage: <input type="number" name="employeewage" required="required" id="employeewage" placeholder="00.00"/><br><br></label>
+                        <label>Years Experience: <input type="number" name="employeeexperience" required="required" id="employeeexperience" placeholder="0"/><br><br></label>
+                        <label>Phone Number: <input type="tel" name="employeePhone" required="required" id="employeePhone" placeholder="(000)-000-0000"/><br><br></label>
+                        <label>Email: <input type="email" name="employeeEmail" required="required" id="employeeEmail" placeholder="name@host.com"/><br><br></label>
+                        <label>Address: <input type="text" name="employeeAddress" required="required" id="employeeAddress" placeholder="000 Main Street"/><br><br> </label>
+                        <label>Active: <input type="checkbox" name="employeeisActive" required="required" id="employeeisActive"/><br><br></label>
                     </fieldset>
-                    <button type="submit">Add </button>
+                    <button type="submit">Add</button>
                 </form>
         </section>
     <section>
         <h3>Current Employees</h3>
         <table id="employeeTable">
             <tr>
-                <th>
-                    Employee
-                </th>
-                <th>
-                    Wage
-                </th>
-                <th>
-                    Years Experience
-                </th>
-                <th>
-                    Phone Number
-                </th>
-                <th>
-                    Email
-                </th>
-                <th>
-                    Address
-                </th>
-                <th>
-                    Active
-                </th>
+                <th>Employee</th>
+                <th>Wage</th>
+                <th>Years Experience</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Active</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
             <tr>
-                <td>
-                    Matija Tristin
-                </td>
-                <td>
-                    $18.20
-                </td>
-                <td>
-                    3
-                </td>
-                <td>
-                    (555)-555-5555
-                </td>
-                <td>
-                    matijatri@gmail.com
-                </td>
-                <td>
-                    123 Georgia Ln
-                </td>
-                <td>
-                    Yes
-                </td>
+                <td>Matija Tristin</td>
+                <td>$18.20</td>
+                <td>3</td>
+                <td>(555)-555-5555</td>
+                <td>matijatri@gmail.com</td>
+                <td>123 Georgia Ln</td>
+                <td>Yes</td>
+                <td><button>Edit</button></td>
+                <td><button>Delete</button></td>
+            </tr>
+            <tr>
+                <td>Marley Kirby</td>
+                <td>$17.00</td>
+                <td>1</td>
+                <td>(503)-777-7777</td>
+                <td>marleykir@gmail.com</td>
+                <td>6 Main St.</td>
+                <td>Yes</td>
+                <td><button>Edit</button></td>
+                <td><button>Delete</button></td>
+            </tr>
+            <tr>
+                <td>Zikomo Apoorva</td>
+                <td>$23.80</td>
+                <td>10</td>
+                <td>(900)-999-9999</td>
+                <td>zikomoapo@gmail.com</td>
+                <td>700 Fall St.</td>
+                <td>No</td>
+                <td><button>Edit</button></td>
+                <td><button>Delete</button></td>
             </tr>
         </table>
     </section>

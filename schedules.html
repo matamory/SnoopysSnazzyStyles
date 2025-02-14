@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Schedules</title>
+  <title>Review/Create Schedules</title>
   <link href="style/style.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -27,22 +27,18 @@
                 <h3>Submit a New Schedule</h3>
                 <form id="scheduleForm" action="submitSchedule" method="GET">
                     <fieldset>
-                        <label>
-                            Employee ID:<br>
-                            <input type="text" name="employeeID" required="required" id="employeeID"/>
-                            <br>
-                        </label>
-                        <label>
-                            Start:<br>
-                            <input type="datetime-local" name="start" required="required" id="startTime"/>
-                            <br>
-                        </label>
-                        <label>
-                            End:<br>
-                            <input type="datetime-local" name="end" required="required" id="endTime"/>
-                            <br>
-                        </label>
-                        
+                        <label for="employeeID">Employee: </label> 
+                        <select name="employeeID" id="employeeID" required >
+                            <option value="0">select employee</option>
+                            <option value="1">Matija Tristin</option>
+                            <option value="2">Marley Kirby</option>
+                            <option value="3">Zikomo Apoorva</option>
+                            <option value="4">Quincy Ketut</option>
+                            <option value="5">Diede Sovanna</option>
+                        </select>
+                        <br><br>
+                        <label>Start: <input type="datetime-local" name="start" required="required" id="startTime"/><br><br></label>
+                        <label>End: <input type="datetime-local" name="end" required="required" id="endTime"/><br><br></label> 
                     </fieldset>
                     <button type="submit">Submit</button>
                 </form>
@@ -51,32 +47,68 @@
         <h3>Employee Schedules</h3>
         <table id="scheduleTable">
             <tr>
-                <th>
-                    Employee
-                </th>
-                <th>
-                    Date
-                </th>
-                <th>
-                    Start
-                </th>
-                <th>
-                    End
-                </th>
+                <th>Employee</th>
+                <th>Date</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
             <tr>
-                <td>
-                    Matija Tristin
-                </td>
-                <td>
-                    2025-1-05
-                </td>
-                <td>
-                    9:00 am
-                </td>
-                <td>
-                    5:00 pm
-                </td>
+                <td>Diede Sovanna</td>
+                <td>2025-1-05</td>
+                <td>9:00 am</td>
+                <td>5:00 pm</td>
+                <td><button>Edit</button></td>
+                <td><button>Delete</button></td>
+            </tr>
+            <tr>
+                <td>Diede Sovanna</td>
+                <td>2025-2-05</td>
+                <td>9:00 am</td>
+                <td>5:00 pm</td>
+                <td><button>Edit</button></td>
+                <td><button>Delete</button></td>
+            </tr>
+            <tr>
+                <td>Matija Tristina</td>
+                <td>2025-2-05</td>
+                <td>7:00 am</td>
+                <td>3:00 pm</td>
+                <td><button>Edit</button></td>
+                <td><button>Delete</button></td>
+            </tr>
+            <tr>
+                <td>Matija Tristin</td>
+                <td>2025-8-05</td>
+                <td>7:00 am</td>
+                <td>12:00 pm</td>
+                <td><button>Edit</button></td>
+                <td><button>Delete</button></td>
+            </tr>
+            <tr>
+                <td>Marley Kirby</td>
+                <td>2025-1-05</td>
+                <td>11:00 am</td>
+                <td>8:00 pm</td>
+                <td><button>Edit</button></td>
+                <td><button>Delete</button></td>
+            </tr>
+            <tr>
+                <td>Marley Kirby</td>
+                <td>2025-2-05</td>
+                <td>11:00 am</td>
+                <td>8:00 pm</td>
+                <td><button>Edit</button></td>
+                <td><button>Delete</button></td>
+            </tr>
+            <tr>
+                <td>Quincy Ketut</td>
+                <td>2025-2-05</td>
+                <td>11:00 am</td>
+                <td>8:00 pm</td>
+                <td><button>Edit</button></td>
+                <td><button>Delete</button></td>
             </tr>
         </table>
     </section>
@@ -86,79 +118,60 @@
         <label for="start">Start date:</label>
         <input type="date" id="startDate" name="startDate" min="2024-02-01"/>
         <label for="start">End date:</label>
-        <input type="date" id="endDate" name="endDate" min="2024-02-01"/>
+        <input type="date" id="endDate" name="endDate" min="2024-02-01" />
         <table id="scheduleTable">
             <tr>
-                <th>
-                    Employee
-                </th>
-                <th>
-                    Date
-                </th>
-                <th>
-                    Day Start
-                </th>
-                <th>
-                    From
-                </th>
-                <th>
-                    To
-                </th>
-                <th>
-                    From
-                </th>
-                <th>
-                    To
-                </th>
-                <th>
-                    From
-                </th>
-                <th>
-                    To
-                </th>
-                <th>
-                    From
-                </th>
-                <th>
-                    To
-                </th>
+                <th>Employee</th>
+                <th>Date</th>
+                <th>Day Start</th>
+                <th>From</th>
+                <th>To</th>
+                <th>From</th>
+                <th>To</th>
+                <th>From</th>
+                <th>To</th>
+                <th>From</th>
+                <th>To</th>
+                <th>From</th>
+                <th>To</th>
+                <th>From</th>
+                <th>To</th>
             </tr>
             <tr>
-                <td>
-                    Matija Tristin
-                </td>
-                <td>
-                    2025-1-05
-                </td>
-                <td>
-                    9:00 am
-                </td>
-                <td>
-                    9:00 am
-                </td>
-                <td>
-                    11:00 am
-                </td>
-                <td>
-                    11:00 am
-                </td>
-                <td>
-                    12:30 pm
-                </td>
-                <td>
-                    2:00 pm
-                </td>
-                <td>
-                    3:30 pm
-                </td>
-                <td>
-                    3:30 pm
-                </td>
-                <td>
-                    5:00 pm
-                </td>
-                
+                <td>Diede Sovanna</td>
+                <td>2025-1-05</td>
+                <td>9:00 am</td>
+                <td>9:00 am</td>
+                <td>10:00 am</td>
+                <td>10:00 am</td>
+                <td>12:00 pm</td>
+                <td>12:30 pm</td>
+                <td>2:00 pm</td>
+                <td>2:00 pm</td>
+                <td>4:00 pm</td>
+                <td>4:00 pm</td>
+                <td>6:00 pm</td>
+                <td></td>
+                <td></td>
             </tr>
+            <tr>
+                <td>Marley Kirby</td>
+                <td>2025-1-05</td>
+                <td>11:00 am</td>
+                <td></td>
+                <td></td>
+                <td>11:00 am</td>
+                <td>12:00 pm</td>
+                <td>12:30 pm</td>
+                <td>2:00 pm</td>
+                <td></td>
+                <td></td>
+                <td>5:00 pm</td>
+                <td>6:30 pm</td>
+                <td>7:00 pm</td>
+                <td>8:00 pm</td>
+            </tr>
+    
         </table>
     </section>
 </body>

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Services</title>
+  <title>Review/Add Services</title>
   <link href="style/style.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -27,20 +27,9 @@
                 <h3>Submit a new Service</h3>
                     <form id="serviceForm" action="submitService" method="GET">
                         <fieldset>
-                            <label>
-                                Service Name:<br>
-                                <input type="text" name="employeeID" required="required" id="ServiceName"/>
-                                <br>
-                            </label>
-                            <label>
-                                Service Duration in Minutes:<br>
-                                <input type="number" name="start" required="required" id="servDur"/>
-                                min <br>
-                            </label>
-                            <label>
-                                Service Price:<br>
-                                <input type="number" name="end" required="required" id="servPrice"/>
-                            </label>
+                            <label>Service Name: <input type="text" name="employeeID" required="required" id="ServiceName" placeholder="haircut"/><br><br></label>
+                            <label> Service Duration: <input type="number" name="start" required="required" id="servDur" placeholder="00"/> min <br><br></label>
+                            <label>Service Price: <input type="number" name="end" required="required" id="servPrice" placeholder="00.00"/></label>
                             
                         </fieldset>
                         <button type="submit">Submit</button>
@@ -51,26 +40,45 @@
             <h3>Current Services</h3>
             <table id="scheduleTable">
                 <tr>
-                    <th>
-                        Service
-                    </th>
-                    <th>
-                        Duration
-                    </th>
-                    <th>
-                        Price
-                    </th>
+                    <th>ServiceID</th>
+                    <th>Service</th>
+                    <th>Duration</th>
+                    <th>Price</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
                 <tr>
-                    <td>
-                        Nail Trim
-                    </td>
-                    <td>
-                        30 min
-                    </td>
-                    <td>
-                        $20
-                    </td>
+                    <td>1</td>
+                    <td>Nail Trim</td>
+                    <td>30 min</td>
+                    <td>$20</td>
+                    <td><button>Edit</button></td>
+                    <td><button>Delete</button></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Puppy Cut</td>
+                    <td>60 min</td>
+                    <td>$50</td>
+                    <td><button>Edit</button></td>
+                    <td><button>Delete</button></td>
+                </tr>
+
+                <tr>
+                    <td>3</td>
+                    <td>Basic Cut: Fluffy Breeds</td>
+                    <td>120 min</td>
+                    <td>$90</td>
+                    <td><button>Edit</button></td>
+                    <td><button>Delete</button></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Basic Cut: Short Coats</td>
+                    <td>60 min</td>
+                    <td>$70</td>
+                    <td><button>Edit</button></td>
+                    <td><button>Delete</button></td>
                 </tr>
             </table>
         </section>
