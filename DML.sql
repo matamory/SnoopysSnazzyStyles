@@ -182,3 +182,100 @@ WHERE serviceID = :idInput;
 DELETE FROM Services WHERE serviceID = :idInput
 
 
+-- -----------------------------------------------------
+-- Dogs table queries
+-- -----------------------------------------------------
+-- Select all dogs
+SELECT * FROM Dogs;
+
+-- Select specific dog
+SELECT * FROM Dogs WHERE dogID = :idInput;
+
+-- Add new dog
+INSERT INTO Dogs(
+    name,
+    age
+    breed,
+    size_lbs, 
+    groomer_notes
+) VALUES (
+    :nameInput,
+    :ageInput,
+    :breedInput,
+    :sizeInput, 
+    :notesInput
+);
+
+-- Update dog information
+UPDATE Dogs SET 
+    name = :nameInput, 
+    age = :ageInput, 
+    breed = :breedInput, 
+    size_lbs= :sizeInput,
+    groomer_notes = :notesInput, 
+WHERE dogID = :idInput;
+
+-- Delete dog
+DELETE FROM Dogs WHERE dogID = :idInput;
+
+
+-- -----------------------------------------------------
+-- Clients table queries
+-- -----------------------------------------------------
+
+-- Select all clients
+SELECT * FROM Clients;
+
+-- Add new dog
+INSERT INTO Clients(
+    name,
+    phone_number,
+    contact_method, 
+    email
+) VALUES (
+    :nameInput,
+    :phoneInput,
+    :contactInput,
+    :emailInput
+);
+
+-- Delete client
+DELETE FROM Clients WHERE ClientID = :idInput
+
+-- -----------------------------------------------------
+-- Sessions table queries
+-- -----------------------------------------------------
+
+-- Select all sessions
+SELECT Sessions.sessionID, Employees.name, Clients.name, Dogs.name, Sessions.session_time, Sessions.actual_duration, Sessions.total_price, Sessions.status FROM Sessions
+JOIN Employees ON Sessions.employee_id = Employees.employeeID
+JOIN Clients ON Sessions.client_id = Clients.clientID
+JOIN Dogs ON Sessions.dog_id = Dogs.dogID;
+
+-- Select schedules based on date
+SELECT Sessions.sessionID, Employees.name, Clients.name, Dogs.name, Sessions.session_time, Sessions.actual_duration, Sessions.total_price, Sessions.status FROM Sessions
+JOIN Employees ON Sessions.employee_id = Employees.employeeID
+JOIN Clients ON Sessions.client_id = Clients.clientID
+JOIN Dogs ON Sessions.dog_id = Dogs.dogID
+WHERE DATE(Sessions.start) = :dateInput;
+
+-- Add new session
+INSERT INTO Sessions(
+    employee_ID,
+    client_id,
+    dog_id,
+    session_time, 
+    actual_duration, 
+    total_price,
+    status
+) VALUES (
+    :employeeInput,
+    :clientInput,
+    :timeInput, 
+    :durationInput, 
+    :priceInput,
+    :statusInput
+);
+
+-- Delete session
+DELETE FROM Sessions WHERE sessionID = :idInput

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clients</title>
+  <link href="style/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <header>
+        <h1>Snoopy's Snazzy Styles</h1>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="clients.html">Clients</a>
+        <a href="dogs.html">Dogs</a>
+        <a href="services.html">Services</a>
+        <a href="sessions.html">Sessions</a>
+        <a href="employees.html">Employees</a>
+        <a href="schedules.html">Schedules</a>
+    </nav>
+    <main>
+        <section>
+            <h2>Clients</h2>
+            <article>
+                <h3>Add a new client:</h3>
+                <form id="clientForm" action="submitClient" method="POST">
+                <fieldset>
+                    <label>Client's Name:</label> <input type="text" name="clientname" id="clientName" size = "34" maxLength = "120" required placeholder="name" /><br><br>
+                    <label>Phone number:</label> <input type="text" name="age" id="dogAge"max= "999" required placeholder="years, months"/><br><br>
+                    <label>Preferred contact method:</label>
+                        <input type="radio" id="phone" name="contactMethod" value="call"><label for="call">Call</label>
+                        <input type="radio" id="text" name="contactMethod" value="text"><label for="text">Text</label><br><br>
+                    <label>Email:</label> <input type="email" name="eAddress" id="email" size="34" maxlength="120" required pattern="[^ @]+@[^ @]+.[a-z]+"placeholder="name@host.com" /><br><br>
+    
+                </fieldset>
+                <button type="submit">Add</button> 
+                </form>
+            </article>
+        </section>
+        <section>
+            <h3> All Clients</h3>
+            <table id="clientTable">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>Contact Method</th>
+                    <th>Email</th>
+                </tr> 
+                <tr>
+                    <td>1</td>
+                    <td>Nzinga Fumnaya</td>
+                    <td>(222)-221-2222</td>
+                    <td>Text</td>
+                    <td>nzingafu@gmail.com</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Pat Yonah</td>
+                    <td>(444)-444-4444</td>
+                    <td>Call</td>
+                    <td>patyon@gmail.com</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Karuna Yarden</td>
+                    <td>(333)-333-3333</td>
+                    <td>Text</td>
+                    <td>karunayar@gmail.com</td>
+                </tr>
+            </table>
+        </section>
+               
+    </main>
+    
+</body>
+
+</html>

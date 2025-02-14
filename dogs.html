@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dogs</title>
+  <link href="style/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <header>
+        <h1>Snoopy's Snazzy Styles</h1>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="clients.html">Clients</a>
+        <a href="dogs.html">Dogs</a>
+        <a href="services.html">Services</a>
+        <a href="sessions.html">Sessions</a>
+        <a href="employees.html">Employees</a>
+        <a href="schedules.html">Schedules</a>
+    </nav>
+    <main>
+        <section>
+            <h2>Dogs</h2>
+            <article>
+                <h3>Add a New Dog</h3>
+                <form id="dogForm" action="submitDog" method="POST">
+                <fieldset>
+                    <label>Dog's Name:</label> <input type="text" name="dogName" id="dogName" size = "34" maxLength = "120" required placeholder="name" /><br><br>
+                    <label>Age:</label> <input type="text" name="age" id="dogAge"max= "999" required placeholder="years, months"/><br><br>
+                    <label>Breed:</label> <input type="text" name="breed" id="dogBreed" size = "34" maxLength = "120"  placeholder="breed" /><br><br>
+                    <label>Size:</label> <input type="number" name="size" id="dogSize" max = "999" required placeholder="lbs" /><br><br>
+                    <label>Notes:</label><input type="text" name="notes" id="dogNotes" size = "34" maxLength = "120" placeholder="grooming notes" /><br><br>
+                </fieldset>
+                <button type="submit">Add</button> 
+            </article>
+        </section>
+        <section>
+            <br><br>
+            <table id="dogTable">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Breed</th>
+                    <th>Size</th>
+                    <th>Notes</th>
+                </tr> 
+                <tr>
+                    <td>1</td>
+                    <td>Fido</td>
+                    <td>3</td>
+                    <td>Labrador Retriever</td>
+                    <td>64</td>
+                    <td>A very good boy</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Nalla</td>
+                    <td>10</td>
+                    <td></td>
+                    <td>13</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Ferdinand the Destroyer</td>
+                    <td>1</td>
+                    <td>Chihuahua</td>
+                    <td>7</td>
+                    <td>Take extra caution with this one…</td>
+                </tr>
+            </table>
+        </section>
+               
+    </main>
+    
+</body>
+
+</html>

@@ -3,38 +3,52 @@
 
 <head>
   <meta charset="utf-8">
-  <title>SSS Schedules</title>
+  <title>Schedules</title>
   <link href="style/style.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
+    <header>
+        <h1>Snoopy's Snazzy Styles</h1>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="clients.html">Clients</a>
+        <a href="dogs.html">Dogs</a>
+        <a href="services.html">Services</a>
+        <a href="sessions.html">Sessions</a>
+        <a href="employees.html">Employees</a>
+        <a href="schedules.html">Schedules</a>
+    </nav>
+    <main>
+        <section>
+            <h2>Schedules</h2>
+            <article>
+                <h3>Submit a New Schedule</h3>
+                <form id="scheduleForm" action="submitSchedule" method="GET">
+                    <fieldset>
+                        <label>
+                            Employee ID:<br>
+                            <input type="text" name="employeeID" required="required" id="employeeID"/>
+                            <br>
+                        </label>
+                        <label>
+                            Start:<br>
+                            <input type="datetime-local" name="start" required="required" id="startTime"/>
+                            <br>
+                        </label>
+                        <label>
+                            End:<br>
+                            <input type="datetime-local" name="end" required="required" id="endTime"/>
+                            <br>
+                        </label>
+                        
+                    </fieldset>
+                    <button type="submit">Submit</button>
+                </form>
+        </section>
     <section>
-        <h1><a href="index.html">Home</a></h1>
-        <h2>Submit a New Schedule</h2>
-        <form id="scheduleForm" action="submitSchedule" method="GET">
-            <fieldset>
-                <label>
-                    Employee ID:<br>
-                    <input type="text" name="employeeID" required="required" id="employeeID"/>
-                    <br>
-                </label>
-                <label>
-                    Start:<br>
-                    <input type="datetime-local" name="start" required="required" id="startTime"/>
-                    <br>
-                </label>
-                <label>
-                    End:<br>
-                    <input type="datetime-local" name="end" required="required" id="endTime"/>
-                    <br>
-                </label>
-                
-            </fieldset>
-            <button type="submit">Submit Order</button>
-        </form>
-    </section>
-    <section>
-        <h2>Employee Schedules</h2>
+        <h3>Employee Schedules</h3>
         <table id="scheduleTable">
             <tr>
                 <th>
@@ -68,7 +82,7 @@
     </section>
    
     <section>
-        <h2>Employee Availability</h2>
+        <h3>Employee Availability</h3>
         <label for="start">Start date:</label>
         <input type="date" id="startDate" name="startDate" min="2024-02-01"/>
         <label for="start">End date:</label>
@@ -85,9 +99,6 @@
                     Day Start
                 </th>
                 <th>
-                    To
-                </th>
-                <th>
                     From
                 </th>
                 <th>
@@ -110,21 +121,6 @@
                 </th>
                 <th>
                     To
-                </th>
-                <th>
-                    From
-                </th>
-                <th>
-                    To
-                </th>
-                <th>
-                    From
-                </th>
-                <th>
-                    To
-                </th>
-                <th>
-                    From
                 </th>
             </tr>
             <tr>
@@ -156,29 +152,12 @@
                     3:30 pm
                 </td>
                 <td>
+                    3:30 pm
+                </td>
+                <td>
                     5:00 pm
                 </td>
-                <td>
-                    
-                </td>
-                <td>
-                    
-                </td>
-                <td>
-                    
-                </td>
-                <td>
-                    
-                </td>
-                <td>
-                    
-                </td>
-                <td>
-                    
-                </td>
-                <td>
-                    
-                </td>
+                
             </tr>
         </table>
     </section>

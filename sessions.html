@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clients</title>
+  <link href="style/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <header>
+        <h1>Snoopy's Snazzy Styles</h1>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="clients.html">Clients</a>
+        <a href="dogs.html">Dogs</a>
+        <a href="services.html">Services</a>
+        <a href="sessions.html">Sessions</a>
+        <a href="employees.html">Employees</a>
+        <a href="schedules.html">Schedules</a>
+    </nav>
+    <main>
+        <section>
+            <h2>Sessions</h2>
+            <article>
+                <h3>Create a new session</h3>
+                <form id="sessionForm" action="submitSession" method="POST">
+                <fieldset>
+                    <label>EmployeeID:</label> <input type="number" name="employeeID" id="employeeID" required placeholder="ID" /><br><br>
+                    <label>ClientID:</label> <input type="number" name="customerID" id="customerID" required placeholder="ID" /><br><br>
+                    <label>DogID:</label> <input type="number" name="dogID" id="dogID" required placeholder="ID" /><br><br>
+                    <label>Session Time: <input type="datetime-local" name="sessionTime" required id="sessionTime"/><br><br>
+                    <label>Actual Duration:</label> <input type="number" name="duration" id="sessionDuration" placeholder="total time (minutes)" /><br><br>
+                    <label>Total Price:</label> <input type="number" name="totalPrice" id="sessionPrice" required placeholder="00.00" /><br><br>
+                    
+                    <label>Status:</label>
+                        <input type="radio" id="pending" name="sessionStatus" value="pending"><label for="pending">Pending</label>
+                        <input type="radio" id="completed" name="sessionStatus" value="completed"><label for="completed">completed</label>
+                        <input type="radio" id="canceled" name="sessionStatus" value="canceled"><label for="canceled">completed</label>
+                        <input type="radio" id="noShow" name="sessionStatus" value="noShow"><label for="noShow">completed</label><br><br>
+        
+                </fieldset>
+                <button type="submit">Create</button> 
+                </form>
+            </article>
+        </section>
+        <section>
+            
+            <table id="sessionTable">
+                <tr>
+                    <th>SessionID</th>
+                    <th>Employee</th>
+                    <th>Client</th>
+                    <th>Dog</th>
+                    <th>Session Time</th>
+                    <th>Actual Duration</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+                </tr> 
+                <tr>
+                    <td>1</td>
+                    <td>Diede Sovanna</td>
+                    <td>Pat Yonah</td>
+                    <td>Leoford</td>
+                    <td>2025-1-05 09:00:00</td>
+                    <td>13000</td>
+                    <td>70</td>
+                    <td>Completed</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Diede Sovanna</td>
+                    <td>Nzinga Fumnaya</td>
+                    <td>Fido</td>
+                    <td>2025-1-05 11:00:00</td>
+                    <td></td>
+                    <td>70</td>
+                    <td>Canceled</td>
+                </tr> 
+                <tr>
+                    <td>3</td>
+                    <td>Matija Tristin</td>
+                    <td>Pat Yonah</td>
+                    <td>Lucky</td>
+                    <td>2025-2-05 08:00:00</td>
+                    <td>3000</td>
+                    <td>20</td>
+                    <td>Completed</td>
+                </tr> <tr>
+                    <td>4</td>
+                    <td>Marley Kirby</td>
+                    <td>Karuna Yarden</td>
+                    <td>Ferdinand the Destroyer</td>
+                    <td>2025-2-05 08:30:00</td>
+                    <td>30000</td>
+                    <td>110</td>
+                    <td>Completed</td>
+                </tr> 
+            </table>
+        </section>
+               
+    </main>
+    
+</body>
+
+</html>
