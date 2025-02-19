@@ -1,3 +1,8 @@
+-- Group 57: Thomas Carpenter, Yesenia Matamoros
+-- Project: Snoopy’s Snazzy Styles Management System
+-- Project Step 3 Draft
+
+
 -- -----------------------------------------------------
 -- Employees table queries
 -- -----------------------------------------------------
@@ -7,6 +12,9 @@ SELECT * FROM Employees;
 
 -- Select specific employee
 SELECT * FROM Employees WHERE employeeID = :idInput;
+
+-- Get employee's data to populate a dropdown for associating with a session 
+SELECT employeeID, name FROM Employees
 
 -- Add new employee
 INSERT INTO Employees (
@@ -39,7 +47,7 @@ UPDATE Employees SET
 WHERE employeeID = :idInput;
 
 -- Delete employee
-DELETE FROM Employees WHERE employeeID = :idInput;
+DELETE FROM Employees WHERE employeeID = :employee_ID_selected_from_employee_page;
 
 -- -----------------------------------------------------
 -- Schedules table queries
@@ -152,7 +160,7 @@ UPDATE Schedules SET
 WHERE scheduleID = :idInput;
 
 -- Deleting a schedule
-DELETE FROM Schedules WHERE scheduleID = :idInput;
+DELETE FROM Schedules WHERE scheduleID = :schedule_ID_selected_from_schedule_page;
 
 -- -----------------------------------------------------
 -- Services table queries
@@ -179,6 +187,129 @@ UPDATE Services SET
 WHERE serviceID = :idInput;
 
 -- Delete service
-DELETE FROM Services WHERE serviceID = :idInput
+DELETE FROM Services WHERE serviceID = :service_ID_selected_from_service_page
 
 
+-- -----------------------------------------------------
+-- Dogs table queries
+-- -----------------------------------------------------
+-- Select all dogs
+SELECT * FROM Dogs;
+
+-- Select specific dog
+SELECT * FROM Dogs WHERE dogID = :idInput;
+
+-- Getdog's data to populate a dropdown for associating with a session
+SELECT dogID, name FROM Dogs
+
+-- Add new dog
+INSERT INTO Dogs(
+    name,
+    age
+    breed,
+    size_lbs, 
+    groomer_notes
+) VALUES (
+    :nameInput,
+    :ageInput,
+    :breedInput,
+    :sizeInput, 
+    :notesInput
+);
+
+-- Update dog information
+UPDATE Dogs SET 
+    name = :nameInput, 
+    age = :ageInput, 
+    breed = :breedInput, 
+    size_lbs= :sizeInput,
+    groomer_notes = :notesInput, 
+WHERE dogID = :idInput;
+
+-- Delete dog
+DELETE FROM Dogs WHERE dogID = :dog_ID_selected_from_dog_page;
+
+
+-- -----------------------------------------------------
+-- Clients table queries
+-- -----------------------------------------------------
+
+-- Select all clients
+SELECT * FROM Clients;
+
+-- Get client's data to populate a dropdown for associating with a session
+SELECT clientID, name FROM Clients
+
+-- Add new client
+INSERT INTO Clients(
+    name,
+    phone_number,
+    contact_method, 
+    email
+) VALUES (
+    :nameInput,
+    :phoneInput,
+    :contactInput,
+    :emailInput
+);
+
+-- Update client information
+UPDATE Clients SET 
+    name = :nameInput, 
+    phone_number = :phoneInput, 
+    contact_method = :contactInput, 
+    email = :emailInput, 
+WHERE clientID = :idInput;
+
+-- Delete client
+DELETE FROM Clients WHERE ClientID = :client_ID_selected_from_client_page;
+
+-- -----------------------------------------------------
+-- Sessions table queries
+-- -----------------------------------------------------
+
+-- Select all sessions
+SELECT Sessions.sessionID, Employees.name, Clients.name, Dogs.name, Sessions.session_time, Sessions.actual_duration, Sessions.total_price, Sessions.status FROM Sessions
+JOIN Employees ON Sessions.employee_id = Employees.employeeID
+JOIN Clients ON Sessions.client_id = Clients.clientID
+JOIN Dogs ON Sessions.dog_id = Dogs.dogID;
+
+
+-- Select sessions based on date
+SELECT Sessions.sessionID, Employees.name, Clients.name, Dogs.name, Sessions.session_time, Sessions.actual_duration, Sessions.total_price, Sessions.status FROM Sessions
+JOIN Employees ON Sessions.employee_id = Employees.employeeID
+JOIN Clients ON Sessions.client_id = Clients.clientID
+JOIN Dogs ON Sessions.dog_id = Dogs.dogID
+WHERE DATE(Sessions.start) = :dateInput;
+
+-- Add new session
+INSERT INTO Sessions(
+    employee_ID,
+    client_id,
+    dog_id,
+    session_time, 
+    actual_duration, 
+    total_price,
+    status
+) VALUES (
+    :employee_id_from_dropdown_Input,
+    :client_id_from_dropdown_Input,
+    :dog_id_from_dropdown_Input,
+    :timeInput, 
+    :durationInput, 
+    :priceInput,
+    :statusInput
+);
+
+-- Update session information
+UPDATE Sessions SET 
+    employee_ID = :employeeInput, 
+    client_ID = :clientInput, 
+    dog_ID = :dogInput, 
+    session_time= :timeInput,
+    actual_duration = :durationInput,
+    status= :statusInput,
+WHERE sessionID = :idInput;
+
+-- Delete session
+DELETE FROM Sessions WHERE sessionID = :sessions_ID_selected_from_session_page;
