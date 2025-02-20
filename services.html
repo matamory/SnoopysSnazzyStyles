@@ -5,6 +5,25 @@
   <meta charset="utf-8">
   <title>Review/Add Services</title>
   <link href="style/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript">
+    // Should probably be its own js file, but for now this will work
+
+    document.addEventListener('DOMContentLoaded', function() {
+        let del = document.getElementsByClassName('serviceDelete')
+        for (let i = 0; i < del.length; i++) {
+            del[i].addEventListener("click", delRow)
+        };
+    });
+
+    function delRow(event) {
+        event.preventDefault();
+        if (confirm("Are you sure you want to delete this service?")) {
+            let td = event.target.parentNode; 
+            let tr = td.parentNode; 
+            tr.parentNode.removeChild(tr);
+        };
+    };
+    </script>
 </head>
 
 <body>
@@ -53,7 +72,7 @@
                     <td>30 min</td>
                     <td>$20</td>
                     <td><button>Edit</button></td>
-                    <td><button>Delete</button></td>
+                    <td><button type="button" class="serviceDelete">Delete</button></td>
                 </tr>
                 <tr>
                     <td>2</td>
@@ -61,7 +80,7 @@
                     <td>60 min</td>
                     <td>$50</td>
                     <td><button>Edit</button></td>
-                    <td><button>Delete</button></td>
+                    <td><button type="button" class="serviceDelete">Delete</button></td>
                 </tr>
 
                 <tr>
@@ -70,7 +89,7 @@
                     <td>120 min</td>
                     <td>$90</td>
                     <td><button>Edit</button></td>
-                    <td><button>Delete</button></td>
+                    <td><button type="button" class="serviceDelete">Delete</button></td>
                 </tr>
                 <tr>
                     <td>4</td>
@@ -78,7 +97,7 @@
                     <td>60 min</td>
                     <td>$70</td>
                     <td><button>Edit</button></td>
-                    <td><button>Delete</button></td>
+                    <td><button type="button" class="serviceDelete">Delete</button></td>
                 </tr>
             </table>
         </section>

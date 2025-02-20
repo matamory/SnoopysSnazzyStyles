@@ -5,6 +5,25 @@
   <meta charset="utf-8">
   <title>Review/Create Schedules</title>
   <link href="style/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript">
+    // Should probably be its own js file, but for now this will work
+
+    document.addEventListener('DOMContentLoaded', function() {
+        let del = document.getElementsByClassName('scheduleDelete')
+        for (let i = 0; i < del.length; i++) {
+            del[i].addEventListener("click", delRow)
+        };
+    });
+
+    function delRow(event) {
+        event.preventDefault();
+        if (confirm("Are you sure you want to delete this schedule?")) {
+            let td = event.target.parentNode; 
+            let tr = td.parentNode; 
+            tr.parentNode.removeChild(tr);
+        };
+    };
+    </script>
 </head>
 
 <body>
@@ -60,7 +79,7 @@
                 <td>9:00 am</td>
                 <td>5:00 pm</td>
                 <td><button>Edit</button></td>
-                <td><button>Delete</button></td>
+                <td type="button" class="scheduleDelete"><button>Delete</button></td>
             </tr>
             <tr>
                 <td>Diede Sovanna</td>
@@ -68,7 +87,7 @@
                 <td>9:00 am</td>
                 <td>5:00 pm</td>
                 <td><button>Edit</button></td>
-                <td><button>Delete</button></td>
+                <td type="button" class="scheduleDelete"><button>Delete</button></td>
             </tr>
             <tr>
                 <td>Matija Tristina</td>
@@ -76,7 +95,7 @@
                 <td>7:00 am</td>
                 <td>3:00 pm</td>
                 <td><button>Edit</button></td>
-                <td><button>Delete</button></td>
+                <td type="button" class="scheduleDelete"><button>Delete</button></td>
             </tr>
             <tr>
                 <td>Matija Tristin</td>
@@ -84,7 +103,7 @@
                 <td>7:00 am</td>
                 <td>12:00 pm</td>
                 <td><button>Edit</button></td>
-                <td><button>Delete</button></td>
+                <td type="button" class="scheduleDelete"><button>Delete</button></td>
             </tr>
             <tr>
                 <td>Marley Kirby</td>
@@ -92,7 +111,7 @@
                 <td>11:00 am</td>
                 <td>8:00 pm</td>
                 <td><button>Edit</button></td>
-                <td><button>Delete</button></td>
+                <td type="button" class="scheduleDelete"><button>Delete</button></td>
             </tr>
             <tr>
                 <td>Marley Kirby</td>
@@ -100,7 +119,7 @@
                 <td>11:00 am</td>
                 <td>8:00 pm</td>
                 <td><button>Edit</button></td>
-                <td><button>Delete</button></td>
+                <td type="button" class="scheduleDelete"><button>Delete</button></td>
             </tr>
             <tr>
                 <td>Quincy Ketut</td>
@@ -108,7 +127,7 @@
                 <td>11:00 am</td>
                 <td>8:00 pm</td>
                 <td><button>Edit</button></td>
-                <td><button>Delete</button></td>
+                <td><button type="button" class="scheduleDelete">Delete</button></td>
             </tr>
         </table>
     </section>

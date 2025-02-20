@@ -168,6 +168,9 @@ DELETE FROM Schedules WHERE scheduleID = :schedule_ID_selected_from_schedule_pag
 -- Select all services
 SELECT * FROM Services;
 
+-- Select services for dropdowns
+SELECT serviceID, service_name FROM Services;
+
 -- Insert new service
 INSERT INTO Services(
     service_name,

@@ -55,9 +55,9 @@ CREATE OR REPLACE TABLE Employees (
 
 CREATE OR REPLACE TABLE Sessions (
     sessionID int AUTO_INCREMENT UNIQUE NOT NULL,
-    employee_id int NOT NULL,
-    client_id int NOT NULL,
-    dog_id int NOT NULL,
+    employee_id int,
+    client_id int,
+    dog_id int,
     session_time datetime NOT NULL,
     actual_duration time,
     total_price decimal(10,2) NOT NULL,
