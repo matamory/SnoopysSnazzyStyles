@@ -25,45 +25,16 @@
         };
     };
 
-    let dogFields = 1
-    function addDog() {
-        dogFields++;
-        let dogs = document.getElementById("dogEntry");
-        let newSelect = document.createElement("div");
-        newSelect.innerHTML = '<select name="dog_id" id="dog_idSelect" required >\
-                        <option value="0">Fido</option>\
-                        <option value="1">Nalla</option>\
-                        <option value="2">Ferdinand the Destroyer</option>\
-                        <option value="3">Leoford</option>\
-                        <option value="4">Lucky</option>\
-                        </select>';
-        newSelect.id = "dog_id " + dogFields
-        newSelect.className = "dog_id"
-        dogs.appendChild(newSelect); 
-    }
-
-    function removeDog() {
-        if (dogFields > 1){
-            let dogs = document.getElementById("dogEntry");
-            let oldSelect = document.getElementById("dog_id " + dogFields);
-            
-            dogs.removeChild(oldSelect);
-            
-            dogFields--;
-        }
-    }
-
     function showEditForm() {
         document.getElementById('editClientForm').style.display='none';
         document.getElementById('editClientForm').style.display='block';
     }
 
-    function populateEditForm(name, phone, contact, email, dogs) {
+    function populateEditForm(name, phone, contact, email) {
         document.getElementById('editClientName').value = name;
         document.getElementById('editClientPhone').value = phone;
         document.getElementById('editClientContact').value = contact;
         document.getElementById('editClientEmail').value = email;
-        document.getElementById('editClientDogs').value = dogs;
         showEditForm('editClientForm');
     }
 
@@ -92,20 +63,12 @@
                 <form id="clientForm" action="submitClient" method="POST">
                 <fieldset>
                     <label>Client's Name:</label> <input type="text" name="clientName" id="clientName" size = "34" maxLength = "120" required placeholder="first and last name" /><br><br>
-                    <label>Phone number:</label> <input type="text" name="phone" id="clientPhone"max= "999" required placeholder="(000)-000-0000"/><br><br>
+                    <label>Phone number:</label> <input type="tel" name="phone" id="clientPhone"max= "999" required placeholder="(000)-000-0000"/><br><br>
                     <label>Preferred contact method:</label>
                         <input type="radio" id="phone" name="contactMethod" value="call"><label for="call">Call</label>
                         <input type="radio" id="text" name="contactMethod" value="text"><label for="text">Text</label><br><br>
                     <label>Email:</label> <input type="email" name="eAddress" id="email" size="34" maxlength="120" required pattern="[^ @]+@[^ @]+.[a-z]+"placeholder="name@host.com" /><br><br>
-                    <div id="dogEntry"> <label for="dog_id">Dogs: </label> <div id="dog_id" class = "dog_id">
-                        <select name="dog_id" id="dog_idSelect" required >
-                            <option value="0">Fido</option>
-                            <option value="1">Nalla</option>
-                            <option value="2">Ferdinand the Destroyer</option>
-                            <option value="3">Leoford</option>
-                            <option value="4">Lucky</option>
-                        </select> <button type="button" onclick="addDog()">Add Dog</button> <button type="button" onclick="removeDog()">Remove Dog</button> </div></div>
-                        <br><br>
+                        <br>
                 </fieldset>
                 <button type="submit">Add</button> 
                 </form>
@@ -121,7 +84,6 @@
                     <th>Phone Number</th>
                     <th>Contact Method</th>
                     <th>Email</th>
-                    <th>Dogs</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr> 
@@ -131,8 +93,7 @@
                     <td>(222)-221-2222</td>
                     <td>Text</td>
                     <td>nzingafu@gmail.com</td>
-                    <td>Fido</td>
-                    <td><button onclick="populateEditForm('Nzinga Fumnaya', '(222)-221-2222', 'Text', 'nzingafu@gmail.com', 'Fido' )">Edit</button></td>
+                    <td><button onclick="populateEditForm('Nzinga Fumnaya', '(222)-221-2222', 'Text', 'nzingafu@gmail.com' )">Edit</button></td>
                     <td><button type="button" class="clientDelete">Delete</button></td>
 
                 </tr>
@@ -142,8 +103,7 @@
                     <td>(444)-444-4444</td>
                     <td>Call</td>
                     <td>patyon@gmail.com</td>
-                    <td>Fido, Lucky, Leoford</td>
-                    <td><button onclick="populateEditForm('Pat Yonah', '(444)-444-4444', 'Call', 'patyon@gmail.com', 'Fido, Lucky, Leoford' )">Edit</button></td>
+                    <td><button onclick="populateEditForm('Pat Yonah', '(444)-444-4444', 'Call', 'patyon@gmail.com')">Edit</button></td>
                     <td><button type="button" class="clientDelete">Delete</button></td>
 
                 </tr>
@@ -153,8 +113,7 @@
                     <td>(333)-333-3333</td>
                     <td>Text</td>
                     <td>karunayar@gmail.com</td>
-                    <td>Ferdinand the Destroyer, Nalla</td>
-                    <td><button onclick="populateEditForm('Karuna Yarden', '(333)-333-3333', 'Text', 'karunayar@gmail.com', 'Ferdinand the Destroyer, Nalla' )">Edit</button></td>
+                    <td><button onclick="populateEditForm('Karuna Yarden', '(333)-333-3333', 'Text', 'karunayar@gmail.com' )">Edit</button></td>
                     <td><button type="button" class="clientDelete">Delete</button></td>
                 </tr>
             </table>
@@ -164,10 +123,9 @@
                 <h3>Edit Client Information</h3>
                 <form >
                     <label>Name:</label> <input type="text" id="editClientName"><br><br>
-                    <label>Phone number:</label> <input type="text" id="editClientPhone"><br><br>
+                    <label>Phone number:</label> <input type="tel" id="editClientPhone"><br><br>
                     <label>Preferred Contact Method:</label> <input type="text" id="editClientContact"><br><br>
                     <label>Email:</label> <input type="text" id="editClientEmail"><br><br>
-                    <label>Dogs:</label> <input type="text" id="editClientDogs"><br><br>
                     <br>
                     <button type="button" class="UpdateInfo">Update</button>
                 </form>

@@ -24,6 +24,22 @@
             tr.parentNode.removeChild(tr);
         };
     };
+
+
+    function showEditForm() {
+        document.getElementById('editDogForm').style.display='none';
+        document.getElementById('editDogForm').style.display='block';
+    }
+
+    function populateEditForm(name, age, breed, size, notes) {
+        document.getElementById('editDogName').value = name;
+        document.getElementById('editDogAge').value = age;
+        document.getElementById('editDogBreed').value = breed;
+        document.getElementById('editDogSize').value = size;
+        document.getElementById('editDogNotes').value = notes;
+        showEditForm('editDogForm');
+    }
+
     </script>
 </head>
 
@@ -39,6 +55,7 @@
         <a href="sessions.html">Sessions</a>
         <a href="employees.html">Employees</a>
         <a href="schedules.html">Schedules</a>
+        <a href="clientsDogs.html">Clients Dogs</a>
     </nav>
     <main>
         <section>
@@ -48,7 +65,7 @@
                 <form id="dogForm" action="submitDog" method="POST">
                 <fieldset>
                     <label>Dog's Name:</label> <input type="text" name="dogName" id="dogName" size = "34" maxLength = "120" required placeholder="name" /><br><br>
-                    <label>Age:</label> <input type="text" name="age" id="dogAge"max= "999" required placeholder="years, months"/><br><br>
+                    <label>Age:</label> <input type="number" name="age" id="dogAge"max= "999" required placeholder="years, months"/><br><br>
                     <label>Breed:</label> <input type="text" name="breed" id="dogBreed" size = "34" maxLength = "120"  placeholder="breed" /><br><br>
                     <label>Size:</label> <input type="number" name="size" id="dogSize" max = "999" required placeholder="lbs" /><br><br>
                     <label>Notes:</label><input type="text" name="notes" id="dogNotes" size = "34" maxLength = "120" placeholder="grooming notes" /><br><br>
@@ -76,7 +93,7 @@
                     <td>Labrador Retriever</td>
                     <td>64</td>
                     <td>A very good boy</td>
-                    <td><button>Edit</button></td>
+                    <td><button onclick="populateEditForm('Fido', 3,'Labrador Retriever', 64, 'A very good boy' )">Edit</button></td>
                     <td><button type="button" class="dogDelete">Delete</button></td>
                 </tr>
                 <tr>
@@ -86,7 +103,7 @@
                     <td></td>
                     <td>13</td>
                     <td></td>
-                    <td><button>Edit</button></td>
+                    <td><button onclick="populateEditForm('Nalla', 10,'', 13, '' )">Edit</button></td>
                     <td><button type="button" class="dogDelete">Delete</button></td>
                 </tr>
                 <tr>
@@ -96,10 +113,45 @@
                     <td>Chihuahua</td>
                     <td>7</td>
                     <td>Take extra caution with this one…</td>
-                    <td><button>Edit</button></td>
+                    <td><button onclick="populateEditForm('Ferdinand the Destroyer', 1,'Chihuahua', 7, 'Take extra caution with this one…' )">Edit</button></td>
+                    <td><button type="button" class="dogDelete">Delete</button></td>
+                </tr>
+
+                <tr>
+                    <td>4</td>
+                    <td>Leoford</td>
+                    <td>0</td>
+                    <td>Lhasa Apo</td>
+                    <td>1</td>
+                    <td>Still a puppy</td>
+                    <td><button onclick="populateEditForm('Leoford', 0,'Lhasa Apo', 1, 'Still a puppy' )">Edit</button></td>
+                    <td><button type="button" class="dogDelete">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Lucky</td>
+                    <td>16</td>
+                    <td></td>
+                    <td>25</td>
+                    <td>Likes chin scratches</td>
+                    <td><button  onclick="populateEditForm('Lucky', 16,'', 25, 'Likes chin scratches' )">Edit</button></td>
                     <td><button type="button" class="dogDelete">Delete</button></td>
                 </tr>
             </table>
+            <br><br>
+            <div id="editDogForm" style="display: none;">
+                <h3>Edit Dog Information</h3>
+                <form >
+                    <label>Name:</label> <input type="text" id="editDogName"><br><br>
+                    <label>Age:</label> <input type="number" id="editDogAge"><br><br>
+                    <label>Breed:</label> <input type="text" id="editDogBreed"><br><br>
+                    <label>Size:</label> <input type="number" id="editDogSize"><br><br>
+                    <label>Notes:</label> <input type="text" id="editDogNotes"><br><br>
+                    <br>
+                    <button type="button" class="UpdateInfo">Update</button>
+                </form>
+                <br><br>
+            </div>
         </section>
                
     </main>

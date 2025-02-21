@@ -23,6 +23,22 @@
             tr.parentNode.removeChild(tr);
         };
     };
+
+    function showEditForm() {
+        document.getElementById('editEmployeesForm').style.display='none';
+        document.getElementById('editEmployeesForm').style.display='block';
+    }
+
+    function populateEditForm(name, wage, experience, phone, email, address, active) {
+        document.getElementById('editEmployeesName').value = name;
+        document.getElementById('editEmployeesWage').value = wage;
+        document.getElementById('editEmployeesExperience').value = experience;
+        document.getElementById('editEmployeesPhone').value = phone;
+        document.getElementById('editEmployeesEmail').value = email;
+        document.getElementById('editEmployeesAddress').value = address;
+        document.getElementById('editEmployeesActive').value = active;
+        showEditForm('editEmployeesForm');
+    }
     </script>
 </head>
 
@@ -38,6 +54,7 @@
         <a href="sessions.html">Sessions</a>
         <a href="employees.html">Employees</a>
         <a href="schedules.html">Schedules</a>
+        <a href="clientsDogs.html">Clients Dogs</a>
     </nav>
     <main>
         <section>
@@ -52,7 +69,7 @@
                         <label>Phone Number: <input type="tel" name="employeePhone" required="required" id="employeePhone" placeholder="(000)-000-0000"/><br><br></label>
                         <label>Email: <input type="email" name="employeeEmail" required="required" id="employeeEmail" placeholder="name@host.com"/><br><br></label>
                         <label>Address: <input type="text" name="employeeAddress" required="required" id="employeeAddress" placeholder="000 Main Street"/><br><br> </label>
-                        <label>Active: <input type="checkbox" name="employeeisActive" required="required" id="employeeisActive"/><br><br></label>
+                        <label>Active: <input type="checkbox" name="employeeisActive" required="required" id="employeeisActive" /><br><br></label>
                     </fieldset>
                     <button type="submit">Add</button>
                 </form>
@@ -81,7 +98,7 @@
                 <td>matijatri@gmail.com</td>
                 <td>123 Georgia Ln</td>
                 <td>Yes</td>
-                <td><button>Edit</button></td>
+                <td><button onclick="populateEditForm('Matija Tristin', 18.20, 3,'(555)-555-5555', 'matijatri@gmail.com', '123 Georgia Ln', 'Yes')">Edit</button></td>
                 <td><button type="button" class="employeeDelete">Delete</button></td>
             </tr>
             <tr>
@@ -93,7 +110,7 @@
                 <td>marleykir@gmail.com</td>
                 <td>6 Main St.</td>
                 <td>Yes</td>
-                <td><button>Edit</button></td>
+                <td><button onclick="populateEditForm('Marley Kirby', 17.00, 1,'(503)-777-7777', 'marleykir@gmail.com', '6 Main St', 'Yes')">Edit</button></td>
                 <td><button type="button" class="employeeDelete">Delete</button></td>
             </tr>
             <tr>
@@ -105,10 +122,26 @@
                 <td>zikomoapo@gmail.com</td>
                 <td>700 Fall St.</td>
                 <td>No</td>
-                <td><button>Edit</button></td>
+                <td><button  onclick="populateEditForm('Zikomo Apoorva', 23.8, 10,'(900)-999-9999', 'zikomoapo@gmail.com', '700 Fall St.', 'No')">Edit</button></td>
                 <td><button type="button" class="employeeDelete">Delete</button></td>
             </tr>
         </table>
+        <br><br>
+            <div id="editEmployeesForm" style="display: none;">
+                <h3>Edit Employee Information</h3>
+                <form >
+                    <label>Name:</label> <input type="text" id="editEmployeesName"><br><br>
+                    <label>Wage:</label> <input type="number" id="editEmployeesWage"><br><br>
+                    <label>Years Experience:</label> <input type="number" id="editEmployeesExperience"><br><br>
+                    <label>Phone number:</label> <input type="tel" id="editEmployeesPhone"><br><br>
+                    <label>Email:</label> <input type="text" id="editEmployeesEmail"><br><br>
+                    <label>Address:</label> <input type="email" id="editEmployeesAddress"><br><br>
+                    <label>Active:</label> <input type="text" id="editEmployeesActive"><br><br>
+                    <br>
+                    <button type="button" class="UpdateInfo">Update</button>
+                </form>
+                <br><br>
+            </div>
     </section>
    
 </body>
