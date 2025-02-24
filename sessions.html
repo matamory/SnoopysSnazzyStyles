@@ -57,7 +57,7 @@
         document.getElementById('editSessionForm').style.display='block';
     }
 
-    function populateEditForm(employee, client, dog, time, duration, price, status, services) {
+    function populateEditForm(employee, client, dog, time, duration, price, status) {
         document.getElementById('editSessionEmployee').value = employee;
         document.getElementById('editSessionClient').value = client;
         document.getElementById('editSessionDog').value = dog;
@@ -65,7 +65,6 @@
         document.getElementById('editSessionDuration').value = duration;
         document.getElementById('editSessionPrice').value = price;
         document.getElementById('editSessionStatus').value = status;
-        document.getElementById('editSessionServices').value = services;
         showEditForm('editSessionForm');
     }
 
@@ -258,7 +257,7 @@
         </section>
         <section>
             <br><br>
-            <table id="sessionTable">
+            <table id="sessionServiceTable">
                 <tr>  <!--  -->
                     <th>SessionID</th>
                     <th>Services</th>
