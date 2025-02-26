@@ -6,69 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Review/Add Sessions</title>
   <link href="style/style.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript">
-    // Should probably be its own js file, but for now this will work
-
-    document.addEventListener('DOMContentLoaded', function() {
-        let del = document.getElementsByClassName('sessionDelete')
-        for (let i = 0; i < del.length; i++) {
-            del[i].addEventListener("click", delRow)
-        };
-    });
-
-    function delRow(event) {
-        event.preventDefault();
-        if (confirm("Are you sure you want to delete this session?")) {
-            let td = event.target.parentNode; 
-            let tr = td.parentNode; 
-            tr.parentNode.removeChild(tr);
-        };
-    };
-    
-    let serviceFields = 1
-    function addService() {
-        serviceFields++;
-        let services = document.getElementById("serviceEntry");
-        let newSelect = document.createElement("div");
-        newSelect.innerHTML = '<select name="service_id" id="service_idSelect" required >\
-                        <option value="0">Nail Trim</option>\
-                        <option value="1">Puppy Cut</option>\
-                        <option value="2">Basic Cut: Fluffy Breeds</option>\
-                        <option value="3">Basic Cut: Short Coats</option>\
-                        </select>';
-        newSelect.id = "service_id " + serviceFields
-        newSelect.className = "service_id"
-        services.appendChild(newSelect); 
-    }
-
-    function removeService() {
-        if (serviceFields > 1){
-            let services = document.getElementById("serviceEntry");
-            let oldSelect = document.getElementById("service_id " + serviceFields);
-            
-            services.removeChild(oldSelect);
-            
-            serviceFields--;
-        }
-    }
-
-    function showEditForm() {
-        document.getElementById('editSessionForm').style.display='none';
-        document.getElementById('editSessionForm').style.display='block';
-    }
-
-    function populateEditForm(employee, client, dog, time, duration, price, status) {
-        document.getElementById('editSessionEmployee').value = employee;
-        document.getElementById('editSessionClient').value = client;
-        document.getElementById('editSessionDog').value = dog;
-        document.getElementById('editSessionTime').value =time;
-        document.getElementById('editSessionDuration').value = duration;
-        document.getElementById('editSessionPrice').value = price;
-        document.getElementById('editSessionStatus').value = status;
-        showEditForm('editSessionForm');
-    }
-
-
+  <script type="text/javascript" src="scripts/sessions.js">
   </script>
 </head>
 
@@ -165,11 +103,11 @@
                     <td>Diede Sovanna</td>
                     <td>Pat Yonah</td>
                     <td>Leoford</td>
-                    <td>2025-1-05 09:00:00</td>
+                    <td>2025-01-05 09:00:00</td>
                     <td>90 min</td>
                     <td>$70</td>
                     <td>Completed</td>
-                    <td><button  onclick="populateEditForm('Diede Sovanna','Pat Yonah','Leoford', '2025-01-05T09:00:00', 90,70, 'Completed')">Edit</button></td>
+                    <td><button class="sessionEdit">Edit</button></td>
                     <td><button type="button" class="sessionDelete">Delete</button></td>
                 </tr>
                 <tr>
@@ -177,11 +115,11 @@
                     <td>Diede Sovanna</td>
                     <td>Nzinga Fumnaya</td>
                     <td>Fido</td>
-                    <td>2025-1-05 11:00:00</td>
+                    <td>2025-01-05 11:00:00</td>
                     <td></td>
                     <td>$70</td>
                     <td>Canceled</td>
-                    <td><button  onclick="populateEditForm('Diede Sovanna','Nzinga Fumnaya','Fido', '2025-1-05T11:00:00', 0, 70, 'Canceled')">Edit</button></td>
+                    <td><button class="sessionEdit">Edit</button></td>
                     <td><button type="button" class="sessionDelete">Delete</button></td>
                 </tr> 
                 <tr>
@@ -189,11 +127,11 @@
                     <td>Matija Tristin</td>
                     <td>Pat Yonah</td>
                     <td>Lucky</td>
-                    <td>2025-2-05 08:00:00</td>
+                    <td>2025-02-05 08:00:00</td>
                     <td>30 min</td>
                     <td>$20</td>
                     <td>Completed</td>
-                    <td><button  onclick="populateEditForm('Matija Tristin','Pat Yonah','Lucky', '2025-02-05T08:00:00', 30, 20, 'Completed')">Edit</button></td>
+                    <td><button class="sessionEdit">Edit</button></td>
                     <td><button type="button" class="sessionDelete">Delete</button></td>
                 </tr> 
                 <tr>
@@ -201,11 +139,11 @@
                     <td>Marley Kirby</td>
                     <td>Karuna Yarden</td>
                     <td>Ferdinand the Destroyer</td>
-                    <td>2025-2-05 08:30:00</td>
+                    <td>2025-02-05 08:30:00</td>
                     <td>180 min</td>
                     <td>$110</td>
                     <td>Completed</td>
-                    <td><button  onclick="populateEditForm('Marley Kirby','Karuna Yarden','Ferdinand the Destroyer', '2025-02-05T08:30:00', 180, 110, 'Completed')">Edit</button></td>
+                    <td><button class="sessionEdit">Edit</button></td>
                     <td><button type="button" class="sessionDelete">Delete</button></td>
                 </tr> 
             </table>
@@ -213,15 +151,16 @@
             <div id="editSessionForm" style="display: none;">
                 <h3>Edit Session Information</h3>
                 <form >
-                    <label>Employee:</label> <input type="text" id="editSessionEmployee"><br><br>
-                    <label>Client:</label> <input type="text" id="editSessionClient"><br><br>
-                    <label>Dog:</label> <input type="text" id="editSessionDog"><br><br>
-                    <label>Time:</label> <input type="datetime-local" id="editSessionTime"><br><br>
+                    <label>ID:</label><label id="editSessionID"></label><br><br>
+                    <label>Employee:</label> <input type="text" id="editSessionEmployee" required><br><br>
+                    <label>Client:</label> <input type="text" id="editSessionClient" required><br><br>
+                    <label>Dog:</label> <input type="text" id="editSessionDog" required><br><br>
+                    <label>Time:</label> <input type="datetime-local" id="editSessionTime" required><br><br>
                     <label>Duration:</label> <input type="number" id="editSessionDuration"><br><br>
-                    <label>Price:</label> <input type="number" id="editSessionPrice"><br><br>
-                    <label>Status:</label> <input type="text" id="editSessionStatus"><br><br>
+                    <label>Price:</label> <input type="number" id="editSessionPrice" required><br><br>
+                    <label>Status:</label> <input type="text" id="editSessionStatus" required><br><br>
                     <br>
-                    <button type="button" class="UpdateInfo">Update</button>
+                    <button type="submit" class="UpdateInfo">Update</button>
                 </form>
                 <br><br>
             </div>
