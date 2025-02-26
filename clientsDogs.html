@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Add/Review Clients Dogs</title>
+  <link href="style/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript">
+    // Should probably be its own js file, but for now this will work
+
+    document.addEventListener('DOMContentLoaded', function() {
+        let del = document.getElementsByClassName('clientDogDelete')
+        for (let i = 0; i < del.length; i++) {
+            del[i].addEventListener("click", delRow)
+        };
+    });
+
+    function delRow(event) {
+        event.preventDefault();
+        if (confirm("Are you sure you want to delete this client-dog pair?")) {
+            let td = event.target.parentNode; 
+            let tr = td.parentNode; 
+            tr.parentNode.removeChild(tr);
+        };
+    };
+
+    function showEditForm() {
+        document.getElementById('editClientDogForm').style.display='none';
+        document.getElementById('editClientDogForm').style.display='block';
+    }
+
+    function populateEditForm(client, dogs) {
+        document.getElementById('editClient').value = client;
+        document.getElementById('editDog').value = dogs;
+        showEditForm('editClientDogForm');
+    }
+
+    </script>
+</head>
+
+<body>
+    <header>
+        <h1>Snoopy's Snazzy Styles</h1>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="clients.html">Clients</a>
+        <a href="dogs.html">Dogs</a>
+        <a href="services.html">Services</a>
+        <a href="sessions.html">Sessions</a>
+        <a href="employees.html">Employees</a>
+        <a href="schedules.html">Schedules</a>
+        <a href="clientsDogs.html">Clients Dogs</a>
+
+    </nav>
+    <main>
+        <section>
+            <h2>Clients' Dogs</h2>
+            <article>
+                <h3>Add a new Client Dog pair :</h3>
+                <form id="clientDogForm" action="submitClientDog" method="POST">
+                <fieldset>
+                    <label for="clientID">Client: </label> 
+                        <select name="clientID" id="clientID" required >
+                            <option value="0">select client</option>
+                            <option value="1">Nzinga Fumnaya</option>
+                            <option value="2">Pat Yonah</option> 
+                            <option value="3">Karuna Yardena</option>
+                        </select>
+                        <br><br>
+                    <label for="dogID">Dog: </label> 
+                        <select name="dogID" id="dogID" required >
+                            <option value="0">select dog</option>
+                            <option value="1">Fido</option>
+                            <option value="2">Nalla</option>
+                            <option value="3">Ferdinand the Destroyer</option>
+                            <option value="4">Leoford</option>
+                            <option value="5">Lucky</option>
+                        </select>
+                        <br><br>
+                </fieldset>
+                <button type="submit">Add</button> 
+                </form>
+            </article>
+            <br>
+        </section>
+        <section>
+            <h3> All Clients</h3>
+            <table id="clientTable">
+                <tr>
+                    <th>Client</th>
+                    <th>Dog</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr> 
+                <tr>
+                    <td>Nzinga Fumnaya</td>
+                    <td>Fido</td>
+                    <td><button onclick="populateEditForm('Nzinga Fumnaya', 'Fido' )">Edit</button></td>
+                    <td><button type="button" class="clientDogDelete">Delete</button></td>
+
+                </tr>
+                <tr>
+                    <td>Pat Yonah</td>
+                    <td>Fido</td>
+                    <td><button onclick="populateEditForm('Pat Yonah', 'Fido')">Edit</button></td>
+                    <td><button type="button" class="clientDogDelete">Delete</button></td>
+
+                </tr>
+                <tr>
+                    <td>Pat Yonah</td>
+                    <td>Lucky</td>
+                    <td><button onclick="populateEditForm('Pat Yonah', 'Lucky')">Edit</button></td>
+                    <td><button type="button" class="clientDogDelete">Delete</button></td>
+
+                </tr>
+
+                <tr>
+                    <td>Pat Yonah</td>
+                    <td>Leoford</td>
+                    <td><button onclick="populateEditForm('Pat Yonah', 'Leoford')">Edit</button></td>
+                    <td><button type="button" class="clientDogDelete">Delete</button></td>
+
+                </tr>
+                <tr>
+                    <td>Karuna Yarden</td>
+                    <td>Ferdinand the Destroyer</td>
+                    <td><button onclick="populateEditForm('Karuna Yarden', 'Ferdinand the Destroyer' )">Edit</button></td>
+                    <td><button type="button" class="clientDogDelete">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>Karuna Yarden</td>
+                    <td>Nalla</td>
+                    <td><button onclick="populateEditForm('Karuna Yarden', 'Nalla' )">Edit</button></td>
+                    <td><button type="button" class="clientDogDelete">Delete</button></td>
+                </tr>
+            </table>
+
+            <br>
+            <div id="editClientDogForm" style="display: none;">
+                <h3>Edit Client/Dog Information</h3>
+                <form >
+                    <label>Name:</label> <input type="text" id="editClient"><br><br>
+                    <label>Dogs:</label> <input type="text" id="editDog"><br><br>
+                    <br>
+                    <button type="button" class="UpdateInfo">Update</button>
+                </form>
+                <br><br>
+            </div>
+        </section>
+        
+    </main>
+    
+</body>
+
+</html>

@@ -24,6 +24,20 @@
             tr.parentNode.removeChild(tr);
         };
     };
+
+    function showEditForm() {
+        document.getElementById('editClientForm').style.display='none';
+        document.getElementById('editClientForm').style.display='block';
+    }
+
+    function populateEditForm(name, phone, contact, email) {
+        document.getElementById('editClientName').value = name;
+        document.getElementById('editClientPhone').value = phone;
+        document.getElementById('editClientContact').value = contact;
+        document.getElementById('editClientEmail').value = email;
+        showEditForm('editClientForm');
+    }
+
     </script>
 </head>
 
@@ -39,6 +53,7 @@
         <a href="sessions.html">Sessions</a>
         <a href="employees.html">Employees</a>
         <a href="schedules.html">Schedules</a>
+        <a href="clientsDogs.html">Clients Dogs</a>
     </nav>
     <main>
         <section>
@@ -48,16 +63,17 @@
                 <form id="clientForm" action="submitClient" method="POST">
                 <fieldset>
                     <label>Client's Name:</label> <input type="text" name="clientName" id="clientName" size = "34" maxLength = "120" required placeholder="first and last name" /><br><br>
-                    <label>Phone number:</label> <input type="text" name="phone" id="clientPhone"max= "999" required placeholder="(000)-000-0000"/><br><br>
+                    <label>Phone number:</label> <input type="tel" name="phone" id="clientPhone"max= "999" required placeholder="(000)-000-0000"/><br><br>
                     <label>Preferred contact method:</label>
                         <input type="radio" id="phone" name="contactMethod" value="call"><label for="call">Call</label>
                         <input type="radio" id="text" name="contactMethod" value="text"><label for="text">Text</label><br><br>
                     <label>Email:</label> <input type="email" name="eAddress" id="email" size="34" maxlength="120" required pattern="[^ @]+@[^ @]+.[a-z]+"placeholder="name@host.com" /><br><br>
-    
+                        <br>
                 </fieldset>
                 <button type="submit">Add</button> 
                 </form>
             </article>
+            <br>
         </section>
         <section>
             <h3> All Clients</h3>
@@ -77,7 +93,7 @@
                     <td>(222)-221-2222</td>
                     <td>Text</td>
                     <td>nzingafu@gmail.com</td>
-                    <td><button>Edit</button></td>
+                    <td><button onclick="populateEditForm('Nzinga Fumnaya', '(222)-221-2222', 'Text', 'nzingafu@gmail.com' )">Edit</button></td>
                     <td><button type="button" class="clientDelete">Delete</button></td>
 
                 </tr>
@@ -87,7 +103,7 @@
                     <td>(444)-444-4444</td>
                     <td>Call</td>
                     <td>patyon@gmail.com</td>
-                    <td><button>Edit</button></td>
+                    <td><button onclick="populateEditForm('Pat Yonah', '(444)-444-4444', 'Call', 'patyon@gmail.com')">Edit</button></td>
                     <td><button type="button" class="clientDelete">Delete</button></td>
 
                 </tr>
@@ -97,12 +113,25 @@
                     <td>(333)-333-3333</td>
                     <td>Text</td>
                     <td>karunayar@gmail.com</td>
-                    <td><button>Edit</button></td>
+                    <td><button onclick="populateEditForm('Karuna Yarden', '(333)-333-3333', 'Text', 'karunayar@gmail.com' )">Edit</button></td>
                     <td><button type="button" class="clientDelete">Delete</button></td>
                 </tr>
             </table>
+
+            <br>
+            <div id="editClientForm" style="display: none;">
+                <h3>Edit Client Information</h3>
+                <form >
+                    <label>Name:</label> <input type="text" id="editClientName"><br><br>
+                    <label>Phone number:</label> <input type="tel" id="editClientPhone"><br><br>
+                    <label>Preferred Contact Method:</label> <input type="text" id="editClientContact"><br><br>
+                    <label>Email:</label> <input type="text" id="editClientEmail"><br><br>
+                    <br>
+                    <button type="button" class="UpdateInfo">Update</button>
+                </form>
+                <br><br>
+            </div>
         </section>
-               
     </main>
     
 </body>

@@ -51,6 +51,24 @@
             serviceFields--;
         }
     }
+
+    function showEditForm() {
+        document.getElementById('editSessionForm').style.display='none';
+        document.getElementById('editSessionForm').style.display='block';
+    }
+
+    function populateEditForm(employee, client, dog, time, duration, price, status) {
+        document.getElementById('editSessionEmployee').value = employee;
+        document.getElementById('editSessionClient').value = client;
+        document.getElementById('editSessionDog').value = dog;
+        document.getElementById('editSessionTime').value =time;
+        document.getElementById('editSessionDuration').value = duration;
+        document.getElementById('editSessionPrice').value = price;
+        document.getElementById('editSessionStatus').value = status;
+        showEditForm('editSessionForm');
+    }
+
+
   </script>
 </head>
 
@@ -66,6 +84,7 @@
         <a href="sessions.html">Sessions</a>
         <a href="employees.html">Employees</a>
         <a href="schedules.html">Schedules</a>
+        <a href="clientsDogs.html">Clients Dogs</a>
     </nav>
     <main>
         <section>
@@ -150,7 +169,7 @@
                     <td>90 min</td>
                     <td>$70</td>
                     <td>Completed</td>
-                    <td><button>Edit</button></td>
+                    <td><button  onclick="populateEditForm('Diede Sovanna','Pat Yonah','Leoford', '2025-01-05T09:00:00', 90,70, 'Completed')">Edit</button></td>
                     <td><button type="button" class="sessionDelete">Delete</button></td>
                 </tr>
                 <tr>
@@ -162,7 +181,7 @@
                     <td></td>
                     <td>$70</td>
                     <td>Canceled</td>
-                    <td><button>Edit</button></td>
+                    <td><button  onclick="populateEditForm('Diede Sovanna','Nzinga Fumnaya','Fido', '2025-1-05T11:00:00', 0, 70, 'Canceled')">Edit</button></td>
                     <td><button type="button" class="sessionDelete">Delete</button></td>
                 </tr> 
                 <tr>
@@ -174,7 +193,7 @@
                     <td>30 min</td>
                     <td>$20</td>
                     <td>Completed</td>
-                    <td><button>Edit</button></td>
+                    <td><button  onclick="populateEditForm('Matija Tristin','Pat Yonah','Lucky', '2025-02-05T08:00:00', 30, 20, 'Completed')">Edit</button></td>
                     <td><button type="button" class="sessionDelete">Delete</button></td>
                 </tr> 
                 <tr>
@@ -186,10 +205,96 @@
                     <td>180 min</td>
                     <td>$110</td>
                     <td>Completed</td>
-                    <td><button>Edit</button></td>
+                    <td><button  onclick="populateEditForm('Marley Kirby','Karuna Yarden','Ferdinand the Destroyer', '2025-02-05T08:30:00', 180, 110, 'Completed')">Edit</button></td>
                     <td><button type="button" class="sessionDelete">Delete</button></td>
                 </tr> 
             </table>
+            <br><br>
+            <div id="editSessionForm" style="display: none;">
+                <h3>Edit Session Information</h3>
+                <form >
+                    <label>Employee:</label> <input type="text" id="editSessionEmployee"><br><br>
+                    <label>Client:</label> <input type="text" id="editSessionClient"><br><br>
+                    <label>Dog:</label> <input type="text" id="editSessionDog"><br><br>
+                    <label>Time:</label> <input type="datetime-local" id="editSessionTime"><br><br>
+                    <label>Duration:</label> <input type="number" id="editSessionDuration"><br><br>
+                    <label>Price:</label> <input type="number" id="editSessionPrice"><br><br>
+                    <label>Status:</label> <input type="text" id="editSessionStatus"><br><br>
+                    <br>
+                    <button type="button" class="UpdateInfo">Update</button>
+                </form>
+                <br><br>
+            </div>
+        </section>
+        <section>
+            <h2>Sessions Services</h2>
+            <article>
+                <h3>Add a Service to a Session:</h3>
+                <form id="sessionForm" action="submitSession" method="POST">
+                <fieldset>
+                    <label for="sessionID">SessionID: </label> 
+                        <select name="sessionID" id="sessionID" required >
+                            <option value="0">select session</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                        <br><br>
+                    <label for="service">Service: </label> 
+                        <select name="service" id="service" required >
+                            <option value="0">select employee</option>
+                            <option value="1">Nail Trim</option>
+                            <option value="2">Puppy Cut</option>
+                            <option value="3">Basic Cut: Fluffy Breeds</option>
+                            <option value="4">Basic Cut: Short Coats</option>
+                        </select>
+                        <br><br>
+                </fieldset>
+                <button type="submit">Create</button> 
+                </form>
+            </article>
+        </section>
+        <section>
+            <br><br>
+            <table id="sessionServiceTable">
+                <tr>  <!--  -->
+                    <th>SessionID</th>
+                    <th>Services</th>
+                    <th>Delete</th>
+                </tr> 
+                <tr>
+                    <td>1</td>
+                    <td>Nail Trim</td>
+                    <td><button type="button" class="sessionDelete">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Puppy Cut</td>
+                    <td><button type="button" class="sessionDelete">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Basic Cut: Short Coats</td>
+                    <td><button type="button" class="sessionDelete">Delete</button></td>
+                </tr> 
+                <tr>
+                    <td>3</td>
+                    <td> Nail Trim</td>
+                    <td><button type="button" class="sessionDelete">Delete</button></td>
+                </tr> 
+                <tr>
+                    <td>4</td>
+                    <td>Nail Trim</td>
+                    <td><button type="button" class="sessionDelete">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Basic Cut: Fluffy Breeds</td>
+                    <td><button type="button" class="sessionDelete">Delete</button></td>
+                </tr> 
+            </table>
+
         </section>
                
     </main>

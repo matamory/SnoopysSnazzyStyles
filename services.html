@@ -23,6 +23,19 @@
             tr.parentNode.removeChild(tr);
         };
     };
+
+    function showEditForm() {
+        document.getElementById('editServiceForm').style.display='none';
+        document.getElementById('editServiceForm').style.display='block';
+    }
+
+    function populateEditForm(name, duration, price) {
+        document.getElementById('editServiceName').value = name;
+        document.getElementById('editServiceDuration').value = duration;
+        document.getElementById('editServicePrice').value = price;
+        showEditForm('editServiceForm');
+    }
+
     </script>
 </head>
 
@@ -38,6 +51,7 @@
         <a href="sessions.html">Sessions</a>
         <a href="employees.html">Employees</a>
         <a href="schedules.html">Schedules</a>
+        <a href="clientsDogs.html">Clients Dogs</a>
     </nav>
     <main>
         <section>
@@ -71,7 +85,7 @@
                     <td>Nail Trim</td>
                     <td>30 min</td>
                     <td>$20</td>
-                    <td><button>Edit</button></td>
+                    <td><button onclick="populateEditForm('Nail Trim', 30, 20)">Edit</button></td>
                     <td><button type="button" class="serviceDelete">Delete</button></td>
                 </tr>
                 <tr>
@@ -79,7 +93,7 @@
                     <td>Puppy Cut</td>
                     <td>60 min</td>
                     <td>$50</td>
-                    <td><button>Edit</button></td>
+                    <td><button onclick="populateEditForm('Puppy Cut', 60, 50)">Edit</button></td>
                     <td><button type="button" class="serviceDelete">Delete</button></td>
                 </tr>
 
@@ -88,7 +102,7 @@
                     <td>Basic Cut: Fluffy Breeds</td>
                     <td>120 min</td>
                     <td>$90</td>
-                    <td><button>Edit</button></td>
+                    <td><button onclick="populateEditForm('Basic Cut: Fluffy Breeds', 120, 90 )">Edit</button></td>
                     <td><button type="button" class="serviceDelete">Delete</button></td>
                 </tr>
                 <tr>
@@ -96,11 +110,24 @@
                     <td>Basic Cut: Short Coats</td>
                     <td>60 min</td>
                     <td>$70</td>
-                    <td><button>Edit</button></td>
+                    <td><button onclick="populateEditForm('Basic Cut: Short Coats', 60, 70 )">Edit</button></td>
                     <td><button type="button" class="serviceDelete">Delete</button></td>
                 </tr>
             </table>
+            <br><br>
+            <div id="editServiceForm" style="display: none;">
+                <h3>Edit Service Information</h3>
+                <form>
+                    <label>Service Name:</label> <input type="text" id="editServiceName"><br><br>
+                    <label>Duration:</label> <input type="number" id="editServiceDuration"><br><br>
+                    <label>Price:</label> <input type="number" id="editServicePrice"><br><br>
+                    <br>
+                    <button type="button" class="UpdateInfo">Update</button>
+                </form>
+                <br><br>
+            </div>
         </section>
+        
     </main>
 </body>
 
