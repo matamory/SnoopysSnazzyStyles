@@ -5,37 +5,7 @@
   <meta charset="utf-8">
   <title>Review/Add Services</title>
   <link href="style/style.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript">
-    // Should probably be its own js file, but for now this will work
-
-    document.addEventListener('DOMContentLoaded', function() {
-        let del = document.getElementsByClassName('serviceDelete')
-        for (let i = 0; i < del.length; i++) {
-            del[i].addEventListener("click", delRow)
-        };
-    });
-
-    function delRow(event) {
-        event.preventDefault();
-        if (confirm("Are you sure you want to delete this service?")) {
-            let td = event.target.parentNode; 
-            let tr = td.parentNode; 
-            tr.parentNode.removeChild(tr);
-        };
-    };
-
-    function showEditForm() {
-        document.getElementById('editServiceForm').style.display='none';
-        document.getElementById('editServiceForm').style.display='block';
-    }
-
-    function populateEditForm(name, duration, price) {
-        document.getElementById('editServiceName').value = name;
-        document.getElementById('editServiceDuration').value = duration;
-        document.getElementById('editServicePrice').value = price;
-        showEditForm('editServiceForm');
-    }
-
+  <script type="text/javascript" src="scripts/services.js">
     </script>
 </head>
 
@@ -85,7 +55,7 @@
                     <td>Nail Trim</td>
                     <td>30 min</td>
                     <td>$20</td>
-                    <td><button onclick="populateEditForm('Nail Trim', 30, 20)">Edit</button></td>
+                    <td><button class="serviceEdit" onclick="populateEditForm('Nail Trim', 30, 20)">Edit</button></td>
                     <td><button type="button" class="serviceDelete">Delete</button></td>
                 </tr>
                 <tr>
@@ -93,7 +63,7 @@
                     <td>Puppy Cut</td>
                     <td>60 min</td>
                     <td>$50</td>
-                    <td><button onclick="populateEditForm('Puppy Cut', 60, 50)">Edit</button></td>
+                    <td><button class="serviceEdit" onclick="populateEditForm('Puppy Cut', 60, 50)">Edit</button></td>
                     <td><button type="button" class="serviceDelete">Delete</button></td>
                 </tr>
 
@@ -102,7 +72,7 @@
                     <td>Basic Cut: Fluffy Breeds</td>
                     <td>120 min</td>
                     <td>$90</td>
-                    <td><button onclick="populateEditForm('Basic Cut: Fluffy Breeds', 120, 90 )">Edit</button></td>
+                    <td><button class="serviceEdit" onclick="populateEditForm('Basic Cut: Fluffy Breeds', 120, 90 )">Edit</button></td>
                     <td><button type="button" class="serviceDelete">Delete</button></td>
                 </tr>
                 <tr>
@@ -110,7 +80,7 @@
                     <td>Basic Cut: Short Coats</td>
                     <td>60 min</td>
                     <td>$70</td>
-                    <td><button onclick="populateEditForm('Basic Cut: Short Coats', 60, 70 )">Edit</button></td>
+                    <td><button class="serviceEdit" onclick="populateEditForm('Basic Cut: Short Coats', 60, 70 )">Edit</button></td>
                     <td><button type="button" class="serviceDelete">Delete</button></td>
                 </tr>
             </table>
@@ -118,11 +88,12 @@
             <div id="editServiceForm" style="display: none;">
                 <h3>Edit Service Information</h3>
                 <form>
-                    <label>Service Name:</label> <input type="text" id="editServiceName"><br><br>
-                    <label>Duration:</label> <input type="number" id="editServiceDuration"><br><br>
-                    <label>Price:</label> <input type="number" id="editServicePrice"><br><br>
+                    <label>ID:</label><label id="editServiceID"></label><br><br>
+                    <label>Service Name:</label> <input type="text" id="editServiceName" required><br><br>
+                    <label>Duration:</label> <input type="number" id="editServiceDuration" required><br><br>
+                    <label>Price:</label> <input type="number" id="editServicePrice" required><br><br>
                     <br>
-                    <button type="button" class="UpdateInfo">Update</button>
+                    <button type="submit" class="UpdateInfo">Update</button>
                 </form>
                 <br><br>
             </div>

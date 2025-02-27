@@ -5,38 +5,7 @@
   <meta charset="utf-8">
   <title>Review/Create Schedules</title>
   <link href="style/style.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript">
-    // Should probably be its own js file, but for now this will work
-
-    document.addEventListener('DOMContentLoaded', function() {
-        let del = document.getElementsByClassName('scheduleDelete')
-        for (let i = 0; i < del.length; i++) {
-            del[i].addEventListener("click", delRow)
-        };
-    });
-
-    function delRow(event) {
-        event.preventDefault();
-        if (confirm("Are you sure you want to delete this schedule?")) {
-            let td = event.target.parentNode; 
-            let tr = td.parentNode; 
-            tr.parentNode.removeChild(tr);
-        };
-    };
-
-    function showEditForm() {
-        document.getElementById('editScheduleForm').style.display='none';
-        document.getElementById('editScheduleForm').style.display='block';
-    }
-
-    function populateEditForm(employee, date, start, end) {
-        document.getElementById('editScheduleEmployee').value = employee;
-        document.getElementById('editScheduleDate').value = date;
-        document.getElementById('editScheduleStart').value = start;
-        document.getElementById('editScheduleEnd').value = end;
-        showEditForm('editScheduleForm');
-    }
-
+  <script type="text/javascript" src="scripts/schedules.js">
     </script>
 </head>
 
@@ -90,58 +59,58 @@
             </tr>
             <tr>
                 <td>Diede Sovanna</td>
-                <td>2025-1-05</td>
-                <td>9:00 am</td>
-                <td>5:00 pm</td>
-                <td><button onclick="populateEditForm('Diede Sovanna', '2025-01-05', '09:00', '17:00' )">Edit</button></td>
+                <td>2025-01-05</td>
+                <td>09:00 am</td>
+                <td>05:00 pm</td>
+                <td><button class="scheduleEdit">Edit</button></td>
                 <td type="button" class="scheduleDelete"><button>Delete</button></td>
             </tr>
             <tr>
                 <td>Diede Sovanna</td>
-                <td>2025-2-05</td>
-                <td>9:00 am</td>
-                <td>5:00 pm</td>
-                <td><button onclick="populateEditForm('Diede Sovanna', '2025-02-05', '09:00', '17:00' )">Edit</button></td>
+                <td>2025-02-05</td>
+                <td>09:00 am</td>
+                <td>05:00 pm</td>
+                <td><button class="scheduleEdit">Edit</button></td>
                 <td type="button" class="scheduleDelete"><button>Delete</button></td>
             </tr>
             <tr>
                 <td>Matija Tristina</td>
-                <td>2025-2-05</td>
-                <td>7:00 am</td>
-                <td>3:00 pm</td>
-                <td><button onclick="populateEditForm('Matija Tristin', '2025-02-05', '07:00', '15:00' )">Edit</button></td>
+                <td>2025-02-05</td>
+                <td>07:00 am</td>
+                <td>03:00 pm</td>
+                <td><button class="scheduleEdit">Edit</button></td>
                 <td type="button" class="scheduleDelete"><button>Delete</button></td>
             </tr>
             <tr>
                 <td>Matija Tristin</td>
-                <td>2025-8-05</td>
-                <td>7:00 am</td>
+                <td>2025-08-05</td>
+                <td>07:00 am</td>
                 <td>12:00 pm</td>
-                <td><button onclick="populateEditForm('Matija Tristin', '2025-08-05', '07:00', '12:00' )">Edit</button></td>
+                <td><button class="scheduleEdit">Edit</button></td>
                 <td type="button" class="scheduleDelete"><button>Delete</button></td>
             </tr>
             <tr>
                 <td>Marley Kirby</td>
-                <td>2025-1-05</td>
+                <td>2025-01-05</td>
                 <td>11:00 am</td>
-                <td>8:00 pm</td>
-                <td><button onclick="populateEditForm('Marley Kirby', '2025-01-05', '11:00', '20:00' )">Edit</button></td>
+                <td>08:00 pm</td>
+                <td><button class="scheduleEdit">Edit</button></td>
                 <td type="button" class="scheduleDelete"><button>Delete</button></td>
             </tr>
             <tr>
                 <td>Marley Kirby</td>
-                <td>2025-2-05</td>
+                <td>2025-02-05</td>
                 <td>11:00 am</td>
-                <td>8:00 pm</td>
-                <td><button onclick="populateEditForm('Marley Kirby', '2025-02-05', '11:00', '20:00' )">Edit</button></td>
+                <td>08:00 pm</td>
+                <td><button class="scheduleEdit">Edit</button></td>
                 <td type="button" class="scheduleDelete"><button>Delete</button></td>
             </tr>
             <tr>
                 <td>Quincy Ketut</td>
-                <td>2025-2-05</td>
+                <td>2025-02-05</td>
                 <td>11:00 am</td>
-                <td>8:00 pm</td>
-                <td><button onclick="populateEditForm('Quincy Ketut', '2025-02-05', '11:00', '20:00' )">Edit</button></td>
+                <td>08:00 pm</td>
+                <td><button class="scheduleEdit">Edit</button></td>
                 <td><button type="button" class="scheduleDelete">Delete</button></td>
             </tr>
         </table>
@@ -211,12 +180,12 @@
             <div id="editScheduleForm" style="display: none;">
                 <h3>Edit Schedule Information</h3>
                 <form>
-                    <label>Employee:</label> <input type="text" id="editScheduleEmployee"><br><br>
-                    <label>Date:</label> <input type="date" id="editScheduleDate"><br><br>
-                    <label>Start:</label> <input type="time" id="editScheduleStart"><br><br>
-                    <label>End:</label> <input type="time" id="editScheduleEnd"><br><br>
+                    <label>Employee:</label> <input type="text" id="editScheduleEmployee" required><br><br>
+                    <label>Date:</label> <input type="date" id="editScheduleDate" required><br><br>
+                    <label>Start:</label> <input type="time" id="editScheduleStart" required><br><br>
+                    <label>End:</label> <input type="time" id="editScheduleEnd" required><br><br>
                     <br>
-                    <button type="button" class="UpdateInfo">Update</button>
+                    <button type="submit" class="UpdateInfo">Update</button>
                 </form>
                 <br><br>
             </div>

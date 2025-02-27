@@ -6,40 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Review/Add Dogs</title>
   <link href="style/style.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript">
-    // Should probably be its own js file, but for now this will work
-
-    document.addEventListener('DOMContentLoaded', function() {
-        let del = document.getElementsByClassName('dogDelete')
-        for (let i = 0; i < del.length; i++) {
-            del[i].addEventListener("click", delRow)
-        };
-    });
-
-    function delRow(event) {
-        event.preventDefault();
-        if (confirm("Are you sure you want to delete this dog?")) {
-            let td = event.target.parentNode; 
-            let tr = td.parentNode; 
-            tr.parentNode.removeChild(tr);
-        };
-    };
-
-
-    function showEditForm() {
-        document.getElementById('editDogForm').style.display='none';
-        document.getElementById('editDogForm').style.display='block';
-    }
-
-    function populateEditForm(name, age, breed, size, notes) {
-        document.getElementById('editDogName').value = name;
-        document.getElementById('editDogAge').value = age;
-        document.getElementById('editDogBreed').value = breed;
-        document.getElementById('editDogSize').value = size;
-        document.getElementById('editDogNotes').value = notes;
-        showEditForm('editDogForm');
-    }
-
+  <script type="text/javascript" src="scripts/dogs.js">
     </script>
 </head>
 
@@ -93,7 +60,7 @@
                     <td>Labrador Retriever</td>
                     <td>64</td>
                     <td>A very good boy</td>
-                    <td><button onclick="populateEditForm('Fido', 3,'Labrador Retriever', 64, 'A very good boy' )">Edit</button></td>
+                    <td><button class="dogsEdit">Edit</button></td>
                     <td><button type="button" class="dogDelete">Delete</button></td>
                 </tr>
                 <tr>
@@ -103,7 +70,7 @@
                     <td></td>
                     <td>13</td>
                     <td></td>
-                    <td><button onclick="populateEditForm('Nalla', 10,'', 13, '' )">Edit</button></td>
+                    <td><button class="dogsEdit">Edit</button></td>
                     <td><button type="button" class="dogDelete">Delete</button></td>
                 </tr>
                 <tr>
@@ -113,7 +80,7 @@
                     <td>Chihuahua</td>
                     <td>7</td>
                     <td>Take extra caution with this one…</td>
-                    <td><button onclick="populateEditForm('Ferdinand the Destroyer', 1,'Chihuahua', 7, 'Take extra caution with this one…' )">Edit</button></td>
+                    <td><button class="dogsEdit">Edit</button></td>
                     <td><button type="button" class="dogDelete">Delete</button></td>
                 </tr>
 
@@ -124,7 +91,7 @@
                     <td>Lhasa Apo</td>
                     <td>1</td>
                     <td>Still a puppy</td>
-                    <td><button onclick="populateEditForm('Leoford', 0,'Lhasa Apo', 1, 'Still a puppy' )">Edit</button></td>
+                    <td><button class="dogsEdit">Edit</button></td>
                     <td><button type="button" class="dogDelete">Delete</button></td>
                 </tr>
                 <tr>
@@ -134,7 +101,7 @@
                     <td></td>
                     <td>25</td>
                     <td>Likes chin scratches</td>
-                    <td><button  onclick="populateEditForm('Lucky', 16,'', 25, 'Likes chin scratches' )">Edit</button></td>
+                    <td><button class="dogsEdit">Edit</button></td>
                     <td><button type="button" class="dogDelete">Delete</button></td>
                 </tr>
             </table>
@@ -142,13 +109,14 @@
             <div id="editDogForm" style="display: none;">
                 <h3>Edit Dog Information</h3>
                 <form >
-                    <label>Name:</label> <input type="text" id="editDogName"><br><br>
-                    <label>Age:</label> <input type="number" id="editDogAge"><br><br>
+                    <label>ID:</label><label id="editDogID"></label><br><br>
+                    <label>Name:</label> <input type="text" id="editDogName" required><br><br>
+                    <label>Age:</label> <input type="number" id="editDogAge" required><br><br>
                     <label>Breed:</label> <input type="text" id="editDogBreed"><br><br>
-                    <label>Size:</label> <input type="number" id="editDogSize"><br><br>
+                    <label>Size:</label> <input type="number" id="editDogSize" required><br><br>
                     <label>Notes:</label> <input type="text" id="editDogNotes"><br><br>
                     <br>
-                    <button type="button" class="UpdateInfo">Update</button>
+                    <button type="submit" class="UpdateInfo">Update</button>
                 </form>
                 <br><br>
             </div>
