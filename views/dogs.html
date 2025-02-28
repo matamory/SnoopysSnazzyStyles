@@ -29,7 +29,7 @@
             <h2>Dogs</h2>
             <article>
                 <h3>Add a New Dog</h3>
-                <form id="dogForm" action="submitDog" method="POST">
+                <form id="dogForm">
                 <fieldset>
                     <label>Dog's Name:</label> <input type="text" name="dogName" id="dogName" size = "34" maxLength = "120" required placeholder="name" /><br><br>
                     <label>Age:</label> <input type="number" name="age" id="dogAge"max= "999" required placeholder="years, months"/><br><br>
@@ -37,7 +37,8 @@
                     <label>Size:</label> <input type="number" name="size" id="dogSize" max = "999" required placeholder="lbs" /><br><br>
                     <label>Notes:</label><input type="text" name="notes" id="dogNotes" size = "34" maxLength = "120" placeholder="grooming notes" /><br><br>
                 </fieldset>
-                <button type="submit">Add</button> 
+                <input type="submit" value="Add"/>
+                </form>
             </article>
         </section>
         <section>

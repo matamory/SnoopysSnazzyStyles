@@ -73,7 +73,6 @@ app.get('/dogsSel', function(req, res)
         })                                                      
     });                                                        
 
-
 app.post('/add-dog-ajax', function(req, res){
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
@@ -108,23 +107,7 @@ app.post('/add-dog-ajax', function(req, res){
         }
         else
         {
-            // If there was no error, perform a SELECT * on bsg_people
-            query2 = `SELECT * FROM Dogs;`;
-            db.pool.query(query2, function(error, rows, fields){
-
-                // If there was an error on the second query, send a 400
-                if (error) {
-                    
-                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-                    console.log(error);
-                    res.sendStatus(400);
-                }
-                // If all went well, send the results of the query back.
-                else
-                {
-                    res.send(rows);
-                }
-            })
+            res.send(rows);
         }
     })
 });
