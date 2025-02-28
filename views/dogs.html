@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Review/Add Dogs</title>
+  <link href="style/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="./scripts/dogs.js">
+    </script>
+</head>
+
+<body>
+    <header>
+        <h1>Snoopy's Snazzy Styles</h1>
+    </header>
+    <nav>
+        <a href="/">Home</a>
+        <a href="clients">Clients</a>
+        <a href="dogs">Dogs</a>
+        <a href="services">Services</a>
+        <a href="sessions">Sessions</a>
+        <a href="employees">Employees</a>
+        <a href="schedules">Schedules</a>
+        <a href="clientsDogs">Clients Dogs</a>
+    </nav>
+    <main>
+        <section>
+            <h2>Dogs</h2>
+            <article>
+                <h3>Add a New Dog</h3>
+                <form id="dogForm" action="submitDog" method="POST">
+                <fieldset>
+                    <label>Dog's Name:</label> <input type="text" name="dogName" id="dogName" size = "34" maxLength = "120" required placeholder="name" /><br><br>
+                    <label>Age:</label> <input type="number" name="age" id="dogAge"max= "999" required placeholder="years, months"/><br><br>
+                    <label>Breed:</label> <input type="text" name="breed" id="dogBreed" size = "34" maxLength = "120"  placeholder="breed" /><br><br>
+                    <label>Size:</label> <input type="number" name="size" id="dogSize" max = "999" required placeholder="lbs" /><br><br>
+                    <label>Notes:</label><input type="text" name="notes" id="dogNotes" size = "34" maxLength = "120" placeholder="grooming notes" /><br><br>
+                </fieldset>
+                <button type="submit">Add</button> 
+            </article>
+        </section>
+        <section>
+            <br><br>
+            <table id="dogTable">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Breed</th>
+                    <th>Size</th>
+                    <th>Notes</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr> 
+            </table>
+            <br><br>
+            <div id="editDogForm" style="display: none;">
+                <h3>Edit Dog Information</h3>
+                <form >
+                    <label>ID:</label><label id="editDogID"></label><br><br>
+                    <label>Name:</label> <input type="text" id="editDogName" required><br><br>
+                    <label>Age:</label> <input type="number" id="editDogAge" required><br><br>
+                    <label>Breed:</label> <input type="text" id="editDogBreed"><br><br>
+                    <label>Size:</label> <input type="number" id="editDogSize" required><br><br>
+                    <label>Notes:</label> <input type="text" id="editDogNotes"><br><br>
+                    <br>
+                    <button type="submit" class="UpdateInfo">Update</button>
+                </form>
+                <br><br>
+            </div>
+        </section>
+               
+    </main>
+    
+</body>
+
+</html>

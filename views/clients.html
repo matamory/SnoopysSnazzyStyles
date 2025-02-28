@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Review/Add Clients</title>
+  <link href="style/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="../scripts/clients.js">
+    </script>
+</head>
+
+<body>
+    <header>
+        <h1>Snoopy's Snazzy Styles</h1>
+    </header>
+    <nav>
+        <a href="/">Home</a>
+        <a href="clients">Clients</a>
+        <a href="dogs">Dogs</a>
+        <a href="services">Services</a>
+        <a href="sessions">Sessions</a>
+        <a href="employees">Employees</a>
+        <a href="schedules">Schedules</a>
+        <a href="clientsDogs">Clients Dogs</a>
+    </nav>
+    <main>
+        <section>
+            <h2>Clients</h2>
+            <article>
+                <h3>Add a new client:</h3>
+                <form id="clientForm" action="submitClient" method="POST">
+                <fieldset>
+                    <label>Client's Name:</label> <input type="text" name="clientName" id="clientName" size = "34" maxLength = "120" required placeholder="first and last name" /><br><br>
+                    <label>Phone number:</label> <input type="tel" name="phone" id="clientPhone"max= "999" required placeholder="(000)-000-0000"/><br><br>
+                    <label>Preferred contact method:</label>
+                        <input type="radio" id="phone" name="contactMethod" value="call"><label for="call">Call</label>
+                        <input type="radio" id="text" name="contactMethod" value="text"><label for="text">Text</label><br><br>
+                    <label>Email:</label> <input type="email" name="eAddress" id="email" size="34" maxlength="120" required pattern="[^ @]+@[^ @]+.[a-z]+"placeholder="name@host.com" /><br><br>
+                        <br>
+                </fieldset>
+                <button type="submit">Add</button> 
+                </form>
+            </article>
+            <br>
+        </section>
+        <section>
+            <h3> All Clients</h3>
+            <table id="clientTable">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>Contact Method</th>
+                    <th>Email</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr> 
+                <tr>
+                    <td>1</td>
+                    <td>Nzinga Fumnaya</td>
+                    <td>(222)-221-2222</td>
+                    <td>Text</td>
+                    <td>nzingafu@gmail.com</td>
+                    <td><button class="clientEdit">Edit</button></td>
+                    <td><button type="button" class="clientDelete">Delete</button></td>
+
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Pat Yonah</td>
+                    <td>(444)-444-4444</td>
+                    <td>Call</td>
+                    <td>patyon@gmail.com</td>
+                    <td><button class="clientEdit">Edit</button></td>
+                    <td><button type="button" class="clientDelete">Delete</button></td>
+
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Karuna Yarden</td>
+                    <td>(333)-333-3333</td>
+                    <td>Text</td>
+                    <td>karunayar@gmail.com</td>
+                    <td><button class="clientEdit">Edit</button></td>
+                    <td><button type="button" class="clientDelete">Delete</button></td>
+                </tr>
+            </table>
+
+            <br>
+            <div id="editClientForm" style="display: none;">
+                <h3>Edit Client Information</h3>
+                <form >
+                    <label>ID:</label><label id="editClientID"></label><br><br>
+                    <label>Name:</label> <input type="text" id="editClientName" required><br><br>
+                    <label>Phone number:</label> <input type="tel" id="editClientPhone" required><br><br>
+                    <label>Preferred Contact Method:</label>
+                    <select name="service_id" id="editClientContact">
+                        <option value="0">Call</option>
+                        <option value="1">Text</option></select><br><br>
+                    <label>Email:</label> <input type="text" id="editClientEmail" required><br><br>
+                    <br>
+                    <button type="submit" class="UpdateInfo">Update</button>
+                </form>
+                <br><br>
+            </div>
+        </section>
+    </main>
+    
+</body>
+
+</html>
