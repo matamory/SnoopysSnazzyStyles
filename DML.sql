@@ -14,17 +14,10 @@ SELECT * FROM Employees;
 SELECT * FROM Employees WHERE employeeID = :idInput;
 
 -- Get employee's data to populate a dropdown for associating with a session 
-SELECT employeeID, name FROM Employees
+SELECT employeeID, name FROM Employees;
 
 -- Add new employee
-INSERT INTO Employees (
-    name, 
-    hourly_wage,
-    years_experience,
-    phone_number,
-    email,
-    address,
-    is_active
+INSERT INTO Employees (name, hourly_wage, years_experience, phone_number, email, address, is_active
 ) VALUES (
     :nameInput,
     :wageInput,

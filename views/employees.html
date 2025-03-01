@@ -28,17 +28,17 @@
             <h2>Employees</h2>
             <article>
                 <h3>Add a New Employee</h3>
-                <form id="scheduleForm" action="submitEmployee" method="GET">
+                <form id="employeeForm" action="submitEmployee" method="GET">
                     <fieldset>
                         <label>Employee Name: <input type="text" name="employeeName" required="required" id="employeeName" placeholder="first and last name"/><br><br></label>
                         <label>Wage: <input type="number" name="employeewage" required="required" id="employeewage" placeholder="00.00"/><br><br></label>
-                        <label>Years Experience: <input type="number" name="employeeexperience" required="required" id="employeeexperience" placeholder="0"/><br><br></label>
-                        <label>Phone Number: <input type="tel" name="employeePhone" required="required" id="employeePhone" placeholder="(000)-000-0000"/><br><br></label>
+                        <label>Years Experience: <input type="number" name="employeeexperience" required="required" id="employeeExperience" placeholder="0"/><br><br></label>
+                        <label>Phone Number: <input type="tel" name="employeePhone" required="required" id="employeePhone" pattern="([0-9]{3})-[0-9]{3}-[0-9]{4}" placeholder="(000)-000-0000"/><br><br></label>
                         <label>Email: <input type="email" name="employeeEmail" required="required" id="employeeEmail" placeholder="name@host.com"/><br><br></label>
                         <label>Address: <input type="text" name="employeeAddress" required="required" id="employeeAddress" placeholder="000 Main Street"/><br><br> </label>
                         <label>Active: <input type="checkbox" name="employeeisActive" required="required" id="employeeisActive" /><br><br></label>
                     </fieldset>
-                    <button type="submit">Add</button>
+                    <input type="submit" value="Submit"/>
                 </form>
         </section>
     <section>

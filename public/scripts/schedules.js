@@ -1,19 +1,27 @@
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Store original table state
+    // Store original table states
     let table = document.getElementById('scheduleTable');
     table.oldHtml = table.innerHTML;
     table = document.getElementById('availabilityTable');
     table.oldHtml = table.innerHTML;
+    table = document.getElementById('employeeID');
+    table.oldHtml = table.innerHTML;
     // Populate table
     refreshTable();
     refreshAvailabilityTable();
+    // Get insert form
+    let addScheduleForm = document.getElementById('scheduleForm');
+    // apply insert form event listener
+    addScheduleForm.addEventListener("submit", addNewSchedule);
 });
 
 function refreshTable() {
     let table = document.getElementById('scheduleTable');
     // Removing old rows
     table.innerHTML = table.oldHtml;
+    // Refresh Dropdowns
+    refreshDropdowns();
     var xhttp = new XMLHttpRequest();
     //alert("test")
     xhttp.open("GET", "/schedulesSel", true);
@@ -84,9 +92,14 @@ function refreshAvailabilityTable() {
     if (startDate !== '') {
         document.getElementById('endDate').min = startDate;
         startDate = '/' + startDate
+    } else {
+        document.getElementById('endDate').min = "2024-02-01";
     }
     if (endDate !== '') {
+        document.getElementById('startDate').max = endDate;
         endDate = '/' + endDate
+    } else {
+        document.getElementById('startDate').max = '';
     }
     //alert(data['startDate'] === '');
     var xhttp = new XMLHttpRequest();
@@ -136,6 +149,75 @@ function createAvailability(data, table) {
     table.appendChild(newRow);
 };
 
+function refreshDropdowns() {
+    // Clear dropdowns
+    dd = document.getElementById('employeeID');
+    dd.innerHTML = dd.oldHtml;
+
+    // Query new data
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "/employeesDropdown", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    // Tell our AJAX request how to resolve
+    xhttp.onreadystatechange = () => {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            //alert(xhttp.responseText);
+            let data = JSON.parse(xhttp.responseText)
+            // Add the new rows to the table
+            for (let i = 0; i < data.length; i++ ) {
+                let newRow = document.createElement('option');
+                newRow.value = data[i]['employeeID'];
+                newRow.textContent = data[i]['name'];
+                dd.appendChild(newRow);
+            };
+        }
+        else if (xhttp.readyState == 4 && xhttp.status != 200) {
+            console.log("There was an error with the input.")
+        }
+    }
+    xhttp.send();
+};
+
+function addNewSchedule(event) {
+    // Prevent the form from submitting
+    event.preventDefault();
+
+    // Get form fields we need to get data from
+    let inputID = document.getElementById("employeeID");
+    let inputStartTime = document.getElementById("startTime");
+    let inputEndTime = document.getElementById("endTime");
+    
+    // Put our data we want to send in a javascript object
+    let data = {
+        employeeID: inputID.value,
+        startTime: inputStartTime.value,
+        endTime: inputEndTime.value,
+    }
+    // Setup our AJAX request
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "/add-schedule", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+
+    // Tell our AJAX request how to resolve
+    xhttp.onreadystatechange = () => {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            // Add the new data to the table
+            refreshTable();
+            refreshAvailabilityTable();
+
+            // Clear the input fields for another transaction
+            inputID.selectedIndex = '';
+            inputStartTime.value = '';
+            inputEndTime.value = '';
+        }
+        else if (xhttp.readyState == 4 && xhttp.status != 200) {
+            console.log("There was an error with the input.")
+        }
+    };
+
+    // Send the request and wait for the response
+    xhttp.send(JSON.stringify(data));
+};
 
 function delRow(event) {
     event.preventDefault();

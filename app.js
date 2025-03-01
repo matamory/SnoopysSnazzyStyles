@@ -82,10 +82,20 @@ app.get('/employeesSel', function(req, res)
         })                                                      
     });                                                        
 
+app.get('/employeesDropdown', function(req, res)
+    {  
+        let query1 = "SELECT employeeID, name FROM Employees;";                     // Define our query
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            res.send(JSON.stringify(rows));                     // Return query as JSON string
+        })                                                      
+    });                                                        
+
 app.get('/schedulesSel', function(req, res)
     {  
         let query1 = "SELECT Schedules.scheduleID, Employees.name, Schedules.start, Schedules.end FROM Schedules\
-            JOIN Employees ON Schedules.employee_id = Employees.employeeID;";                     // Define our query
+            JOIN Employees ON Schedules.employee_id = Employees.employeeID\
+            ORDER BY Schedules.start;";                     // Define our query
 
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
             res.send(JSON.stringify(rows));                     // Return query as JSON string
@@ -93,10 +103,11 @@ app.get('/schedulesSel', function(req, res)
     });                                                        
 
 app.get('/schedulesAvailability/:startDate?/:endDate?', function(req, res)
-    {  // Capture the incoming data and parse it back to a JS object
+    {  // Capture the incoming data
         let startDate = req.params.startDate;
         let endDate = req.params.endDate;
         let dateFilter = '';
+        // Adjusting the query statement
         if (startDate !== undefined) {
             dateFilter = `WHERE DATE(Schedules.start) >= date '` + startDate + "'";
             if (endDate !== undefined) {
@@ -168,6 +179,55 @@ app.post('/add-dog-ajax', function(req, res){
 
     // Create the query and run it on the database
     query1 = `INSERT INTO Dogs (name, age, breed, size_lbs, groomer_notes) VALUES ('${data.name}', '${data.age}', ${breed}, '${data.size_lbs}', ${groomer_notes})`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+            res.send(rows);
+        }
+    })
+});
+
+app.post('/add-schedule', function(req, res){
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Capture NULL values
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Schedules (employee_id, start, end) VALUES (${data.employeeID}, '${data.startTime}', '${data.endTime}')`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+            res.send(rows);
+        }
+    })
+});
+
+app.post('/add-employee', function(req, res){
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Capture NULL values
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Employees (name, hourly_wage, years_experience, phone_number, email, address, is_active) VALUES \
+        (${data.name}, '${data.wage}', '${data.experience}', '${data.phone}', '${data.email}', '${data.address}', '${data.active}')`;
     db.pool.query(query1, function(error, rows, fields){
 
         // Check to see if there was an error

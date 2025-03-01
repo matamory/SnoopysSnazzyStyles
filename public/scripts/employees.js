@@ -3,6 +3,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let table = document.getElementById('employeeTable');
     table.oldHtml = table.innerHTML;
     refreshTable();
+    // Get insert form
+    let addEmployeeForm = document.getElementById('employeeForm');
+    // apply insert form event listener
+    addEmployeeForm.addEventListener("submit", addNewEmployee);
 });
 
 function refreshTable() {
@@ -57,6 +61,58 @@ function createRow(data, table) {
     table.appendChild(newRow);
 };
 
+function addNewEmployee(event) {
+    // Prevent the form from submitting
+    event.preventDefault();
+
+    // Get form fields we need to get data from
+    let inputName = document.getElementById("employeeName");
+    let inputWage = document.getElementById("employeewage");
+    let inputExperience = document.getElementById("employeeExperience");
+    let inputPhone = document.getElementById("employeePhone");
+    let inputEmail = document.getElementById("employeeEmail");
+    let inputAddress = document.getElementById("employeeAddress");
+    let inputActive = document.getElementById("employeeisActive");
+    alert(inputActive.value)
+    // Put our data we want to send in a javascript object
+    let data = {
+        name: inputName.value,
+        wage: inputWage.value,
+        experience: inputExperience.value,
+        phone: inputPhone.value,
+        email: inputEmail.value,
+        address: inputAddress.value,
+        active: inputActive.value
+    }
+    alert(inputActive.value);
+    // Setup our AJAX request
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "/add-employee", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+
+    // Tell our AJAX request how to resolve
+    xhttp.onreadystatechange = () => {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            // Add the new data to the table
+            refreshTable();
+
+            // Clear the input fields for another transaction
+            inputName.value = '';
+            inputWage.value = '';
+            inputExperience.value = '';
+            inputPhone.value = '';
+            inputEmail.value = '';
+            inputAddress.value = '';
+            inputActive.value = '';
+        }
+        else if (xhttp.readyState == 4 && xhttp.status != 200) {
+            console.log("There was an error with the input.")
+        }
+    };
+
+    // Send the request and wait for the response
+    xhttp.send(JSON.stringify(data));
+};
 
 function delRow(event) {
     event.preventDefault();

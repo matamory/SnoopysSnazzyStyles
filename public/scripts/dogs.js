@@ -1,13 +1,13 @@
 //var fetch = require("node-fetch");
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Saving table state
     let table = document.getElementById('dogTable');
     table.oldHtml = table.innerHTML;
     refreshTable();
-    // Get the objects we need to modify
+    // Get insert form
     let addDogForm = document.getElementById('dogForm');
-    
-    // Modify the objects we need
+    // apply insert form event listener
     addDogForm.addEventListener("submit", addNewDog);
 });
 
@@ -66,20 +66,28 @@ function delRow(event) {
     if (confirm("Are you sure you want to delete this dog?")) {
         let td = event.target.parentNode; 
         let tr = td.parentNode; 
-        let link = '/delete-dog-ajax/';
         let data = {
             id: tr.children[0].value
         };
     
-        $.ajax({
-            url: link,
-            type: 'DELETE',
-            data: JSON.stringify(data),
-            contentType: "application/json; charset=utf-8",
-            success: function(result) {
-                tr.parentNode.removeChild(tr);
+        // Setup our AJAX request
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("DELETE", '/delete-dog-ajax/', true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+    
+        // Tell our AJAX request how to resolve
+        xhttp.onreadystatechange = () => {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                // Remove row from table
+                tr.parentNode.removeChild(tr)
             }
-        });
+            else if (xhttp.readyState == 4 && xhttp.status != 200) {
+                console.log("There was an error with the input.")
+            }
+        };
+    
+        // Send the request and wait for the response
+        xhttp.send(JSON.stringify(data));
     };
 };
 
