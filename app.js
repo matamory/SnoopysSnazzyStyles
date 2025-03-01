@@ -73,6 +73,78 @@ app.get('/dogsSel', function(req, res)
         })                                                      
     });                                                        
 
+app.get('/employeesSel', function(req, res)
+    {  
+        let query1 = "SELECT * FROM Employees;";                     // Define our query
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            res.send(JSON.stringify(rows));                     // Return query as JSON string
+        })                                                      
+    });                                                        
+
+app.get('/schedulesSel', function(req, res)
+    {  
+        let query1 = "SELECT Schedules.scheduleID, Employees.name, Schedules.start, Schedules.end FROM Schedules\
+            JOIN Employees ON Schedules.employee_id = Employees.employeeID;";                     // Define our query
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            res.send(JSON.stringify(rows));                     // Return query as JSON string
+        })                                                      
+    });                                                        
+
+app.get('/schedulesAvailability/:startDate?/:endDate?', function(req, res)
+    {  // Capture the incoming data and parse it back to a JS object
+        let startDate = req.params.startDate;
+        let endDate = req.params.endDate;
+        let dateFilter = '';
+        if (startDate !== undefined) {
+            dateFilter = `WHERE DATE(Schedules.start) >= date '` + startDate + "'";
+            if (endDate !== undefined) {
+                dateFilter += ` AND DATE(Schedules.end) <= date '` + endDate + "'";
+            };
+        };
+        let query1 = `SELECT Schedules.scheduleID, Employees.name, DATE(Schedules.start) AS date, TIME(Schedules.start) AS start, TIME(MIN(Session1.session_start)) AS session_start, MIN(Session1.session_end) AS session_end, \
+                TIME(MIN(Session2.session_start)) AS session_start1, MIN(Session2.session_end) AS session_end1, TIME(MIN(Session3.session_start)) AS session_start2, MIN(Session3.session_end) AS session_end2, \
+                TIME(MIN(Session4.session_start)) AS session_start3, MIN(Session4.session_end) AS session_end3, TIME(MIN(Session5.session_start)) AS session_start4, MIN(Session5.session_end) AS session_end4, \
+                TIME(MIN(Session6.session_start)) AS session_start5, MIN(Session6.session_end) AS session_end5, TIME(MIN(Session7.session_start)) AS session_start6, MIN(Session7.session_end) AS session_end6, TIME(Schedules.end) FROM Schedules\
+            JOIN Employees ON Schedules.employee_id = Employees.employeeID \
+            LEFT JOIN (SELECT Sessions.employee_id, Sessions.session_time AS session_start, ADDTIME(TIME(Sessions.session_time), SUM(Services.service_duration)) AS session_end FROM Sessions \
+                JOIN SessionServices ON Sessions.sessionID = SessionServices.session_id\
+                JOIN Services ON Services.serviceID = SessionServices.service_id \
+                GROUP BY Sessions.sessionID) AS Session1 ON Session1.employee_id = Employees.employeeID AND Session1.session_start >= Schedules.start AND Session1.session_start < Schedules.end\
+            LEFT JOIN (SELECT Sessions.employee_id, Sessions.session_time AS session_start, ADDTIME(TIME(Sessions.session_time), SUM(Services.service_duration)) AS session_end FROM Sessions \
+                JOIN SessionServices ON Sessions.sessionID = SessionServices.session_id\
+                JOIN Services ON Services.serviceID = SessionServices.service_id \
+                GROUP BY Sessions.sessionID) AS Session2 ON Session2.employee_id = Employees.employeeID AND Session2.session_start >= Schedules.start AND Session2.session_start < Schedules.end AND Session1.session_start < Session2.session_start\
+            LEFT JOIN (SELECT Sessions.employee_id, Sessions.session_time AS session_start, ADDTIME(TIME(Sessions.session_time), SUM(Services.service_duration)) AS session_end FROM Sessions \
+                JOIN SessionServices ON Sessions.sessionID = SessionServices.session_id\
+                JOIN Services ON Services.serviceID = SessionServices.service_id \
+                GROUP BY Sessions.sessionID) AS Session3 ON Session3.employee_id = Employees.employeeID AND Session3.session_start >= Schedules.start AND Session3.session_start < Schedules.end AND Session2.session_start < Session3.session_start\
+            LEFT JOIN (SELECT Sessions.employee_id, Sessions.session_time AS session_start, ADDTIME(TIME(Sessions.session_time), SUM(Services.service_duration)) AS session_end FROM Sessions \
+                JOIN SessionServices ON Sessions.sessionID = SessionServices.session_id\
+                JOIN Services ON Services.serviceID = SessionServices.service_id \
+                GROUP BY Sessions.sessionID) AS Session4 ON Session4.employee_id = Employees.employeeID AND Session4.session_start >= Schedules.start AND Session4.session_start < Schedules.end AND Session3.session_start < Session4.session_start\
+            LEFT JOIN (SELECT Sessions.employee_id, Sessions.session_time AS session_start, ADDTIME(TIME(Sessions.session_time), SUM(Services.service_duration)) AS session_end FROM Sessions \
+                JOIN SessionServices ON Sessions.sessionID = SessionServices.session_id\
+                JOIN Services ON Services.serviceID = SessionServices.service_id \
+                GROUP BY Sessions.sessionID) AS Session5 ON Session5.employee_id = Employees.employeeID AND Session5.session_start >= Schedules.start AND Session5.session_start < Schedules.end AND Session4.session_start < Session5.session_start\
+            LEFT JOIN (SELECT Sessions.employee_id, Sessions.session_time AS session_start, ADDTIME(TIME(Sessions.session_time), SUM(Services.service_duration)) AS session_end FROM Sessions \
+                JOIN SessionServices ON Sessions.sessionID = SessionServices.session_id\
+                JOIN Services ON Services.serviceID = SessionServices.service_id \
+                GROUP BY Sessions.sessionID) AS Session6 ON Session6.employee_id = Employees.employeeID AND Session6.session_start >= Schedules.start AND Session6.session_start < Schedules.end AND Session5.session_start < Session6.session_start\
+            LEFT JOIN (SELECT Sessions.employee_id, Sessions.session_time AS session_start, ADDTIME(TIME(Sessions.session_time), SUM(Services.service_duration)) AS session_end FROM Sessions \
+                JOIN SessionServices ON Sessions.sessionID = SessionServices.session_id\
+                JOIN Services ON Services.serviceID = SessionServices.service_id \
+                GROUP BY Sessions.sessionID) AS Session7 ON Session7.employee_id = Employees.employeeID AND Session7.session_start >= Schedules.start AND Session7.session_start < Schedules.end AND Session6.session_start < Session7.session_start\
+            ${dateFilter}\
+            GROUP BY Schedules.scheduleID\
+            ORDER BY Schedules.start;`;   
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            res.send(JSON.stringify(rows));                     // Return query as JSON string
+        })                                                      
+    });                                                        
+
 app.post('/add-dog-ajax', function(req, res){
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;

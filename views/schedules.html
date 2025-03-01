@@ -57,72 +57,16 @@
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
-            <tr>
-                <td>Diede Sovanna</td>
-                <td>2025-01-05</td>
-                <td>09:00 am</td>
-                <td>05:00 pm</td>
-                <td><button class="scheduleEdit">Edit</button></td>
-                <td type="button" class="scheduleDelete"><button>Delete</button></td>
-            </tr>
-            <tr>
-                <td>Diede Sovanna</td>
-                <td>2025-02-05</td>
-                <td>09:00 am</td>
-                <td>05:00 pm</td>
-                <td><button class="scheduleEdit">Edit</button></td>
-                <td type="button" class="scheduleDelete"><button>Delete</button></td>
-            </tr>
-            <tr>
-                <td>Matija Tristina</td>
-                <td>2025-02-05</td>
-                <td>07:00 am</td>
-                <td>03:00 pm</td>
-                <td><button class="scheduleEdit">Edit</button></td>
-                <td type="button" class="scheduleDelete"><button>Delete</button></td>
-            </tr>
-            <tr>
-                <td>Matija Tristin</td>
-                <td>2025-08-05</td>
-                <td>07:00 am</td>
-                <td>12:00 pm</td>
-                <td><button class="scheduleEdit">Edit</button></td>
-                <td type="button" class="scheduleDelete"><button>Delete</button></td>
-            </tr>
-            <tr>
-                <td>Marley Kirby</td>
-                <td>2025-01-05</td>
-                <td>11:00 am</td>
-                <td>08:00 pm</td>
-                <td><button class="scheduleEdit">Edit</button></td>
-                <td type="button" class="scheduleDelete"><button>Delete</button></td>
-            </tr>
-            <tr>
-                <td>Marley Kirby</td>
-                <td>2025-02-05</td>
-                <td>11:00 am</td>
-                <td>08:00 pm</td>
-                <td><button class="scheduleEdit">Edit</button></td>
-                <td type="button" class="scheduleDelete"><button>Delete</button></td>
-            </tr>
-            <tr>
-                <td>Quincy Ketut</td>
-                <td>2025-02-05</td>
-                <td>11:00 am</td>
-                <td>08:00 pm</td>
-                <td><button class="scheduleEdit">Edit</button></td>
-                <td><button type="button" class="scheduleDelete">Delete</button></td>
-            </tr>
         </table>
     </section>
    
     <section>
         <h3>Employee Availability</h3>
         <label for="start">Start date:</label>
-        <input type="date" id="startDate" name="startDate" min="2024-02-01"/>
+        <input type="date" id="startDate" name="startDate" min="2024-02-01" onchange="refreshAvailabilityTable()"/>
         <label for="start">End date:</label>
-        <input type="date" id="endDate" name="endDate" min="2024-02-01" />
-        <table id="scheduleTable">
+        <input type="date" id="endDate" name="endDate" min="2024-02-01" onchange="refreshAvailabilityTable()"/>
+        <table id="availabilityTable">
             <tr>
                 <th>Employee</th>
                 <th>Date</th>
@@ -139,40 +83,6 @@
                 <th>To</th>
                 <th>From</th>
                 <th>To</th>
-            </tr>
-            <tr>
-                <td>Diede Sovanna</td>
-                <td>2025-1-05</td>
-                <td>9:00 am</td>
-                <td>9:00 am</td>
-                <td>10:00 am</td>
-                <td>10:00 am</td>
-                <td>12:00 pm</td>
-                <td>12:30 pm</td>
-                <td>2:00 pm</td>
-                <td>2:00 pm</td>
-                <td>4:00 pm</td>
-                <td>4:00 pm</td>
-                <td>6:00 pm</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Marley Kirby</td>
-                <td>2025-1-05</td>
-                <td>11:00 am</td>
-                <td></td>
-                <td></td>
-                <td>11:00 am</td>
-                <td>12:00 pm</td>
-                <td>12:30 pm</td>
-                <td>2:00 pm</td>
-                <td></td>
-                <td></td>
-                <td>5:00 pm</td>
-                <td>6:30 pm</td>
-                <td>7:00 pm</td>
-                <td>8:00 pm</td>
             </tr>
     
         </table>
