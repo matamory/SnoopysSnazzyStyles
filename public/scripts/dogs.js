@@ -67,9 +67,8 @@ function delRow(event) {
         let td = event.target.parentNode; 
         let tr = td.parentNode; 
         let data = {
-            id: tr.children[0].value
+            id: tr.children[0].textContent
         };
-    
         // Setup our AJAX request
         var xhttp = new XMLHttpRequest();
         xhttp.open("DELETE", '/delete-dog-ajax/', true);
@@ -77,8 +76,9 @@ function delRow(event) {
     
         // Tell our AJAX request how to resolve
         xhttp.onreadystatechange = () => {
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
+            if (xhttp.readyState == 4 && xhttp.status == 204) {
                 // Remove row from table
+                alert('test');
                 tr.parentNode.removeChild(tr)
             }
             else if (xhttp.readyState == 4 && xhttp.status != 200) {

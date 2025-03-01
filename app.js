@@ -247,6 +247,7 @@ app.post('/add-employee', function(req, res){
 app.delete('/delete-dog-ajax', function(req,res, next){
     let data = req.body;
     let dog_ID = parseInt(data.id);
+    console.log(dog_ID);
     let deleteDog= `DELETE FROM Dogs WHERE dogID = ?`;
   
 
