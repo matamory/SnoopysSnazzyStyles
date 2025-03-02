@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Review/Add Employees</title>
+  <link href="style/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="../scripts/employees.js">
+    </script>
+</head>
+
+<body>
+    <header>
+        <h1>Snoopy's Snazzy Styles</h1>
+    </header>
+    <nav>
+        <a href="/">Home</a>
+        <a href="clients">Clients</a>
+        <a href="dogs">Dogs</a>
+        <a href="services">Services</a>
+        <a href="sessions">Sessions</a>
+        <a href="employees">Employees</a>
+        <a href="schedules">Schedules</a>
+        <a href="clientsDogs">Clients Dogs</a>
+    </nav>
+    <main>
+        <section>
+            <h2>Employees</h2>
+            <article>
+                <h3>Add a New Employee</h3>
+                <form id="employeeForm" action="submitEmployee" method="GET">
+                    <fieldset>
+                        <label>Employee Name: <input type="text" name="employeeName" required="required" id="employeeName" placeholder="first and last name"/><br><br></label>
+                        <label>Wage: <input type="number" name="employeewage" required="required" id="employeewage" placeholder="00.00"/><br><br></label>
+                        <label>Years Experience: <input type="number" name="employeeexperience" required="required" id="employeeExperience" placeholder="0"/><br><br></label>
+                        <label>Phone Number: <input type="tel" name="employeePhone" required="required" id="employeePhone" pattern="([0-9]{3})-[0-9]{3}-[0-9]{4}" placeholder="(000)-000-0000"/><br><br></label>
+                        <label>Email: <input type="email" name="employeeEmail" required="required" id="employeeEmail" placeholder="name@host.com"/><br><br></label>
+                        <label>Address: <input type="text" name="employeeAddress" required="required" id="employeeAddress" placeholder="000 Main Street"/><br><br> </label>
+                        <label>Active: <input type="checkbox" name="employeeisActive" required="required" id="employeeisActive" /><br><br></label>
+                    </fieldset>
+                    <input type="submit" value="Submit"/>
+                </form>
+        </section>
+    <section>
+        <h3>Current Employees</h3>
+        <table id="employeeTable">
+            <tr>
+                <th>ID</th>
+                <th>Employee</th>
+                <th>Wage</th>
+                <th>Years Experience</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Active</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </table>
+        <br><br>
+            <div id="editEmployeesForm" style="display: none;">
+                <h3>Edit Employee Information</h3>
+                <form >
+                    <label>ID:</label><label id="editEmployeeID"></label><br><br>
+                    <label>Name:</label> <input type="text" id="editEmployeesName" required="required"><br><br>
+                    <label>Wage:</label> <input type="number" id="editEmployeesWage" required><br><br>
+                    <label>Years Experience:</label> <input type="number" id="editEmployeesExperience" required><br><br>
+                    <label>Phone number:</label> <input type="tel" id="editEmployeesPhone" required><br><br>
+                    <label>Email:</label> <input type="text" id="editEmployeesEmail" required><br><br>
+                    <label>Address:</label> <input type="email" id="editEmployeesAddress" required><br><br>
+                    <label>Active:</label> <input type="text" id="editEmployeesActive" required><br><br>
+                    <br>
+                    <button type="submit" class="UpdateInfo">Update</button>
+                </form>
+                <br><br>
+            </div>
+    </section>
+   
+</body>
+
+</html>

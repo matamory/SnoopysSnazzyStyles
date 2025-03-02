@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Review/Create Schedules</title>
+  <link href="style/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="../scripts/schedules.js">
+    </script>
+</head>
+
+<body>
+    <header>
+        <h1>Snoopy's Snazzy Styles</h1>
+    </header>
+    <nav>
+        <a href="/">Home</a>
+        <a href="clients">Clients</a>
+        <a href="dogs">Dogs</a>
+        <a href="services">Services</a>
+        <a href="sessions">Sessions</a>
+        <a href="employees">Employees</a>
+        <a href="schedules">Schedules</a>
+        <a href="clientsDogs">Clients Dogs</a>
+    </nav>
+    <main>
+        <section>
+            <h2>Schedules</h2>
+            <article>
+                <h3>Submit a New Schedule</h3>
+                <form id="scheduleForm" action="submitSchedule" method="GET">
+                    <fieldset>
+                        <label for="employeeID">Employee: </label> 
+                        <select name="employeeID" id="employeeID" required>
+                            <option value="" disabled selected hidden>Select Employee</option>
+                        </select>
+                        <br><br>
+                        <label>Start: <input type="datetime-local" name="start" required="required" id="startTime"/><br><br></label>
+                        <label>End: <input type="datetime-local" name="end" required="required" id="endTime"/><br><br></label> 
+                    </fieldset>
+                    <input type="submit" value="Submit"/>
+                </form>
+        </section>
+    <section>
+        <h3>Employee Schedules</h3>
+        <table id="scheduleTable">
+            <tr>
+                <th>Employee</th>
+                <th>Date</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </table>
+    </section>
+   
+    <section>
+        <h3>Employee Availability</h3>
+        <label for="start">Start date:</label>
+        <input type="date" id="startDate" name="startDate" min="2024-02-01" onchange="refreshAvailabilityTable()"/>
+        <label for="start">End date:</label>
+        <input type="date" id="endDate" name="endDate" min="2024-02-01" onchange="refreshAvailabilityTable()"/>
+        <table id="availabilityTable">
+            <tr>
+                <th>Employee</th>
+                <th>Date</th>
+                <th>Day Start</th>
+                <th>From</th>
+                <th>To</th>
+                <th>From</th>
+                <th>To</th>
+                <th>From</th>
+                <th>To</th>
+                <th>From</th>
+                <th>To</th>
+                <th>From</th>
+                <th>To</th>
+                <th>From</th>
+                <th>To</th>
+            </tr>
+    
+        </table>
+        <br><br>
+            <div id="editScheduleForm" style="display: none;">
+                <h3>Edit Schedule Information</h3>
+                <form>
+                    <label>Employee:</label> <input type="text" id="editScheduleEmployee" required><br><br>
+                    <label>Date:</label> <input type="date" id="editScheduleDate" required><br><br>
+                    <label>Start:</label> <input type="time" id="editScheduleStart" required><br><br>
+                    <label>End:</label> <input type="time" id="editScheduleEnd" required><br><br>
+                    <br>
+                    <button type="submit" class="UpdateInfo">Update</button>
+                </form>
+                <br><br>
+            </div>
+    </section>
+</body>
+
+</html>

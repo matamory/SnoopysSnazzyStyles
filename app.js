@@ -1,0 +1,271 @@
+// App.js
+/*
+    SETUP
+*/
+var express = require('express');   // We are using the express library for the web server
+var app     = express();            // We need to instantiate an express object to interact with the server in our code
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+app.use(express.static('public'))
+PORT        = 6595;                 // Set a port number at the top so it's easy to change in the future
+
+
+const { engine } = require('express-handlebars');
+var exphbs = require('express-handlebars');     // Import express-handlebars
+app.use(express.static(__dirname + '/public'));
+app.engine('html', require('ejs').renderFile);  // Create an instance of the handlebars engine to process templates
+app.set('view engine', '.hbs');                 // Tell express to use the handlebars engine whenever it encounters a *.hbs file.
+
+
+// Database
+var db = require('./db-connector')
+
+/*
+    ROUTES
+*/
+// Defining base routes as html pages
+app.get('/',  async function(req, res)
+    {   
+        res.render("index.html");        
+    });                                                       
+
+app.get('/dogs',  async function(req, res)
+    {   
+        res.render("dogs.html");        
+    });                                                       
+
+app.get('/employees',  async function(req, res)
+    {   
+        res.render("employees.html");        
+    });                                                       
+
+app.get('/clients',  async function(req, res)
+    {   
+        res.render("clients.html");        
+    });                                                       
+
+app.get('/services',  async function(req, res)
+    {   
+        res.render("services.html");        
+    });                                                       
+
+app.get('/sessions',  async function(req, res)
+    {   
+        res.render("sessions.html");        
+    });                                                       
+
+app.get('/schedules',  async function(req, res)
+    {   
+        res.render("schedules.html");        
+    });                                                       
+
+app.get('/clientsDogs',  async function(req, res)
+    {   
+        res.render("clientsDogs.html");        
+    });                                                       
+
+app.get('/dogsSel', function(req, res)
+    {  
+        let query1 = "SELECT * FROM Dogs;";                     // Define our query
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            res.send(JSON.stringify(rows));                     // Return query as JSON string
+        })                                                      
+    });                                                        
+
+app.get('/employeesSel', function(req, res)
+    {  
+        let query1 = "SELECT * FROM Employees;";                     // Define our query
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            res.send(JSON.stringify(rows));                     // Return query as JSON string
+        })                                                      
+    });                                                        
+
+app.get('/employeesDropdown', function(req, res)
+    {  
+        let query1 = "SELECT employeeID, name FROM Employees;";                     // Define our query
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            res.send(JSON.stringify(rows));                     // Return query as JSON string
+        })                                                      
+    });                                                        
+
+app.get('/schedulesSel', function(req, res)
+    {  
+        let query1 = "SELECT Schedules.scheduleID, Employees.name, Schedules.start, Schedules.end FROM Schedules\
+            JOIN Employees ON Schedules.employee_id = Employees.employeeID\
+            ORDER BY Schedules.start;";                     // Define our query
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            res.send(JSON.stringify(rows));                     // Return query as JSON string
+        })                                                      
+    });                                                        
+
+app.get('/schedulesAvailability/:startDate?/:endDate?', function(req, res)
+    {  // Capture the incoming data
+        let startDate = req.params.startDate;
+        let endDate = req.params.endDate;
+        let dateFilter = '';
+        // Adjusting the query statement
+        if (startDate !== undefined) {
+            dateFilter = `WHERE DATE(Schedules.start) >= date '` + startDate + "'";
+            if (endDate !== undefined) {
+                dateFilter += ` AND DATE(Schedules.end) <= date '` + endDate + "'";
+            };
+        };
+        let query1 = `SELECT Schedules.scheduleID, Employees.name, DATE(Schedules.start) AS date, TIME(Schedules.start) AS start, TIME(MIN(Session1.session_start)) AS session_start, MIN(Session1.session_end) AS session_end, \
+                TIME(MIN(Session2.session_start)) AS session_start1, MIN(Session2.session_end) AS session_end1, TIME(MIN(Session3.session_start)) AS session_start2, MIN(Session3.session_end) AS session_end2, \
+                TIME(MIN(Session4.session_start)) AS session_start3, MIN(Session4.session_end) AS session_end3, TIME(MIN(Session5.session_start)) AS session_start4, MIN(Session5.session_end) AS session_end4, \
+                TIME(MIN(Session6.session_start)) AS session_start5, MIN(Session6.session_end) AS session_end5, TIME(MIN(Session7.session_start)) AS session_start6, MIN(Session7.session_end) AS session_end6, TIME(Schedules.end) FROM Schedules\
+            JOIN Employees ON Schedules.employee_id = Employees.employeeID \
+            LEFT JOIN (SELECT Sessions.employee_id, Sessions.session_time AS session_start, ADDTIME(TIME(Sessions.session_time), SUM(Services.service_duration)) AS session_end FROM Sessions \
+                JOIN SessionServices ON Sessions.sessionID = SessionServices.session_id\
+                JOIN Services ON Services.serviceID = SessionServices.service_id \
+                GROUP BY Sessions.sessionID) AS Session1 ON Session1.employee_id = Employees.employeeID AND Session1.session_start >= Schedules.start AND Session1.session_start < Schedules.end\
+            LEFT JOIN (SELECT Sessions.employee_id, Sessions.session_time AS session_start, ADDTIME(TIME(Sessions.session_time), SUM(Services.service_duration)) AS session_end FROM Sessions \
+                JOIN SessionServices ON Sessions.sessionID = SessionServices.session_id\
+                JOIN Services ON Services.serviceID = SessionServices.service_id \
+                GROUP BY Sessions.sessionID) AS Session2 ON Session2.employee_id = Employees.employeeID AND Session2.session_start >= Schedules.start AND Session2.session_start < Schedules.end AND Session1.session_start < Session2.session_start\
+            LEFT JOIN (SELECT Sessions.employee_id, Sessions.session_time AS session_start, ADDTIME(TIME(Sessions.session_time), SUM(Services.service_duration)) AS session_end FROM Sessions \
+                JOIN SessionServices ON Sessions.sessionID = SessionServices.session_id\
+                JOIN Services ON Services.serviceID = SessionServices.service_id \
+                GROUP BY Sessions.sessionID) AS Session3 ON Session3.employee_id = Employees.employeeID AND Session3.session_start >= Schedules.start AND Session3.session_start < Schedules.end AND Session2.session_start < Session3.session_start\
+            LEFT JOIN (SELECT Sessions.employee_id, Sessions.session_time AS session_start, ADDTIME(TIME(Sessions.session_time), SUM(Services.service_duration)) AS session_end FROM Sessions \
+                JOIN SessionServices ON Sessions.sessionID = SessionServices.session_id\
+                JOIN Services ON Services.serviceID = SessionServices.service_id \
+                GROUP BY Sessions.sessionID) AS Session4 ON Session4.employee_id = Employees.employeeID AND Session4.session_start >= Schedules.start AND Session4.session_start < Schedules.end AND Session3.session_start < Session4.session_start\
+            LEFT JOIN (SELECT Sessions.employee_id, Sessions.session_time AS session_start, ADDTIME(TIME(Sessions.session_time), SUM(Services.service_duration)) AS session_end FROM Sessions \
+                JOIN SessionServices ON Sessions.sessionID = SessionServices.session_id\
+                JOIN Services ON Services.serviceID = SessionServices.service_id \
+                GROUP BY Sessions.sessionID) AS Session5 ON Session5.employee_id = Employees.employeeID AND Session5.session_start >= Schedules.start AND Session5.session_start < Schedules.end AND Session4.session_start < Session5.session_start\
+            LEFT JOIN (SELECT Sessions.employee_id, Sessions.session_time AS session_start, ADDTIME(TIME(Sessions.session_time), SUM(Services.service_duration)) AS session_end FROM Sessions \
+                JOIN SessionServices ON Sessions.sessionID = SessionServices.session_id\
+                JOIN Services ON Services.serviceID = SessionServices.service_id \
+                GROUP BY Sessions.sessionID) AS Session6 ON Session6.employee_id = Employees.employeeID AND Session6.session_start >= Schedules.start AND Session6.session_start < Schedules.end AND Session5.session_start < Session6.session_start\
+            LEFT JOIN (SELECT Sessions.employee_id, Sessions.session_time AS session_start, ADDTIME(TIME(Sessions.session_time), SUM(Services.service_duration)) AS session_end FROM Sessions \
+                JOIN SessionServices ON Sessions.sessionID = SessionServices.session_id\
+                JOIN Services ON Services.serviceID = SessionServices.service_id \
+                GROUP BY Sessions.sessionID) AS Session7 ON Session7.employee_id = Employees.employeeID AND Session7.session_start >= Schedules.start AND Session7.session_start < Schedules.end AND Session6.session_start < Session7.session_start\
+            ${dateFilter}\
+            GROUP BY Schedules.scheduleID\
+            ORDER BY Schedules.start;`;   
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            res.send(JSON.stringify(rows));                     // Return query as JSON string
+        })                                                      
+    });                                                        
+
+app.post('/add-dog-ajax', function(req, res){
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Capture NULL values
+    let breed = (data.breed);
+    if (breed == "null"){
+        breed = null;
+    }
+    else {
+        breed =`'${breed}'`;
+    }
+
+    let groomer_notes = (data.groomer_notes);
+    if (groomer_notes == "null"){
+        groomer_notes = null;
+    }
+    else {
+        groomer_notes =`'${groomer_notes}'`;
+    }
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Dogs (name, age, breed, size_lbs, groomer_notes) VALUES ('${data.name}', '${data.age}', ${breed}, '${data.size_lbs}', ${groomer_notes})`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+            res.send(rows);
+        }
+    })
+});
+
+app.post('/add-schedule', function(req, res){
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Capture NULL values
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Schedules (employee_id, start, end) VALUES (${data.employeeID}, '${data.startTime}', '${data.endTime}')`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+            res.send(rows);
+        }
+    })
+});
+
+app.post('/add-employee', function(req, res){
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Capture NULL values
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Employees (name, hourly_wage, years_experience, phone_number, email, address, is_active) VALUES \
+        (${data.name}, '${data.wage}', '${data.experience}', '${data.phone}', '${data.email}', '${data.address}', '${data.active}')`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+            res.send(rows);
+        }
+    })
+});
+
+app.delete('/delete-dog-ajax', function(req,res, next){
+    let data = req.body;
+    let dog_ID = parseInt(data.id);
+    console.log(dog_ID);
+    let deleteDog= `DELETE FROM Dogs WHERE dogID = ?`;
+  
+
+        db.pool.query(deleteDog, [dog_ID], function(error, rows, fields) {
+  
+            if (error) {
+                console.log(error);
+                res.sendStatus(400);
+            } else {
+                    res.sendStatus(204);
+            }
+        })
+    }
+);
+
+/*
+    LISTENER
+*/
+app.listen(PORT, function(){            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
+    console.log('Express started on http://localhost:' + PORT + '; press Ctrl-C to terminate.')
+});
