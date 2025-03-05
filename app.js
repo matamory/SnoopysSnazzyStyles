@@ -7,7 +7,7 @@ var app     = express();            // We need to instantiate an express object 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
-PORT        = 6595;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 6594;                 // Set a port number at the top so it's easy to change in the future
 
 
 const { engine } = require('express-handlebars');
@@ -62,7 +62,16 @@ app.get('/schedules',  async function(req, res)
 app.get('/clientsDogs',  async function(req, res)
     {   
         res.render("clientsDogs.html");        
-    });                                                       
+    });
+
+app.get('/clientsSel', function(req, res)
+    {  
+        let query1 = "SELECT * FROM Clients;";                     // Define our query
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            res.send(JSON.stringify(rows));                     // Return query as JSON string
+        })                                                      
+    });
 
 app.get('/dogsSel', function(req, res)
     {  
@@ -154,7 +163,31 @@ app.get('/schedulesAvailability/:startDate?/:endDate?', function(req, res)
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
             res.send(JSON.stringify(rows));                     // Return query as JSON string
         })                                                      
-    });                                                        
+    });    
+
+app.post('/add-client-ajax', function(req, res){
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+    
+    // Capture NULL values
+    
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Clients (name, phone_number, contact_method, email) VALUES ('${data.name}', '${data.phone}', '${data.contact}', '${data.email}')`;
+    db.pool.query(query1, function(error, rows, fields){
+    
+        // Check to see if there was an error
+        if (error) {
+    
+                // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error)
+                res.sendStatus(400);
+            }
+            else
+            {
+                res.send(rows);
+            }
+        })
+});    
 
 app.post('/add-dog-ajax', function(req, res){
     // Capture the incoming data and parse it back to a JS object
@@ -244,6 +277,8 @@ app.post('/add-employee', function(req, res){
     })
 });
 
+
+
 app.delete('/delete-dog-ajax', function(req,res, next){
     let data = req.body;
     let dog_ID = parseInt(data.id);
@@ -252,6 +287,25 @@ app.delete('/delete-dog-ajax', function(req,res, next){
   
 
         db.pool.query(deleteDog, [dog_ID], function(error, rows, fields) {
+  
+            if (error) {
+                console.log(error);
+                res.sendStatus(400);
+            } else {
+                    res.sendStatus(204);
+            }
+        })
+    }
+);
+
+app.delete('/delete-client-ajax', function(req,res, next){
+    let data = req.body;
+    let client_ID = parseInt(data.id);
+    console.log(client_ID);
+    let deleteClient= `DELETE FROM Clients WHERE clientID = ?`;
+  
+
+        db.pool.query(deleteClient, [client_ID], function(error, rows, fields) {
   
             if (error) {
                 console.log(error);
