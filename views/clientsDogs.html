@@ -30,7 +30,7 @@
             <h2>Clients' Dogs</h2>
             <article>
                 <h3>Add a new Client Dog pair :</h3>
-                <form id="clientDogForm" action="submitClientDog" method="POST">
+                <form id="clientDogForm">
                 <fieldset>
                     <label for="clientID">Client: </label> 
                         <select name="clientID" id="clientID" required >
@@ -58,54 +58,13 @@
         </section>
         <section>
             <h3> All Clients</h3>
-            <table id="clientTable">
+            <table id="clientsDogsTable">
                 <tr>
                     <th>Client</th>
                     <th>Dog</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr> 
-                <tr>
-                    <td>Nzinga Fumnaya</td>
-                    <td>Fido</td>
-                    <td><button class="clientDogEdit">Edit</button></td>
-                    <td><button type="button" class="clientDogDelete">Delete</button></td>
-
-                </tr>
-                <tr>
-                    <td>Pat Yonah</td>
-                    <td>Fido</td>
-                    <td><button class="clientDogEdit">Edit</button></td>
-                    <td><button type="button" class="clientDogDelete">Delete</button></td>
-
-                </tr>
-                <tr>
-                    <td>Pat Yonah</td>
-                    <td>Lucky</td>
-                    <td><button class="clientDogEdit">Edit</button></td>
-                    <td><button type="button" class="clientDogDelete">Delete</button></td>
-
-                </tr>
-
-                <tr>
-                    <td>Pat Yonah</td>
-                    <td>Leoford</td>
-                    <td><button class="clientDogEdit">Edit</button></td>
-                    <td><button type="button" class="clientDogDelete">Delete</button></td>
-
-                </tr>
-                <tr>
-                    <td>Karuna Yarden</td>
-                    <td>Ferdinand the Destroyer</td>
-                    <td><button class="clientDogEdit">Edit</button></td>
-                    <td><button type="button" class="clientDogDelete">Delete</button></td>
-                </tr>
-                <tr>
-                    <td>Karuna Yarden</td>
-                    <td>Nalla</td>
-                    <td><button class="clientDogEdit">Edit</button></td>
-                    <td><button type="button" class="clientDogDelete">Delete</button></td>
-                </tr>
             </table>
 
             <br>

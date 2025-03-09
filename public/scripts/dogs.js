@@ -78,7 +78,7 @@ function delRow(event) {
         xhttp.onreadystatechange = () => {
             if (xhttp.readyState == 4 && xhttp.status == 204) {
                 // Remove row from table
-                alert('test');
+                alert('Dog has be deleted');
                 tr.parentNode.removeChild(tr)
             }
             else if (xhttp.readyState == 4 && xhttp.status != 200) {
