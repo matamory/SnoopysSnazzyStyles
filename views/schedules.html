@@ -45,6 +45,7 @@
         <h3>Employee Schedules</h3>
         <table id="scheduleTable">
             <tr>
+                <th>ID</th>
                 <th>Employee</th>
                 <th>Date</th>
                 <th>Start</th>
@@ -85,6 +86,7 @@
             <div id="editScheduleForm" style="display: none;">
                 <h3>Edit Schedule Information</h3>
                 <form>
+                    <label>ID:</label><label id="editScheduleID"></label><br><br>
                     <label>Employee:</label> <input type="text" id="editScheduleEmployee" required><br><br>
                     <label>Date:</label> <input type="date" id="editScheduleDate" required><br><br>
                     <label>Start:</label> <input type="time" id="editScheduleStart" required><br><br>

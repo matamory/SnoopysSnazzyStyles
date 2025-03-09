@@ -227,7 +227,7 @@ app.post('/add-employee', function(req, res){
 
     // Create the query and run it on the database
     query1 = `INSERT INTO Employees (name, hourly_wage, years_experience, phone_number, email, address, is_active) VALUES \
-        (${data.name}, '${data.wage}', '${data.experience}', '${data.phone}', '${data.email}', '${data.address}', '${data.active}')`;
+        ('${data.name}', '${data.wage}', '${data.experience}', '${data.phone}', '${data.email}', '${data.address}', '${data.active}')`;
     db.pool.query(query1, function(error, rows, fields){
 
         // Check to see if there was an error
@@ -244,14 +244,49 @@ app.post('/add-employee', function(req, res){
     })
 });
 
-app.delete('/delete-dog-ajax', function(req,res, next){
+app.delete('/delete-dog', function(req,res, next){
     let data = req.body;
     let dog_ID = parseInt(data.id);
     console.log(dog_ID);
     let deleteDog= `DELETE FROM Dogs WHERE dogID = ?`;
   
-
         db.pool.query(deleteDog, [dog_ID], function(error, rows, fields) {
+  
+            if (error) {
+                console.log(error);
+                res.sendStatus(400);
+            } else {
+                    res.sendStatus(204);
+            }
+        })
+    }
+);
+
+app.delete('/delete-employee', function(req,res, next){
+    let data = req.body;
+    let employee_ID = parseInt(data.id);
+    console.log(employee_ID);
+    let deleteEmployee= `DELETE FROM Employees WHERE employeeID = ?`;
+
+        db.pool.query(deleteEmployee, [employee_ID], function(error, rows, fields) {
+  
+            if (error) {
+                console.log(error);
+                res.sendStatus(400);
+            } else {
+                    res.sendStatus(204);
+            }
+        })
+    }
+);
+
+app.delete('/delete-schedule', function(req,res, next){
+    let data = req.body;
+    let schedule_ID = parseInt(data.id);
+    console.log(schedule_ID);
+    let deleteSchedule= `DELETE FROM Schedules WHERE scheduleID = ?`;
+
+        db.pool.query(deleteSchedule, [schedule_ID], function(error, rows, fields) {
   
             if (error) {
                 console.log(error);
