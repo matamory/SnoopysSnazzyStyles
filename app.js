@@ -1,13 +1,15 @@
 // App.js
-/*
+
+/*========================================================================================
     SETUP
-*/
+==========================================================================================*/
+
 var express = require('express');   // We are using the express library for the web server
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
-PORT        = 6595;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 6594;                 // Set a port number at the top so it's easy to change in the future
 
 
 const { engine } = require('express-handlebars');
@@ -20,9 +22,10 @@ app.set('view engine', '.hbs');                 // Tell express to use the handl
 // Database
 var db = require('./db-connector')
 
-/*
+/*========================================================================================
     ROUTES
-*/
+==========================================================================================*/
+
 // Defining base routes as html pages
 app.get('/',  async function(req, res)
     {   
@@ -62,7 +65,21 @@ app.get('/schedules',  async function(req, res)
 app.get('/clientsDogs',  async function(req, res)
     {   
         res.render("clientsDogs.html");        
-    });                                                       
+    });
+
+
+
+//===============================================================================================
+
+
+app.get('/clientsSel', function(req, res)
+    {  
+        let query1 = "SELECT * FROM Clients;";                     // Define our query
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            res.send(JSON.stringify(rows));                     // Return query as JSON string
+        })                                                      
+    });
 
 app.get('/dogsSel', function(req, res)
     {  
@@ -71,7 +88,43 @@ app.get('/dogsSel', function(req, res)
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
             res.send(JSON.stringify(rows));                     // Return query as JSON string
         })                                                      
-    });                                                        
+    });   
+
+app.get('/clientsDogsSel', function(req, res)
+    {  
+        let query1 = "SELECT * FROM ClientsDogs;";                     // Define our query
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            res.send(JSON.stringify(rows));                     // Return query as JSON string
+        })                                                      
+    });   
+
+app.get('/sessionsSel', function(req, res)
+    {  
+        let query1 = "SELECT * FROM Sessions;";                     // Define our query
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            res.send(JSON.stringify(rows));                     // Return query as JSON string
+        })                                                      
+    });    
+
+app.get('/servicesSel', function(req, res)
+    {  
+        let query1 = "SELECT * FROM Services;";                     // Define our query
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            res.send(JSON.stringify(rows));                     // Return query as JSON string
+        })                                                      
+    });   
+
+app.get('/sessionServicesSel', function(req, res)
+    {  
+        let query1 = "SELECT * FROM SessionServices;";                     // Define our query
+``
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            res.send(JSON.stringify(rows));                     // Return query as JSON string
+        })                                                      
+    });   
 
 app.get('/employeesSel', function(req, res)
     {  
@@ -80,17 +133,8 @@ app.get('/employeesSel', function(req, res)
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
             res.send(JSON.stringify(rows));                     // Return query as JSON string
         })                                                      
-    });                                                        
-
-app.get('/employeesDropdown', function(req, res)
-    {  
-        let query1 = "SELECT employeeID, name FROM Employees;";                     // Define our query
-
-        db.pool.query(query1, function(error, rows, fields){    // Execute the query
-            res.send(JSON.stringify(rows));                     // Return query as JSON string
-        })                                                      
-    });                                                        
-
+    });       
+    
 app.get('/schedulesSel', function(req, res)
     {  
         let query1 = "SELECT Schedules.scheduleID, Employees.name, Schedules.start, Schedules.end FROM Schedules\
@@ -100,7 +144,21 @@ app.get('/schedulesSel', function(req, res)
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
             res.send(JSON.stringify(rows));                     // Return query as JSON string
         })                                                      
+    }); 
+
+
+//===============================================================================================
+
+
+app.get('/employeesDropdown', function(req, res)
+    {  
+        let query1 = "SELECT employeeID, name FROM Employees;";                     // Define our query
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            res.send(JSON.stringify(rows));                     // Return query as JSON string
+        })                                                      
     });                                                        
+                                             
 
 app.get('/schedulesAvailability/:startDate?/:endDate?', function(req, res)
     {  // Capture the incoming data
@@ -154,7 +212,34 @@ app.get('/schedulesAvailability/:startDate?/:endDate?', function(req, res)
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
             res.send(JSON.stringify(rows));                     // Return query as JSON string
         })                                                      
-    });                                                        
+    });    
+
+
+//===============================================================================================
+
+app.post('/add-client-ajax', function(req, res){
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+    
+    // Capture NULL values
+    
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Clients (name, phone_number, contact_method, email) VALUES ('${data.name}', '${data.phone}', '${data.contact}', '${data.email}')`;
+    db.pool.query(query1, function(error, rows, fields){
+    
+        // Check to see if there was an error
+        if (error) {
+    
+                // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error)
+                res.sendStatus(400);
+            }
+            else
+            {
+                res.send(rows);
+            }
+        })
+});    
 
 app.post('/add-dog-ajax', function(req, res){
     // Capture the incoming data and parse it back to a JS object
@@ -194,6 +279,54 @@ app.post('/add-dog-ajax', function(req, res){
         }
     })
 });
+
+app.post('/add-clientsDogs-ajax', function(req, res){
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+    
+    // Capture NULL values
+    
+    // Create the query and run it on the database
+    query1 = `INSERT INTO ClientsDogs (client_ID, dog_ID) VALUES ('${data.client}', '${data.dog}')`;
+    db.pool.query(query1, function(error, rows, fields){
+    
+        // Check to see if there was an error
+        if (error) {
+    
+                // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error)
+                res.sendStatus(400);
+            }
+            else
+            {
+                res.send(rows);
+            }
+        })
+});    
+
+app.post('/add-sessions-ajax', function(req, res){
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+    
+    // Capture NULL values
+    
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Sessions (employee_id, client_id, dog_id, session_time, actual_duration, total_price, status) VALUES ('${data.employee}','${data.client}','${data.dog}','${data.time}','${data.duration}','${data.price}','${data.status}')`;
+    db.pool.query(query1, function(error, rows, fields){
+    
+        // Check to see if there was an error
+        if (error) {
+    
+                // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error)
+                res.sendStatus(400);
+            }
+            else
+            {
+                res.send(rows);
+            }
+        })
+});    
 
 app.post('/add-schedule', function(req, res){
     // Capture the incoming data and parse it back to a JS object
@@ -243,6 +376,9 @@ app.post('/add-employee', function(req, res){
         }
     })
 });
+
+//===============================================================================================
+
 
 app.delete('/delete-dog', function(req,res, next){
     let data = req.body;
@@ -298,9 +434,67 @@ app.delete('/delete-schedule', function(req,res, next){
     }
 );
 
-/*
+app.delete('/delete-client-ajax', function(req,res, next){
+    let data = req.body;
+    let client_ID = parseInt(data.id);
+    console.log(client_ID);
+    let deleteClient= `DELETE FROM Clients WHERE clientID = ?`;
+  
+
+        db.pool.query(deleteClient, [client_ID], function(error, rows, fields) {
+  
+            if (error) {
+                console.log(error);
+                res.sendStatus(400);
+            } else {
+                    res.sendStatus(204);
+            }
+        })
+    }
+);
+
+app.delete('/delete-clientsDogs-ajax', function(req,res, next){
+    let data = req.body;
+    let client_ID = parseInt(data.id);
+    console.log(client_ID);
+    let deleteClient= `DELETE FROM Clients WHERE clientID = ?`;
+  
+
+        db.pool.query(deleteClient, [client_ID], function(error, rows, fields) {
+  
+            if (error) {
+                console.log(error);
+                res.sendStatus(400);
+            } else {
+                    res.sendStatus(204);
+            }
+        })
+    }
+);
+
+app.delete('/delete-sessions-ajax', function(req,res, next){
+    let data = req.body;
+    let session_ID = parseInt(data.id);
+    console.log(session_ID);
+    let deleteSession= `DELETE FROM Sessions WHERE sessionID = ?`;
+  
+
+        db.pool.query(deleteSession, [session_ID], function(error, rows, fields) {
+  
+            if (error) {
+                console.log(error);
+                res.sendStatus(400);
+            } else {
+                    res.sendStatus(204);
+            }
+        })
+    }
+);
+/*========================================================================================
     LISTENER
-*/
+==========================================================================================*/
+
+
 app.listen(PORT, function(){            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
     console.log('Express started on http://localhost:' + PORT + '; press Ctrl-C to terminate.')
 });

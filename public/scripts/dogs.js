@@ -78,6 +78,7 @@ function delRow(event) {
         xhttp.onreadystatechange = () => {
             if (xhttp.readyState == 4 && xhttp.status == 204) {
                 // Remove row from table
+                alert('Dog has be deleted');
                 tr.parentNode.removeChild(tr)
                 document.getElementById('editDogForm').style.display='block';
             }
