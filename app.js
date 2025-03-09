@@ -311,7 +311,7 @@ app.post('/add-sessions-ajax', function(req, res){
     // Capture NULL values
     
     // Create the query and run it on the database
-    query1 = `INSERT INTO Sessions (name, phone_number, contact_method, email) VALUES ('${data.name}', '${data.phone}', '${data.contact}', '${data.email}')`;
+    query1 = `INSERT INTO Sessions (employee_id, client_id, dog_id, session_time, actual_duration, total_price, status) VALUES ('${data.employee}','${data.client}','${data.dog}','${data.time}','${data.duration}','${data.price}','${data.status}')`;
     db.pool.query(query1, function(error, rows, fields){
     
         // Check to see if there was an error
@@ -426,6 +426,25 @@ app.delete('/delete-clientsDogs-ajax', function(req,res, next){
   
 
         db.pool.query(deleteClient, [client_ID], function(error, rows, fields) {
+  
+            if (error) {
+                console.log(error);
+                res.sendStatus(400);
+            } else {
+                    res.sendStatus(204);
+            }
+        })
+    }
+);
+
+app.delete('/delete-sessions-ajax', function(req,res, next){
+    let data = req.body;
+    let session_ID = parseInt(data.id);
+    console.log(session_ID);
+    let deleteSession= `DELETE FROM Sessions WHERE sessionID = ?`;
+  
+
+        db.pool.query(deleteSession, [session_ID], function(error, rows, fields) {
   
             if (error) {
                 console.log(error);

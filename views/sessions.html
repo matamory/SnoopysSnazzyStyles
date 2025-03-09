@@ -29,7 +29,7 @@
             <h2>Sessions</h2>
             <article>
                 <h3>Create a new session</h3>
-                <form id="sessionForm" action="submitSession" method="POST">
+                <form id="sessionForm">
                 <fieldset>
                     <label for="employeeID">Employee: </label> 
                         <select name="employeeID" id="employeeID" required >
@@ -49,8 +49,8 @@
                             <option value="3">Karuna Yardena</option>
                         </select>
                         <br><br>
-                        <label for="dogID">Dog: </label> 
-                            <select name="dogID" id="dogID" required >
+                    <label for="dogID">Dog: </label> 
+                        <select name="dogID" id="dogID" required >
                                 <option value="0">select dog</option>
                                 <option value="1">Fido</option>
                                 <option value="2">Nalla</option>
@@ -86,7 +86,7 @@
         <section>
             <br><br>
             <table id="sessionTable">
-                <tr>  <!--  -->
+                <tr>
                     <th>ID</th>
                     <th>Employee</th>
                     <th>Client</th>
@@ -97,55 +97,7 @@
                     <th>Status</th>
                     <th>Edit</th>
                     <th>Delete</th>
-                </tr> 
-                <tr>
-                    <td>1</td>
-                    <td>Diede Sovanna</td>
-                    <td>Pat Yonah</td>
-                    <td>Leoford</td>
-                    <td>2025-01-05 09:00:00</td>
-                    <td>90 min</td>
-                    <td>$70</td>
-                    <td>Completed</td>
-                    <td><button class="sessionEdit">Edit</button></td>
-                    <td><button type="button" class="sessionDelete">Delete</button></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Diede Sovanna</td>
-                    <td>Nzinga Fumnaya</td>
-                    <td>Fido</td>
-                    <td>2025-01-05 11:00:00</td>
-                    <td></td>
-                    <td>$70</td>
-                    <td>Canceled</td>
-                    <td><button class="sessionEdit">Edit</button></td>
-                    <td><button type="button" class="sessionDelete">Delete</button></td>
-                </tr> 
-                <tr>
-                    <td>3</td>
-                    <td>Matija Tristin</td>
-                    <td>Pat Yonah</td>
-                    <td>Lucky</td>
-                    <td>2025-02-05 08:00:00</td>
-                    <td>30 min</td>
-                    <td>$20</td>
-                    <td>Completed</td>
-                    <td><button class="sessionEdit">Edit</button></td>
-                    <td><button type="button" class="sessionDelete">Delete</button></td>
-                </tr> 
-                <tr>
-                    <td>4</td>
-                    <td>Marley Kirby</td>
-                    <td>Karuna Yarden</td>
-                    <td>Ferdinand the Destroyer</td>
-                    <td>2025-02-05 08:30:00</td>
-                    <td>180 min</td>
-                    <td>$110</td>
-                    <td>Completed</td>
-                    <td><button class="sessionEdit">Edit</button></td>
-                    <td><button type="button" class="sessionDelete">Delete</button></td>
-                </tr> 
+                </tr>  
             </table>
             <br><br>
             <div id="editSessionForm" style="display: none;">

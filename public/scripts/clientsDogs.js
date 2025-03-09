@@ -87,11 +87,6 @@ function delRow(event) {
     };
 };
 
-function showEditForm() {
-    document.getElementById('editClientDogForm').style.display='none';
-    document.getElementById('editClientDogForm').style.display='block';
-}
-
 function populateEditForm(event) {
     event.preventDefault();
     let tr = event.target.parentNode.parentNode; 
