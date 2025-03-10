@@ -92,23 +92,6 @@ function delRow(event) {
     };
 };
 
-function showEditForm() {
-    document.getElementById('editDogForm').style.display='none';
-    document.getElementById('editDogForm').style.display='block';
-}
-
-function populateEditForm(event) {
-    event.preventDefault();
-    let tr = event.target.parentNode.parentNode; 
-    let children = tr.children;
-    document.getElementById('editDogID').textContent = children[0].textContent;
-    document.getElementById('editDogName').value = children[1].textContent;
-    document.getElementById('editDogAge').value = children[2].textContent;
-    document.getElementById('editDogBreed').value = children[3].textContent;
-    document.getElementById('editDogSize').value = children[4].textContent;
-    document.getElementById('editDogNotes').value = children[5].textContent;
-    showEditForm('editDogForm');
-}
 
 function addNewDog(event) {
     // Prevent the form from submitting
@@ -156,3 +139,64 @@ function addNewDog(event) {
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
 };
+
+function updateRow(event){
+    event.preventDefault();
+    
+    // Get form fields we need to get data from
+    let updateID = document.getElementById('editDogID');
+    let updateName = document.getElementById("editDogName");
+    let updateAge = document.getElementById("editDogAge");
+    let updateBreed = document.getElementById("editDogBreed");
+    let updateSize = document.getElementById("editDogSize");
+    let updateNotes = document.getElementById("editDogNotes");
+    // Put our data we want to send in a javascript object
+    let data = {
+        id: updateID.textContent,
+        name: updateName.value,
+        age: updateAge.value,
+        breed: (updateBreed.value.trim() == "") ? 'null': updateBreed.value,
+        size: updateSize.value,
+        groomer_notes: (updateNotes.value.trim() == "") ? 'null': updateNotes.value
+    }
+    // Setup our AJAX request
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("PUT", "/put-dog", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+
+    // Tell our AJAX request how to resolve
+    xhttp.onreadystatechange = () => {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            // Add the new data to the table
+            refreshTable();
+            // Hiding edit window
+            document.getElementById('editDogForm').style.visibility = 'hidden';
+        }
+        else if (xhttp.readyState == 4 && xhttp.status != 200) {
+            console.log("There was an error with the input.")
+        }
+    };
+
+    // Send the request and wait for the response
+    xhttp.send(JSON.stringify(data));
+};
+
+
+function showEditForm() {
+    document.getElementById('editDogForm').style.display='none';
+    document.getElementById('editDogForm').style.display='block';
+    document.getElementById('editDogForm').style.visibility = 'visible';
+}
+
+function populateEditForm(event) {
+    event.preventDefault();
+    let tr = event.target.parentNode.parentNode; 
+    let children = tr.children;
+    document.getElementById('editDogID').textContent = children[0].textContent;
+    document.getElementById('editDogName').value = children[1].textContent;
+    document.getElementById('editDogAge').value = children[2].textContent;
+    document.getElementById('editDogBreed').value = children[3].textContent;
+    document.getElementById('editDogSize').value = children[4].textContent;
+    document.getElementById('editDogNotes').value = children[5].textContent;
+    showEditForm('editDogForm');
+}
