@@ -70,21 +70,24 @@ function addNewEmployee(event) {
     let inputWage = document.getElementById("employeewage");
     let inputExperience = document.getElementById("employeeExperience");
     let inputPhone = document.getElementById("employeePhone");
+    let inputPhoneValue = inputPhone.value.trim();
+    if (inputPhoneValue[0] !== '(') {
+        inputPhoneValue = '(' + inputPhoneValue.slice(0, 3) + ")" + inputPhoneValue.slice(3);
+    };
     let inputEmail = document.getElementById("employeeEmail");
     let inputAddress = document.getElementById("employeeAddress");
     let inputActive = document.getElementById("employeeisActive");
-    alert(inputActive.value)
     // Put our data we want to send in a javascript object
     let data = {
         name: inputName.value,
         wage: inputWage.value,
         experience: inputExperience.value,
-        phone: inputPhone.value,
-        email: inputEmail.value,
+        phone: inputPhoneValue,
+        email: inputEmail.value, 
         address: inputAddress.value,
-        active: inputActive.value
+        active: (inputActive.checked === true) ? 1 : 0
     }
-    alert(inputActive.value);
+
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
     xhttp.open("POST", "/add-employee", true);
@@ -119,7 +122,28 @@ function delRow(event) {
     if (confirm("Are you sure you want to delete this employee?")) {
         let td = event.target.parentNode; 
         let tr = td.parentNode; 
-        tr.parentNode.removeChild(tr);
+        let data = {
+            id: tr.children[0].textContent
+        };
+        // Setup our AJAX request
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("DELETE", '/delete-employee/', true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+    
+        // Tell our AJAX request how to resolve
+        xhttp.onreadystatechange = () => {
+            if (xhttp.readyState == 4 && xhttp.status == 204) {
+                // Remove row from table
+                tr.parentNode.removeChild(tr)
+                document.getElementById('editEmployeesForm').style.display='block';
+            }
+            else if (xhttp.readyState == 4 && xhttp.status != 200) {
+                console.log("There was an error with the input.")
+            }
+        };
+    
+        // Send the request and wait for the response
+        xhttp.send(JSON.stringify(data));
     };
 };
 
@@ -139,6 +163,6 @@ function populateEditForm(event) {
     document.getElementById('editEmployeesPhone').value = children[4].textContent;
     document.getElementById('editEmployeesEmail').value = children[5].textContent;
     document.getElementById('editEmployeesAddress').value = children[6].textContent;
-    document.getElementById('editEmployeesActive').value = children[7].textContent;
+    document.getElementById('editEmployeesActive').checked = (children[7].textContent === '1') ? true : false;
     showEditForm('editEmployeesForm');
 }

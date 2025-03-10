@@ -164,6 +164,9 @@ SELECT * FROM Services;
 -- Select services for dropdowns
 SELECT serviceID, service_name FROM Services;
 
+-- Select specific service
+SELECT serviceID FROM Services WHERE service_name = :service_name_input;
+
 -- Insert new service
 INSERT INTO Services(
     service_name,
@@ -270,13 +273,15 @@ JOIN Employees ON Sessions.employee_id = Employees.employeeID
 JOIN Clients ON Sessions.client_id = Clients.clientID
 JOIN Dogs ON Sessions.dog_id = Dogs.dogID;
 
-
 -- Select sessions based on date
 SELECT Sessions.sessionID, Employees.name, Clients.name, Dogs.name, Sessions.session_time, Sessions.actual_duration, Sessions.total_price, Sessions.status FROM Sessions
 JOIN Employees ON Sessions.employee_id = Employees.employeeID
 JOIN Clients ON Sessions.client_id = Clients.clientID
 JOIN Dogs ON Sessions.dog_id = Dogs.dogID
 WHERE DATE(Sessions.start) = :dateInput;
+
+-- Select sessions for dropdowns
+SELECT sessionID FROM Sessions;
 
 -- Add new session
 INSERT INTO Sessions(
@@ -309,3 +314,22 @@ WHERE sessionID = :idInput;
 
 -- Delete session
 DELETE FROM Sessions WHERE sessionID = :sessions_ID_selected_from_session_page;
+
+-- -----------------------------------------------------
+-- SessionServices table queries
+-- -----------------------------------------------------
+
+-- Select all SessionServices
+SELECT SessionServices.session_id, Services.service_name FROM SessionServices JOIN Services ON Services.serviceID = SessionServices.service_id;
+
+-- Add new SessionServices
+INSERT INTO SessionServices(
+    session_id,
+    service_id
+) VALUES (
+    :session_id_input,
+    :service_id_from_dropdown
+);
+
+-- Delete SessionsServices
+DELETE FROM SessionServices WHERE session_id = :session_id_input AND service_id = :service_id_input;

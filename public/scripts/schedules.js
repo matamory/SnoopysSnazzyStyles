@@ -58,6 +58,7 @@ function createRow(data, table) {
 
     newRow.innerHTML = `\
     <tr>\
+        <td>${data['scheduleID']}</td>\
         <td>${data['name']}</td>\
         <td>${date}</td>\
         <td>${formatTime(data['start'].slice(11), true)}</td>\
@@ -224,7 +225,28 @@ function delRow(event) {
     if (confirm("Are you sure you want to delete this schedule?")) {
         let td = event.target.parentNode; 
         let tr = td.parentNode; 
-        tr.parentNode.removeChild(tr);
+        let data = {
+            id: tr.children[0].textContent
+        };
+        // Setup our AJAX request
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("DELETE", '/delete-schedule/', true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+    
+        // Tell our AJAX request how to resolve
+        xhttp.onreadystatechange = () => {
+            if (xhttp.readyState == 4 && xhttp.status == 204) {
+                // Remove row from table
+                tr.parentNode.removeChild(tr)
+                document.getElementById('editScheduleForm').style.display='none';
+            }
+            else if (xhttp.readyState == 4 && xhttp.status != 200) {
+                console.log("There was an error with the input.")
+            }
+        };
+    
+        // Send the request and wait for the response
+        xhttp.send(JSON.stringify(data));
     };
 };
 
@@ -237,20 +259,11 @@ function populateEditForm(event) {
     event.preventDefault();
     let tr = event.target.parentNode.parentNode; 
     let children = tr.children;
-    document.getElementById('editScheduleEmployee').value = children[0].textContent;
-    document.getElementById('editScheduleDate').value = children[1].textContent.replace(' ', "T");
+    document.getElementById('editScheduleID').textContent = children[0].textContent;
+    document.getElementById('editScheduleEmployee').value = children[1].textContent;
+    document.getElementById('editScheduleDate').value = children[2].textContent.replace(' ', "T");
     let time = 0; 
     // Format for datetime input
-    if (children[2].textContent.slice(-3) === ' pm'){
-        time = children[2].textContent.slice(0, -6);
-        time = parseInt(time);
-        time += (time < 12)? 12 : 0;
-        time = time.toString();
-        time += children[2].textContent.slice(-6, -3);
-    } else {
-        time = children[2].textContent.slice(0, -3);
-    }
-    document.getElementById('editScheduleStart').value = time;
     if (children[3].textContent.slice(-3) === ' pm'){
         time = children[3].textContent.slice(0, -6);
         time = parseInt(time);
@@ -258,7 +271,17 @@ function populateEditForm(event) {
         time = time.toString();
         time += children[3].textContent.slice(-6, -3);
     } else {
-        time = children[3].textContent.slice(0 -3);
+        time = children[3].textContent.slice(0, -3);
+    }
+    document.getElementById('editScheduleStart').value = time;
+    if (children[4].textContent.slice(-3) === ' pm'){
+        time = children[4].textContent.slice(0, -6);
+        time = parseInt(time);
+        time += (time < 12)? 12 : 0;
+        time = time.toString();
+        time += children[4].textContent.slice(-6, -3);
+    } else {
+        time = children[4].textContent.slice(0 -3);
     }
     document.getElementById('editScheduleEnd').value = time;
     showEditForm('editScheduleForm');
