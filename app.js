@@ -565,6 +565,41 @@ app.delete('/delete-sessionService', function(req,res, next){
         })
     }
 );
+
+//===============================================================================================
+
+
+app.put('/put-dog-ajax', function(req,res,next){
+    let data = req.body;
+
+    let id = parseInt(data.dogID);
+    console.log(id);
+    let name = data.name;
+    let age = data.age;
+    let breed = data.breed;
+    let size_lbs = data.size_lbs;
+    let groomer_notes = data.groomer_notes;
+  
+    //let dog_ID = parseInt(data.dogID);
+    
+    //let queryUpdateDog = `UPDATE Dogs SET name = '${data.name}' SET age = '${data.age}', breed = '${data.breed}', size_lbs = '${data.size_lbs}', groomer_notes = '${data.groomer_notes}' WHERE dogID = ?`;
+    let queryUpdateDog = `
+        UPDATE Dogs 
+        SET name = ?, age = ?, breed = ?, size_lbs = ?, groomer_notes = ?
+        WHERE dogID = ?`;
+  
+          // Run the 1st query
+    db.pool.query(queryUpdateDog, [name, age, breed, size_lbs,groomer_notes, id ], function(error, rows, fields){
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.send(rows);
+        }
+
+    })
+});
+
 /*========================================================================================
     LISTENER
 ==========================================================================================*/
