@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let addEmployeeForm = document.getElementById('employeeForm');
     // apply insert form event listener
     addEmployeeForm.addEventListener("submit", addNewEmployee);
+    // Get Update form
+    let updateEmployeeForm = document.getElementById('updateEmployeeForm');
+    // apply update form event listener
+    updateEmployeeForm.addEventListener("submit", updateRow);
 });
 
 function refreshTable() {
@@ -135,7 +139,7 @@ function delRow(event) {
             if (xhttp.readyState == 4 && xhttp.status == 204) {
                 // Remove row from table
                 tr.parentNode.removeChild(tr)
-                document.getElementById('editEmployeesForm').style.display='block';
+                document.getElementById('editEmployeesForm').style.visibility = 'hidden';
             }
             else if (xhttp.readyState == 4 && xhttp.status != 200) {
                 console.log("There was an error with the input.")
@@ -147,9 +151,60 @@ function delRow(event) {
     };
 };
 
+function updateRow(event){
+    event.preventDefault();
+    
+    // Get form fields we need to get data from
+    let updateID = document.getElementById('editEmployeeID');
+    let updateName = document.getElementById("editEmployeesName");
+    let updateWage = document.getElementById("editEmployeesWage");
+    let updateExperience = document.getElementById("editEmployeesExperience");
+    let updatePhone = document.getElementById("editEmployeesPhone");
+    let updatePhoneValue = updatePhone.value.trim();
+    if (updatePhoneValue[0] !== '(') {
+        updatePhoneValue = '(' + updatePhoneValue.slice(0, 3) + ")" + updatePhoneValue.slice(3);
+    };
+    let updateEmail = document.getElementById("editEmployeesEmail");
+    let updateAddress = document.getElementById("editEmployeesAddress");
+    let updateActive = document.getElementById("editEmployeesActive");
+    // Put our data we want to send in a javascript object
+    let data = {
+        id: updateID.textContent,
+        name: updateName.value,
+        wage: updateWage.value,
+        experience: updateExperience.value,
+        phone: updatePhoneValue,
+        email: updateEmail.value, 
+        address: updateAddress.value,
+        active: (updateActive.checked === true) ? 1 : 0
+    }
+    // Setup our AJAX request
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("PUT", "/put-employee", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+
+    // Tell our AJAX request how to resolve
+    xhttp.onreadystatechange = () => {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            // Add the new data to the table
+            refreshTable();
+            // Hiding edit window
+            document.getElementById('editEmployeesForm').style.visibility = 'hidden';
+        }
+        else if (xhttp.readyState == 4 && xhttp.status != 200) {
+            console.log("There was an error with the input.")
+        }
+    };
+
+    // Send the request and wait for the response
+    xhttp.send(JSON.stringify(data));
+};
+
 function showEditForm() {
     document.getElementById('editEmployeesForm').style.display='none';
     document.getElementById('editEmployeesForm').style.display='block';
+    document.getElementById('editEmployeesForm').hidden=false;
+    document.getElementById('editEmployeesForm').style.visibility = 'visible';
 }
 
 function populateEditForm(event) {

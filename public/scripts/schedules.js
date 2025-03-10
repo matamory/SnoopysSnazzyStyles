@@ -14,6 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let addScheduleForm = document.getElementById('scheduleForm');
     // apply insert form event listener
     addScheduleForm.addEventListener("submit", addNewSchedule);
+    // Get Update form
+    let updateScheduleForm = document.getElementById('updateScheduleForm');
+    // apply update form event listener
+    updateScheduleForm.addEventListener("submit", updateRow);
 });
 
 function refreshTable() {
@@ -250,9 +254,48 @@ function delRow(event) {
     };
 };
 
+function updateRow(event){
+    event.preventDefault();
+    
+    // Get form fields we need to get data from
+    let updateID = document.getElementById('editScheduleID');
+    let updateEmployee = document.getElementById("editScheduleEmployee");
+    let updateDate = document.getElementById("editScheduleDate");
+    let updateStart = document.getElementById("editScheduleStart");
+    let updateEnd = document.getElementById("editScheduleEnd");
+    // Put our data we want to send in a javascript object
+    let data = {
+        id: updateID.textContent,
+        name: updateEmployee.value,
+        start: updateDate.value + ' ' + updateStart.value,
+        end: updateDate.value + ' ' + updateEnd.value
+    }
+    // Setup our AJAX request
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("PUT", "/put-schedule", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+
+    // Tell our AJAX request how to resolve
+    xhttp.onreadystatechange = () => {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            // Add the new data to the table
+            refreshTable();
+            // Hiding edit window
+            document.getElementById('editScheduleForm').style.visibility = 'hidden';
+        }
+        else if (xhttp.readyState == 4 && xhttp.status != 200) {
+            console.log("There was an error with the input.")
+        }
+    };
+
+    // Send the request and wait for the response
+    xhttp.send(JSON.stringify(data));
+};
+
 function showEditForm() {
     document.getElementById('editScheduleForm').style.display='none';
     document.getElementById('editScheduleForm').style.display='block';
+    document.getElementById('editScheduleForm').style.visibility = 'visible';
 }
 
 function populateEditForm(event) {

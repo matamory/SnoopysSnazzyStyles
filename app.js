@@ -9,7 +9,7 @@ var app     = express();            // We need to instantiate an express object 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
-PORT        = 6595;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 6594;                 // Set a port number at the top so it's easy to change in the future
 
 
 const { engine } = require('express-handlebars');
@@ -566,37 +566,98 @@ app.delete('/delete-sessionService', function(req,res, next){
     }
 );
 
+
 //===============================================================================================
 
-
-app.put('/put-dog-ajax', function(req,res,next){
+app.put('/put-employee', function(req,res, next){
+    // Capture the incoming data and parse it back to a JS object
     let data = req.body;
 
-    let id = parseInt(data.dogID);
-    console.log(id);
-    let name = data.name;
-    let age = data.age;
-    let breed = data.breed;
-    let size_lbs = data.size_lbs;
-    let groomer_notes = data.groomer_notes;
-  
-    //let dog_ID = parseInt(data.dogID);
-    
-    //let queryUpdateDog = `UPDATE Dogs SET name = '${data.name}' SET age = '${data.age}', breed = '${data.breed}', size_lbs = '${data.size_lbs}', groomer_notes = '${data.groomer_notes}' WHERE dogID = ?`;
-    let queryUpdateDog = `
-        UPDATE Dogs 
-        SET name = ?, age = ?, breed = ?, size_lbs = ?, groomer_notes = ?
-        WHERE dogID = ?`;
-  
-          // Run the 1st query
-    db.pool.query(queryUpdateDog, [name, age, breed, size_lbs,groomer_notes, id ], function(error, rows, fields){
+    // Create the query and run it on the database
+    query1 = `UPDATE Employees SET 
+                name = '${data.name}', 
+                hourly_wage = '${data.wage}', 
+                years_experience = '${data.experience}', 
+                phone_number= '${data.phone}',
+                email = '${data.email}', 
+                address = '${data.address}', 
+                is_active = '${data.active}'
+            WHERE employeeID = ${data.id};`;
+
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
         if (error) {
-            console.log(error);
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
             res.sendStatus(400);
-        } else {
+        }
+        else {
             res.send(rows);
         }
+    })
+});
 
+app.put('/put-dog-ajax', function(req,res, next){
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Capture NULL values
+    let breed = (data.breed);
+    if (breed == "null"){
+        breed = null;
+    }
+
+    let groomer_notes = (data.groomer_notes);
+    if (groomer_notes == "null"){
+        groomer_notes = null;
+    }
+
+    // Create the query and run it on the database
+    query1 = `UPDATE Dogs SET 
+                name = '${data.name}', 
+                age = '${data.age}', 
+                breed = '${breed}', 
+                size_lbs= '${data.size}',
+                groomer_notes = '${groomer_notes}' 
+            WHERE dogID = ${data.id};`;
+
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            res.send(rows);
+        }
+    })
+});
+
+app.put('/put-schedule', function(req,res, next){
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    query1 = `UPDATE Schedules SET 
+                employee_id = '${data.name}', 
+                start = '${data.start}', 
+                end = '${data.end}'
+            WHERE scheduleID = ${data.id};`;
+
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            res.send(rows);
+        }
     })
 });
 
