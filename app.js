@@ -119,8 +119,8 @@ app.get('/servicesSel', function(req, res)
 
 app.get('/sessionServicesSel', function(req, res)
     {  
-        let query1 = "SELECT * FROM SessionServices;";                     // Define our query
-``
+        let query1 = "SELECT SessionServices.session_id, Services.service_name FROM SessionServices JOIN Services ON Services.serviceID = SessionServices.service_id ORDER BY session_id;";                     // Define our query
+
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
             res.send(JSON.stringify(rows));                     // Return query as JSON string
         })                                                      
@@ -153,6 +153,25 @@ app.get('/schedulesSel', function(req, res)
 app.get('/employeesDropdown', function(req, res)
     {  
         let query1 = "SELECT employeeID, name FROM Employees;";                     // Define our query
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            res.send(JSON.stringify(rows));                     // Return query as JSON string
+        })                                                      
+    });                                                        
+
+app.get('/serviceDropdown', function(req, res)
+    {  
+        let query1 = "SELECT serviceID, service_name FROM Services;";                     // Define our query
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            res.send(JSON.stringify(rows));                     // Return query as JSON string
+        })                                                      
+    });                                                        
+                                             
+
+app.get('/sessionDropdown', function(req, res)
+    {  
+        let query1 = "SELECT sessionID FROM Sessions;";                     // Define our query
 
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
             res.send(JSON.stringify(rows));                     // Return query as JSON string
@@ -322,10 +341,42 @@ app.post('/add-sessions-ajax', function(req, res){
                 res.sendStatus(400);
             }
             else
+            {   
+                query2 = "SELECT MAX(sessionID) FROM Sessions;"
+                db.pool.query(query2, function(error, rows, fields){
+                    res.send(JSON.stringify(rows));
+                })
+            }
+        })
+});    
+
+app.post('/add-sessionsService', function(req, res){
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    let query1 = `INSERT INTO SessionServices(
+                    session_id,
+                    service_id
+                ) VALUES (
+                    ?,
+                    ?
+                );`;
+    db.pool.query(query1, [data.session_id, data.service_id], function(error, rows, fields){
+    
+        // Check to see if there was an error
+        if (error) {
+    
+                // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error)
+                res.sendStatus(400);
+            }
+            else
             {
                 res.send(rows);
             }
-        })
+
+    })
 });    
 
 app.post('/add-schedule', function(req, res){
@@ -487,6 +538,30 @@ app.delete('/delete-sessions-ajax', function(req,res, next){
             } else {
                     res.sendStatus(204);
             }
+        })
+    }
+);
+
+app.delete('/delete-sessionService', function(req,res, next){
+    let data = req.body;
+    let session_ID = parseInt(data.session_id);
+    let service_name = data.service_name;
+    let serviceIdQuery = `SELECT serviceID FROM Services WHERE service_name = ?;`
+    let deleteSession= `DELETE FROM SessionServices WHERE session_id = ? AND service_id = ?;`;
+  
+
+        db.pool.query(serviceIdQuery, [service_name], function(error, rows, fields) {
+            let service_ID = rows[0]['serviceID'];
+            console.log(service_ID);
+            db.pool.query(deleteSession, [session_ID, service_ID], function(error, rows, fields) {
+  
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                        res.sendStatus(204);
+                }
+            })
         })
     }
 );

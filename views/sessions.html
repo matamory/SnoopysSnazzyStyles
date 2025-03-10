@@ -64,11 +64,7 @@
                     <label>Total Price:</label> <input type="number" name="totalPrice" id="sessionPrice" required placeholder="00.00" /><br><br>
                     
                     <div id="serviceEntry"> <label for="service_id">Services: </label> <div id="service_id" class = "service_id">
-                    <select name="service_id" id="service_idSelect" required >
-                        <option value="0">Nail Trim</option>
-                        <option value="1">Puppy Cut</option>
-                        <option value="2">Basic Cut: Fluffy Breeds</option>
-                        <option value="3">Basic Cut: Short Coats</option>
+                    <select name="s" id="service_idSelect" required >
                     </select> <button type="button" onclick="addService()">Add Service</button> <button type="button" onclick="removeService()">Remove Service</button> </div></div>
                     <br><br>
                     <label>Status:</label>
@@ -121,24 +117,16 @@
             <h2>Sessions Services</h2>
             <article>
                 <h3>Add a Service to a Session:</h3>
-                <form id="sessionForm" action="submitSession" method="POST">
+                <form id="sessionServiceForm" action="submitSession" method="POST">
                 <fieldset>
                     <label for="sessionID">SessionID: </label> 
                         <select name="sessionID" id="sessionID" required >
-                            <option value="0">select session</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
+                            <option value="0">Select Session</option>
                         </select>
                         <br><br>
                     <label for="service">Service: </label> 
                         <select name="service" id="service" required >
-                            <option value="0">select employee</option>
-                            <option value="1">Nail Trim</option>
-                            <option value="2">Puppy Cut</option>
-                            <option value="3">Basic Cut: Fluffy Breeds</option>
-                            <option value="4">Basic Cut: Short Coats</option>
+                            <option value="0">Select Service</option>
                         </select>
                         <br><br>
                 </fieldset>
@@ -153,36 +141,6 @@
                     <th>SessionID</th>
                     <th>Services</th>
                     <th>Delete</th>
-                </tr> 
-                <tr>
-                    <td>1</td>
-                    <td>Nail Trim</td>
-                    <td><button type="button" class="sessionDelete">Delete</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Puppy Cut</td>
-                    <td><button type="button" class="sessionDelete">Delete</button></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Basic Cut: Short Coats</td>
-                    <td><button type="button" class="sessionDelete">Delete</button></td>
-                </tr> 
-                <tr>
-                    <td>3</td>
-                    <td> Nail Trim</td>
-                    <td><button type="button" class="sessionDelete">Delete</button></td>
-                </tr> 
-                <tr>
-                    <td>4</td>
-                    <td>Nail Trim</td>
-                    <td><button type="button" class="sessionDelete">Delete</button></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Basic Cut: Fluffy Breeds</td>
-                    <td><button type="button" class="sessionDelete">Delete</button></td>
                 </tr> 
             </table>
 
