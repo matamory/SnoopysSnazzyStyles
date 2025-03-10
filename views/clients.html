@@ -61,14 +61,15 @@
             <br>
             <div id="editClientForm" style="display: none;">
                 <h3>Edit Client Information</h3>
-                <form >
+                <form id="update-client-form-ajax">
                     <label>ID:</label><label id="editClientID"></label><br><br>
                     <label>Name:</label> <input type="text" id="editClientName" required><br><br>
                     <label>Phone number:</label> <input type="tel" id="editClientPhone" required><br><br>
-                    <label>Preferred Contact Method:</label>
-                    <select name="service_id" id="editClientContact">
-                        <option value="0">Call</option>
-                        <option value="1">Text</option></select><br><br>
+                    <label>Preferred contact method: </label>
+                        <input type="radio" id="editPhone" name="editContactMethod" value="call">
+                        <label for="editCall">Call</label>
+                        <input type="radio" id="editText" name="editContactMethod" value="text">
+                        <label for="editText">Text</label><br><br>
                     <label>Email:</label> <input type="text" id="editClientEmail" required><br><br>
                     <br>
                     <button type="submit" class="UpdateInfo">Update</button>
