@@ -97,6 +97,24 @@ function delRow(event) {
     };
 };
 
+function showEditForm() {
+    document.getElementById('editDogForm').style.display='none';
+    document.getElementById('editDogForm').style.display='block';
+    document.getElementById('editDogForm').style.visibility = 'visible';
+}
+
+function populateEditForm(event) {
+    event.preventDefault();
+    let tr = event.target.parentNode.parentNode; 
+    let children = tr.children;
+    document.getElementById('editDogID').textContent = children[0].textContent;
+    document.getElementById('editDogName').value = children[1].textContent;
+    document.getElementById('editDogAge').value = children[2].textContent;
+    document.getElementById('editDogBreed').value = children[3].textContent;
+    document.getElementById('editDogSize').value = children[4].textContent;
+    document.getElementById('editDogNotes').value = children[5].textContent;
+    showEditForm('editDogForm');
+}
 
 function addNewDog(event) {
     // Prevent the form from submitting
@@ -190,23 +208,3 @@ function updateDog(event){
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
 };
-
-
-function showEditForm() {
-    document.getElementById('editDogForm').style.display='none';
-    document.getElementById('editDogForm').style.display='block';
-    document.getElementById('editDogForm').style.visibility = 'visible';
-}
-
-function populateEditForm(event) {
-    event.preventDefault();
-    let tr = event.target.parentNode.parentNode; 
-    let children = tr.children;
-    document.getElementById('editDogID').textContent = children[0].textContent;
-    document.getElementById('editDogName').value = children[1].textContent;
-    document.getElementById('editDogAge').value = children[2].textContent;
-    document.getElementById('editDogBreed').value = children[3].textContent;
-    document.getElementById('editDogSize').value = children[4].textContent;
-    document.getElementById('editDogNotes').value = children[5].textContent;
-    showEditForm('editDogForm');
-}
