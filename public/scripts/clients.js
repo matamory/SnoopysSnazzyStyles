@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let addClientForm = document.getElementById('clientForm');
     // apply insert form event listener
     addClientForm.addEventListener("submit", addNewClient);
+    // Get update form 
+    let updateClientForm = document.getElementById('update-client-form-ajax');
+    updateClientForm.addEventListener("submit", updateClient);
 });
 
 function refreshTable() {
@@ -33,7 +36,7 @@ function refreshTable() {
                 del[i].addEventListener("click", delRow)
             };
             let edit = document.getElementsByClassName('clientsEdit')
-            for (let i = 0; i < del.length; i++) {
+            for (let i = 0; i < edit.length; i++) {
                 edit[i].addEventListener("click", populateEditForm)
             };
         }
@@ -76,7 +79,7 @@ function delRow(event) {
         xhttp.onreadystatechange = () => {
             if (xhttp.readyState == 4 && xhttp.status == 204) {
                 // Remove row from table
-                alert('Client has be deleted');
+                alert('Client has been deleted');
                 tr.parentNode.removeChild(tr)
             }
             else if (xhttp.readyState == 4 && xhttp.status != 200) {
@@ -101,9 +104,15 @@ function populateEditForm(event) {
     document.getElementById('editClientID').textContent = children[0].textContent;
     document.getElementById('editClientName').value = children[1].textContent;
     document.getElementById('editClientPhone').value = children[2].textContent;
-    let sel = (children[3].textContent === 'Call') ? 0: 1;
-    document.getElementById('editClientContact').value = sel;
     document.getElementById('editClientEmail').value = children[4].textContent;
+
+    let contactMethod = children[3].textContent.toLowerCase();
+    console.log(contactMethod);
+    let radioButton = document.querySelector(`input[name="editContactMethod"][value ="${contactMethod}"]`);
+    if (radioButton) {
+        radioButton.checked = true;
+    }
+
     showEditForm('editClientForm');
 }
 
@@ -152,3 +161,52 @@ function addNewClient(event) {
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
 };   
+
+function updateClient(event) {
+    event.preventDefault();
+    let inputClientID = document.getElementById("editClientID");
+    let inputName = document.getElementById("editClientName");
+    let inputPhone = document.getElementById("editClientPhone");
+    let inputContact = document.querySelector('input[name="editContactMethod"]:checked');
+    let inputEmail = document.getElementById("editClientEmail");
+
+
+    // must abort if being passed NULL for dogID
+
+    if (inputClientID.textContent === "") {
+        return;
+      }
+
+    // Put our data we want to send in a javascript object
+    let data = {
+        clientID: inputClientID.textContent,
+        name: inputName.value,
+        phone: inputPhone.value,
+        contact: inputContact.value,
+        email: inputEmail.value,
+        
+    }
+    
+    // Setup our AJAX request
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("PUT", "/put-client-ajax", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+
+    // Tell our AJAX request how to resolve
+    xhttp.onreadystatechange = () => {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+
+            // Add the new data to the table
+            refreshTable();
+            document.getElementById("editClientForm").style.display = "none";
+
+        }
+        else if (xhttp.readyState == 4 && xhttp.status != 200) {
+            console.log("There was an error with the input.")
+        }
+    }
+
+    // Send the request and wait for the response
+    xhttp.send(JSON.stringify(data));
+
+}

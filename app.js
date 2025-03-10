@@ -9,7 +9,7 @@ var app     = express();            // We need to instantiate an express object 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
-PORT        = 6594;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 6595;                 // Set a port number at the top so it's easy to change in the future
 
 
 const { engine } = require('express-handlebars');
@@ -590,6 +590,34 @@ app.put('/put-dog-ajax', function(req,res,next){
   
           // Run the 1st query
     db.pool.query(queryUpdateDog, [name, age, breed, size_lbs,groomer_notes, id ], function(error, rows, fields){
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.send(rows);
+        }
+
+    })
+});
+
+
+app.put('/put-client-ajax', function(req,res,next){
+    let data = req.body;
+
+    let id = parseInt(data.clientID);
+    console.log(id);
+    let name = data.name;
+    let phone = data.phone;
+    let contact = data.contact;
+    let email = data.email;
+  
+     let queryUpdateClient = `
+        UPDATE Clients 
+        SET name = ?, phone_number = ?, contact_method = ?, email = ?
+        WHERE clientID = ?`;
+  
+          // Run the 1st query
+    db.pool.query(queryUpdateClient, [name, phone, contact, email, id ], function(error, rows, fields){
         if (error) {
             console.log(error);
             res.sendStatus(400);
