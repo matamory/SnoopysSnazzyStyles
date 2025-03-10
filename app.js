@@ -598,7 +598,7 @@ app.put('/put-employee', function(req,res, next){
     })
 });
 
-app.put('/put-dog', function(req,res, next){
+app.put('/put-dog-ajax', function(req,res, next){
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
 
@@ -607,25 +607,19 @@ app.put('/put-dog', function(req,res, next){
     if (breed == "null"){
         breed = null;
     }
-    else {
-        breed =`'${breed}'`;
-    }
 
     let groomer_notes = (data.groomer_notes);
     if (groomer_notes == "null"){
         groomer_notes = null;
-    }
-    else {
-        groomer_notes =`'${groomer_notes}'`;
     }
 
     // Create the query and run it on the database
     query1 = `UPDATE Dogs SET 
                 name = '${data.name}', 
                 age = '${data.age}', 
-                breed = ${breed}, 
+                breed = '${breed}', 
                 size_lbs= '${data.size}',
-                groomer_notes = ${groomer_notes} 
+                groomer_notes = '${groomer_notes}' 
             WHERE dogID = ${data.id};`;
 
     db.pool.query(query1, function(error, rows, fields){
@@ -664,6 +658,34 @@ app.put('/put-schedule', function(req,res, next){
         else {
             res.send(rows);
         }
+    })
+});
+
+
+app.put('/put-client-ajax', function(req,res,next){
+    let data = req.body;
+
+    let id = parseInt(data.clientID);
+    console.log(id);
+    let name = data.name;
+    let phone = data.phone;
+    let contact = data.contact;
+    let email = data.email;
+  
+     let queryUpdateClient = `
+        UPDATE Clients 
+        SET name = ?, phone_number = ?, contact_method = ?, email = ?
+        WHERE clientID = ?`;
+  
+          // Run the 1st query
+    db.pool.query(queryUpdateClient, [name, phone, contact, email, id ], function(error, rows, fields){
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.send(rows);
+        }
+
     })
 });
 

@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let addDogForm = document.getElementById('dogForm');
     // apply insert form event listener
     addDogForm.addEventListener("submit", addNewDog);
+    // Get update form 
+    let updateDogForm = document.getElementById('update-dog-form-ajax');
+    updateDogForm.addEventListener("submit", updateDog);
 });
 
 function refreshTable() {
@@ -34,7 +37,7 @@ function refreshTable() {
                 del[i].addEventListener("click", delRow)
             };
             let edit = document.getElementsByClassName('dogsEdit')
-            for (let i = 0; i < del.length; i++) {
+            for (let i = 0; i < edit.length; i++) {
                 edit[i].addEventListener("click", populateEditForm)
             };
         }
@@ -47,6 +50,8 @@ function refreshTable() {
 
 function createRow(data, table) {
     let newRow = document.createElement('tr');
+    newRow.setAttribute("data-value", data['dogID']);
+
     newRow.innerHTML = `\
     <tr>\
         <td>${data['dogID']}</td>\
@@ -80,7 +85,7 @@ function delRow(event) {
                 // Remove row from table
                 alert('Dog has be deleted');
                 tr.parentNode.removeChild(tr)
-                document.getElementById('editDogForm').style.display='block';
+                /*document.getElementById('editDogForm').style.display='block';*/
             }
             else if (xhttp.readyState == 4 && xhttp.status != 200) {
                 console.log("There was an error with the input.")
@@ -140,19 +145,24 @@ function addNewDog(event) {
     xhttp.send(JSON.stringify(data));
 };
 
-function updateRow(event){
+function updateDog(event){
     event.preventDefault();
     
     // Get form fields we need to get data from
-    let updateID = document.getElementById('editDogID');
+    let updateDogID = document.getElementById('editDogID');
     let updateName = document.getElementById("editDogName");
     let updateAge = document.getElementById("editDogAge");
     let updateBreed = document.getElementById("editDogBreed");
     let updateSize = document.getElementById("editDogSize");
     let updateNotes = document.getElementById("editDogNotes");
+    // must abort if being passed NULL for dogID
+
+    if (updateDogID.textContent === "") {
+        return;
+      }
     // Put our data we want to send in a javascript object
     let data = {
-        id: updateID.textContent,
+        id: updateDogID.textContent,
         name: updateName.value,
         age: updateAge.value,
         breed: (updateBreed.value.trim() == "") ? 'null': updateBreed.value,
@@ -161,7 +171,7 @@ function updateRow(event){
     }
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("PUT", "/put-dog", true);
+    xhttp.open("PUT", "/put-dog-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
