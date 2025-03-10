@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let addDogForm = document.getElementById('clientDogForm');
     // apply insert form event listener
     addDogForm.addEventListener("submit", addNewClientDog);
+    // Get update form 
+    let updateClientDogForm = document.getElementById('update-clientDog-form-ajax');
+    updateClientDogForm.addEventListener("submit", updateClientDog);
 });
 
 function refreshTable() {
@@ -33,7 +36,7 @@ function refreshTable() {
                 del[i].addEventListener("click", delRow)
             };
             let edit = document.getElementsByClassName('clientsDogEdit')
-            for (let i = 0; i < del.length; i++) {
+            for (let i = 0; i < edit.length; i++) {
                 edit[i].addEventListener("click", populateEditForm)
             };
         }
@@ -74,7 +77,7 @@ function delRow(event) {
         xhttp.onreadystatechange = () => {
             if (xhttp.readyState == 4 && xhttp.status == 204) {
                 // Remove row from table
-                alert('Client-dog pair has be deleted');
+                alert('Client-dog pair has been deleted');
                 tr.parentNode.removeChild(tr)
             }
             else if (xhttp.readyState == 4 && xhttp.status != 200) {
@@ -137,3 +140,46 @@ function addNewClientDog(event) {
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
 };
+
+
+function updateClientDog(event) {
+    event.preventDefault();
+    let inputClientID = document.getElementById("editClient");
+    let inputDogID = document.getElementById("editDog");
+
+    // must abort if being passed NULL for dogID
+
+    if (inputClientID.textContent === "") {
+        return;
+      }
+
+    // Put our data we want to send in a javascript object
+    let data = {
+        client: inputClientID.textContent,
+        dog: inputDogID.value,
+        
+    }
+    
+    // Setup our AJAX request
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("PUT", "/put-clientDog-ajax", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+
+    // Tell our AJAX request how to resolve
+    xhttp.onreadystatechange = () => {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+
+            // Add the new data to the table
+            refreshTable();
+            document.getElementById("editClientDogForm").style.display = "none";
+
+        }
+        else if (xhttp.readyState == 4 && xhttp.status != 200) {
+            console.log("There was an error with the input.")
+        }
+    }
+
+    // Send the request and wait for the response
+    xhttp.send(JSON.stringify(data));
+
+}

@@ -628,6 +628,30 @@ app.put('/put-client-ajax', function(req,res,next){
     })
 });
 
+app.put('/put-clientDog-ajax', function(req,res,next){
+    let data = req.body;
+
+    let id = parseInt(data.client);
+    console.log(id);
+    let dog = data.dog;
+  
+     let queryUpdateClientDog = `
+        UPDATE ClientsDogs 
+        SET dog_id = ?
+        WHERE client_id = ?`;
+  
+          // Run the 1st query
+    db.pool.query(queryUpdateClientDog, [dog, id ], function(error, rows, fields){
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.send(rows);
+        }
+
+    })
+});
+
 /*========================================================================================
     LISTENER
 ==========================================================================================*/
