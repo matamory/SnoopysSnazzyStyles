@@ -692,17 +692,18 @@ app.put('/put-client-ajax', function(req,res,next){
 app.put('/put-clientDog-ajax', function(req,res,next){
     let data = req.body;
 
-    let id = parseInt(data.client);
+    let id = parseInt(data.clientDogID);
     console.log(id);
+    let client = data.client;
     let dog = data.dog;
   
      let queryUpdateClientDog = `
         UPDATE ClientsDogs 
-        SET dog_id = ?
-        WHERE client_id = ?`;
+        SET client_id = ?, dog_id = ?
+        WHERE clientsDogsID = ?`;
   
           // Run the 1st query
-    db.pool.query(queryUpdateClientDog, [dog, id ], function(error, rows, fields){
+    db.pool.query(queryUpdateClientDog, [client, dog, id ], function(error, rows, fields){
         if (error) {
             console.log(error);
             res.sendStatus(400);
