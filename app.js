@@ -506,12 +506,12 @@ app.delete('/delete-client-ajax', function(req,res, next){
 
 app.delete('/delete-clientsDogs-ajax', function(req,res, next){
     let data = req.body;
-    let client_ID = parseInt(data.id);
-    console.log(client_ID);
-    let deleteClient= `DELETE FROM Clients WHERE clientID = ?`;
+    let clientDog_ID = parseInt(data.id);
+    console.log(clientDog_ID);
+    let deleteClientDog= `DELETE FROM ClientsDogs WHERE clientsDogsID = ?`;
   
 
-        db.pool.query(deleteClient, [client_ID], function(error, rows, fields) {
+        db.pool.query(deleteClientDog, [clientDog_ID], function(error, rows, fields) {
   
             if (error) {
                 console.log(error);
