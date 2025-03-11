@@ -714,6 +714,35 @@ app.put('/put-clientDog-ajax', function(req,res,next){
     })
 });
 
+app.put('/put-session-ajax', function(req,res,next){
+    let data = req.body;
+
+    let id = parseInt(data.id);
+    
+    let employee = data.employee;
+    let client = data.client;
+    let dog = data.dog;
+    let time = data.time;
+    let duration = data.duration;
+    let price = data.price;
+    let stat = data.stat;
+  
+     let queryUpdateSession = `
+        UPDATE Sessions 
+        SET employee_id = ?, client_id = ?, dog_id = ?, session_time = ?, actual_duration = ?, total_price = ?, status = ?
+        WHERE sessionID = ?`;
+  
+          // Run the 1st query
+    db.pool.query(queryUpdateSession, [employee, client, dog, time, duration, price, stat, id ], function(error, rows, fields){
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.send(rows);
+        }
+
+    })
+});
 /*========================================================================================
     LISTENER
 ==========================================================================================*/

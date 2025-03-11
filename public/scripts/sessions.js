@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // apply insert form event listener
     addSessionServiceForm.addEventListener("submit", addNewSessionService);
     setDropdowns();
+    // Get update form 
+    let updateSessionForm = document.getElementById('update-session-form-ajax');
+    updateSessionForm.addEventListener("submit", updateSession);
 });
 
 function refreshTable() {
@@ -44,7 +47,7 @@ function refreshTable() {
                 del[i].addEventListener("click", delRow)
             };
             let edit = document.getElementsByClassName('sessionsEdit')
-            for (let i = 0; i < del.length; i++) {
+            for (let i = 0; i < edit.length; i++) {
                 edit[i].addEventListener("click", populateEditForm)
             };
         }
@@ -94,6 +97,7 @@ function delRow(event) {
                 // Remove row from table
                 alert('Session has be deleted');
                 tr.parentNode.removeChild(tr);
+                document.getElementById('editSessionForm').style.display='block';
                 refreshIntersectionTable();
             }
             else if (xhttp.readyState == 4 && xhttp.status != 200) {
@@ -430,3 +434,56 @@ function removeService() {
         serviceFields--;
     }
 }
+
+function updateSession(event){
+    event.preventDefault();
+    
+    // Get form fields we need to get data from
+    let updateSessionID = document.getElementById('editSessionID');
+    let updateEmployee = document.getElementById("editSessionEmployee");
+    let updateClient = document.getElementById("editSessionClient");
+    let updateDog = document.getElementById("editSessionDog");
+    let updateTime = document.getElementById("editSessionTime");
+    let updateDuration = document.getElementById("editSessionDuration");
+    let updatePrice = document.getElementById("editSessionPrice");
+    let updateStatus = document.getElementById("editSessionStatus");
+   
+
+    if (updateSessionID.textContent === "") {
+        return;
+      }
+
+    // Put our data we want to send in a javascript object
+    let data = {
+        id: updateSessionID.textContent,
+        employee: updateEmployee.value,
+        client: updateClient.value,
+        dog: updateDog.value, 
+        time: updateTime.value,
+        duration: updateDuration.value,
+        price: updatePrice.value,
+        stat: updateStatus.value,
+
+    }
+
+    // Setup our AJAX request
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("PUT", "/put-session-ajax", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+
+    // Tell our AJAX request how to resolve
+    xhttp.onreadystatechange = () => {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            // Add the new data to the table
+            refreshTable();
+            // Hiding edit window
+            document.getElementById('editSessionForm').style.visibility = 'hidden';
+        }
+        else if (xhttp.readyState == 4 && xhttp.status != 200) {
+            console.log("There was an error with the input.")
+        }
+    };
+
+    // Send the request and wait for the response
+    xhttp.send(JSON.stringify(data));
+};
