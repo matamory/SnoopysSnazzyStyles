@@ -85,7 +85,7 @@ function delRow(event) {
                 // Remove row from table
                 alert('Dog has been deleted');
                 tr.parentNode.removeChild(tr)
-                /*document.getElementById('editDogForm').style.display='block';*/
+                document.getElementById('editDogForm').style.display='block';
             }
             else if (xhttp.readyState == 4 && xhttp.status != 200) {
                 console.log("There was an error with the input.")
@@ -95,6 +95,7 @@ function delRow(event) {
         // Send the request and wait for the response
         xhttp.send(JSON.stringify(data));
     };
+    location.reload()
 };
 
 function showEditForm() {

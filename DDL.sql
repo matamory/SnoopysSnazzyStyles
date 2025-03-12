@@ -98,9 +98,10 @@ CREATE OR REPLACE TABLE Services(
 -- -----------------------------------------------------
 
 CREATE OR REPLACE TABLE ClientsDogs(
+    clientsDogsID int AUTO_INCREMENT UNIQUE NOT NULL,
     client_id int NOT NULL,
     dog_id int NOT NULL,
-    PRIMARY KEY (client_id, dog_id),
+    PRIMARY KEY (clientsDogsID),
     FOREIGN KEY (client_id) REFERENCES Clients(clientID) ON DELETE CASCADE,
     FOREIGN KEY (dog_id) REFERENCES Dogs(dogID) ON DELETE CASCADE
 );

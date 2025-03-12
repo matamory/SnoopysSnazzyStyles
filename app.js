@@ -506,12 +506,12 @@ app.delete('/delete-client-ajax', function(req,res, next){
 
 app.delete('/delete-clientsDogs-ajax', function(req,res, next){
     let data = req.body;
-    let client_ID = parseInt(data.id);
-    console.log(client_ID);
-    let deleteClient= `DELETE FROM Clients WHERE clientID = ?`;
+    let clientDog_ID = parseInt(data.id);
+    console.log(clientDog_ID);
+    let deleteClientDog= `DELETE FROM ClientsDogs WHERE clientsDogsID = ?`;
   
 
-        db.pool.query(deleteClient, [client_ID], function(error, rows, fields) {
+        db.pool.query(deleteClientDog, [clientDog_ID], function(error, rows, fields) {
   
             if (error) {
                 console.log(error);
@@ -692,17 +692,18 @@ app.put('/put-client-ajax', function(req,res,next){
 app.put('/put-clientDog-ajax', function(req,res,next){
     let data = req.body;
 
-    let id = parseInt(data.client);
+    let id = parseInt(data.clientDogID);
     console.log(id);
+    let client = data.client;
     let dog = data.dog;
   
      let queryUpdateClientDog = `
         UPDATE ClientsDogs 
-        SET dog_id = ?
-        WHERE client_id = ?`;
+        SET client_id = ?, dog_id = ?
+        WHERE clientsDogsID = ?`;
   
           // Run the 1st query
-    db.pool.query(queryUpdateClientDog, [dog, id ], function(error, rows, fields){
+    db.pool.query(queryUpdateClientDog, [client, dog, id ], function(error, rows, fields){
         if (error) {
             console.log(error);
             res.sendStatus(400);
@@ -713,6 +714,35 @@ app.put('/put-clientDog-ajax', function(req,res,next){
     })
 });
 
+app.put('/put-session-ajax', function(req,res,next){
+    let data = req.body;
+
+    let id = parseInt(data.id);
+    
+    let employee = data.employee;
+    let client = data.client;
+    let dog = data.dog;
+    let time = data.time;
+    let duration = data.duration;
+    let price = data.price;
+    let stat = data.stat;
+  
+     let queryUpdateSession = `
+        UPDATE Sessions 
+        SET employee_id = ?, client_id = ?, dog_id = ?, session_time = ?, actual_duration = ?, total_price = ?, status = ?
+        WHERE sessionID = ?`;
+  
+          // Run the 1st query
+    db.pool.query(queryUpdateSession, [employee, client, dog, time, duration, price, stat, id ], function(error, rows, fields){
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.send(rows);
+        }
+
+    })
+});
 /*========================================================================================
     LISTENER
 ==========================================================================================*/

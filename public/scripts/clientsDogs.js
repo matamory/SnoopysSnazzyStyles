@@ -51,6 +51,7 @@ function createRow(data, table) {
     let newRow = document.createElement('tr');
     newRow.innerHTML = `\
     <tr>\
+        <td>${data['clientsDogsID']}</td>\
         <td>${data['client_id']}</td>\
         <td>${data['dog_id']}</td>\
         <td><button class="clientsDogEdit">Edit</button></td>\
@@ -94,8 +95,9 @@ function populateEditForm(event) {
     event.preventDefault();
     let tr = event.target.parentNode.parentNode; 
     let children = tr.children;
-    document.getElementById('editClient').textContent = children[0].textContent;
-    document.getElementById('editDog').value = children[1].textContent;
+    document.getElementById('editClientDogID').textContent = children[0].textContent;
+    document.getElementById('editClient').value = children[1].textContent;
+    document.getElementById('editDog').value = children[2].textContent;
     showEditForm('editClientDogForm');
 }
 function showEditForm() {
@@ -144,18 +146,20 @@ function addNewClientDog(event) {
 
 function updateClientDog(event) {
     event.preventDefault();
+    let inputClientDogID = document.getElementById("editClientDogID");
     let inputClientID = document.getElementById("editClient");
     let inputDogID = document.getElementById("editDog");
 
     // must abort if being passed NULL for dogID
 
-    if (inputClientID.textContent === "") {
+    if (inputClientDogID.textContent === "") {
         return;
       }
 
     // Put our data we want to send in a javascript object
     let data = {
-        client: inputClientID.textContent,
+        clientDogID: inputClientDogID.textContent,
+        client: inputClientID.value,
         dog: inputDogID.value,
         
     }

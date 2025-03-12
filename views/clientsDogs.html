@@ -60,6 +60,7 @@
             <h3> All Clients</h3>
             <table id="clientsDogsTable">
                 <tr>
+                    <th>ID</th>
                     <th>Client</th>
                     <th>Dog</th>
                     <th>Edit</th>
@@ -71,7 +72,8 @@
             <div id="editClientDogForm" style="display: none;">
                 <h3>Edit Client/Dog Information</h3>
                 <form id="update-clientDog-form-ajax">
-                    <label>Client:</label> <label id="editClient"></label><br><br>
+                    <label>ID:</label><label id="editClientDogID"></label><br><br>
+                    <label>Client:</label> <input type="text" id="editClient" required><br><br>
                     <label>Dogs:</label> <input type="text" id="editDog" required><br><br>
                     <br>
                     <button type="submit" class="UpdateInfo">Update</button>
