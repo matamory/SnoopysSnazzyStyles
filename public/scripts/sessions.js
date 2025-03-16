@@ -200,6 +200,7 @@ function populateEditForm(event) {
     document.getElementById('editSessionPrice').value = children[6].textContent.slice(1);
     document.getElementById('editSessionStatus').value = children[7].textContent;
     showEditForm('editSessionForm');
+    document.getElementById('editSessionForm').scrollIntoView();
 }
 
 function setDropdowns() { //Function for dropdowns that do not need refreshing

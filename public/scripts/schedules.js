@@ -336,4 +336,5 @@ function populateEditForm(event) {
     }
     document.getElementById('editScheduleEnd').value = time;
     showEditForm('editScheduleForm');
+    document.getElementById('editScheduleForm').scrollIntoView();
 }

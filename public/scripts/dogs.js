@@ -115,6 +115,7 @@ function populateEditForm(event) {
     document.getElementById('editDogSize').value = children[4].textContent;
     document.getElementById('editDogNotes').value = children[5].textContent;
     showEditForm('editDogForm');
+    document.getElementById('editDogForm').scrollIntoView();
 }
 
 function addNewDog(event) {

@@ -116,6 +116,7 @@ function populateEditForm(event) {
     }
 
     showEditForm('editClientForm');
+    document.getElementById('editClientForm').scrollIntoView();
 }
 
 function addNewClient(event) {

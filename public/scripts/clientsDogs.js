@@ -100,6 +100,7 @@ function populateEditForm(event) {
     document.getElementById('editClient').value = children[1].textContent;
     document.getElementById('editDog').value = children[2].textContent;
     showEditForm('editClientDogForm');
+    document.getElementById('editClientDogForm').scrollIntoView();
 }
 function showEditForm() {
     document.getElementById('editClientDogForm').style.display='none';

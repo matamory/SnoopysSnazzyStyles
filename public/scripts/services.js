@@ -188,4 +188,5 @@ function populateEditForm(event) {
     document.getElementById('editServiceDuration').value = children[2].textContent.slice(0, -4);
     document.getElementById('editServicePrice').value = children[3].textContent.slice(1);
     showEditForm();
+    document.getElementById('updateServiceForm').scrollIntoView();
 }
