@@ -81,6 +81,7 @@ function delRow(event) {
                 // Remove row from table
                 alert('Client has been deleted');
                 tr.parentNode.removeChild(tr)
+                document.getElementById('editClientForm').style.visibility = 'hidden';
             }
             else if (xhttp.readyState == 4 && xhttp.status != 200) {
                 console.log("There was an error with the input.")
@@ -95,6 +96,7 @@ function delRow(event) {
 function showEditForm() {
     document.getElementById('editClientForm').style.display='none';
     document.getElementById('editClientForm').style.display='block';
+    document.getElementById('editClientForm').style.visibility = 'visible';
 }
 
 function populateEditForm(event) {
@@ -199,6 +201,7 @@ function updateClient(event) {
             // Add the new data to the table
             refreshTable();
             document.getElementById("editClientForm").style.display = "none";
+            document.getElementById('editClientForm').style.visibility = 'hidden';
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {

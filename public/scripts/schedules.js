@@ -249,7 +249,7 @@ function delRow(event) {
             if (xhttp.readyState == 4 && xhttp.status == 204) {
                 // Remove row from table
                 tr.parentNode.removeChild(tr)
-                document.getElementById('editScheduleForm').style.display='none';
+                document.getElementById('editScheduleForm').style.visibility = 'hidden';
             }
             else if (xhttp.readyState == 4 && xhttp.status != 200) {
                 console.log("There was an error with the input.")

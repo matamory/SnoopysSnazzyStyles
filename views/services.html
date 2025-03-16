@@ -31,12 +31,12 @@
                 <h3>Submit a new Service</h3>
                     <form id="serviceForm" action="submitService" method="GET">
                         <fieldset>
-                            <label>Service Name: <input type="text" name="employeeID" required="required" id="ServiceName" placeholder="haircut"/><br><br></label>
-                            <label> Service Duration: <input type="number" name="start" required="required" id="servDur" placeholder="00"/> min <br><br></label>
-                            <label>Service Price: <input type="number" name="end" required="required" id="servPrice" placeholder="00.00"/></label>
+                            <label>Service Name: <input type="text"required="required" id="ServiceName" placeholder="haircut"/><br><br></label>
+                            <label> Service Duration: <input type="number"required="required" id="servDur" placeholder="00"/> min <br><br></label>
+                            <label>Service Price: <input type="number"required="required" id="servPrice" placeholder="00.00"/></label>
                             
                         </fieldset>
-                        <button type="submit">Submit</button>
+                        <input type="submit" value="Submit"/>
                     </form>
                 </article>
         </section>
@@ -51,50 +51,17 @@
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Nail Trim</td>
-                    <td>30 min</td>
-                    <td>$20</td>
-                    <td><button class="serviceEdit" onclick="populateEditForm('Nail Trim', 30, 20)">Edit</button></td>
-                    <td><button type="button" class="serviceDelete">Delete</button></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Puppy Cut</td>
-                    <td>60 min</td>
-                    <td>$50</td>
-                    <td><button class="serviceEdit" onclick="populateEditForm('Puppy Cut', 60, 50)">Edit</button></td>
-                    <td><button type="button" class="serviceDelete">Delete</button></td>
-                </tr>
-
-                <tr>
-                    <td>3</td>
-                    <td>Basic Cut: Fluffy Breeds</td>
-                    <td>120 min</td>
-                    <td>$90</td>
-                    <td><button class="serviceEdit" onclick="populateEditForm('Basic Cut: Fluffy Breeds', 120, 90 )">Edit</button></td>
-                    <td><button type="button" class="serviceDelete">Delete</button></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Basic Cut: Short Coats</td>
-                    <td>60 min</td>
-                    <td>$70</td>
-                    <td><button class="serviceEdit" onclick="populateEditForm('Basic Cut: Short Coats', 60, 70 )">Edit</button></td>
-                    <td><button type="button" class="serviceDelete">Delete</button></td>
-                </tr>
             </table>
             <br><br>
-            <div id="editServiceForm" style="display: none;">
+            <div id="updateServiceForm" style="display: none;">
                 <h3>Edit Service Information</h3>
                 <form>
                     <label>ID:</label><label id="editServiceID"></label><br><br>
                     <label>Service Name:</label> <input type="text" id="editServiceName" required><br><br>
-                    <label>Duration:</label> <input type="number" id="editServiceDuration" required><br><br>
+                    <label>Duration:</label> <input type="number" id="editServiceDuration" required><label> min</label><br><br>
                     <label>Price:</label> <input type="number" id="editServicePrice" required><br><br>
                     <br>
-                    <button type="submit" class="UpdateInfo">Update</button>
+                    <input type="submit" value="Update"/>
                 </form>
                 <br><br>
             </div>

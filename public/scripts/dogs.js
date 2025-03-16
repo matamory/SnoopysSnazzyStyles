@@ -85,7 +85,7 @@ function delRow(event) {
                 // Remove row from table
                 alert('Dog has been deleted');
                 tr.parentNode.removeChild(tr)
-                document.getElementById('editDogForm').style.display='block';
+                document.getElementById('editDogForm').style.visibility = 'hidden';
             }
             else if (xhttp.readyState == 4 && xhttp.status != 200) {
                 console.log("There was an error with the input.")

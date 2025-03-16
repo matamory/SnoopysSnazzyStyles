@@ -110,7 +110,7 @@ app.get('/sessionsSel', function(req, res)
 
 app.get('/servicesSel', function(req, res)
     {  
-        let query1 = "SELECT * FROM Services;";                     // Define our query
+        let query1 = "SELECT serviceID, service_name, TIME_TO_SEC(service_duration) as service_duration, price FROM Services;";                     // Define our query
 
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
             res.send(JSON.stringify(rows));                     // Return query as JSON string
@@ -428,6 +428,29 @@ app.post('/add-employee', function(req, res){
     })
 });
 
+app.post('/add-service', function(req, res){
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Services(service_name, service_duration, price) VALUES \
+        ('${data.service_name}', SEC_TO_TIME(${data.service_duration}), ${data.price});`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+            res.send(rows);
+        }
+    })
+});
+
 //===============================================================================================
 
 
@@ -474,6 +497,23 @@ app.delete('/delete-schedule', function(req,res, next){
     let deleteSchedule= `DELETE FROM Schedules WHERE scheduleID = ?`;
 
         db.pool.query(deleteSchedule, [schedule_ID], function(error, rows, fields) {
+  
+            if (error) {
+                console.log(error);
+                res.sendStatus(400);
+            } else {
+                    res.sendStatus(204);
+            }
+        })
+    }
+);
+
+app.delete('/delete-service', function(req,res, next){
+    let data = req.body;
+    let service_ID = parseInt(data.id);
+    let deleteDog= `DELETE FROM Services WHERE serviceID = ?`;
+  
+        db.pool.query(deleteDog, [service_ID], function(error, rows, fields) {
   
             if (error) {
                 console.log(error);
@@ -661,6 +701,29 @@ app.put('/put-schedule', function(req,res, next){
     })
 });
 
+app.put('/put-service', function(req,res, next){
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+    // Create the query and run it on the database
+    query1 = `UPDATE Services SET 
+                service_name = '${data.service_name}', 
+                service_duration = SEC_TO_TIME(${data.service_duration}), 
+                price = ${data.price}
+            WHERE serviceID = ${data.id};`;
+
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            res.send(rows);
+        }
+    })
+});
 
 app.put('/put-client-ajax', function(req,res,next){
     let data = req.body;

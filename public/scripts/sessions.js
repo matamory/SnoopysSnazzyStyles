@@ -97,7 +97,7 @@ function delRow(event) {
                 // Remove row from table
                 alert('Session has be deleted');
                 tr.parentNode.removeChild(tr);
-                document.getElementById('editSessionForm').style.display='block';
+                document.getElementById('editSessionForm').style.visibility = 'hidden';
                 refreshIntersectionTable();
             }
             else if (xhttp.readyState == 4 && xhttp.status != 200) {
