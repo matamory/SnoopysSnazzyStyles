@@ -47,16 +47,16 @@ DELETE FROM Employees WHERE employeeID = :employee_ID_selected_from_employee_pag
 -- -----------------------------------------------------
 
 -- Select all schedules
-SELECT Schedules.scheduleID, Employees.name, Schedules.start, Schedules.end FROM Schedules
+SELECT Schedules.scheduleID, Employees.employeeID, Employees.name, Schedules.start, Schedules.end FROM Schedules
 JOIN Employees ON Schedules.employee_id = Employees.employeeID;
 
 -- Select schedules based on date
-SELECT Schedules.scheduleID, Employees.name, Schedules.start, Schedules.end FROM Schedules
+SELECT Schedules.scheduleID, Employees.employeeID, Employees.name, Schedules.start, Schedules.end FROM Schedules
 JOIN Employees ON Schedules.employee_id = Employees.employeeID 
 WHERE DATE(Schedules.start) = :dateInput;
 
 -- Select schedules based on date range
-SELECT Schedules.scheduleID, Employees.name, Schedules.start, Schedules.end FROM Schedules
+SELECT Schedules.scheduleID, Employees.employeeID, Employees.name, Schedules.start, Schedules.end FROM Schedules
 JOIN Employees ON Schedules.employee_id = Employees.employeeID 
 WHERE DATE(Schedules.start) >= :fDateInput AND DATE(Schedules.end) <= :lDateInput;
 

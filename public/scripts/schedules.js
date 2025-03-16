@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
     table.oldHtml = table.innerHTML;
     table = document.getElementById('employeeID');
     table.oldHtml = table.innerHTML;
+    table = document.getElementById('editScheduleEmployee');
+    table.oldHtml = table.innerHTML;
     // Populate table
     refreshTable();
     refreshAvailabilityTable();
@@ -63,7 +65,7 @@ function createRow(data, table) {
     newRow.innerHTML = `\
     <tr>\
         <td>${data['scheduleID']}</td>\
-        <td>${data['name']}</td>\
+        <td name="${data['employeeID']}">${data['name']}</td>\
         <td>${date}</td>\
         <td>${formatTime(data['start'].slice(11), true)}</td>\
         <td>${formatTime(data['end'].slice(11), true)}</td>\
@@ -137,6 +139,7 @@ function createAvailability(data, table) {
         <td>${data['name']}</td>\
         <td>${date}</td>\
         <td>${formatTime(data['start'])}</td>\
+        <td>${formatTime(data['session_start'])}</td>\
         <td>${formatTime(data['session_end'])}</td>\
         <td>${formatTime(data['session_start1'])}</td>\
         <td>${formatTime(data['session_end1'])}</td>\
@@ -150,6 +153,7 @@ function createAvailability(data, table) {
         <td>${formatTime(data['session_end5'])}</td>\
         <td>${formatTime(data['session_start6'])}</td>\
         <td>${formatTime(data['session_end6'])}</td>\
+        <td>${formatTime(data['TIME(Schedules.end)'])}</td>\
     </tr>`;
     table.appendChild(newRow);
 };
@@ -157,7 +161,9 @@ function createAvailability(data, table) {
 function refreshDropdowns() {
     // Clear dropdowns
     dd = document.getElementById('employeeID');
+    dd2 = document.getElementById('editScheduleEmployee');
     dd.innerHTML = dd.oldHtml;
+    dd2.innerHTML = dd2.oldHtml;
 
     // Query new data
     var xhttp = new XMLHttpRequest();
@@ -174,6 +180,7 @@ function refreshDropdowns() {
                 newRow.value = data[i]['employeeID'];
                 newRow.textContent = data[i]['name'];
                 dd.appendChild(newRow);
+                dd2.appendChild(newRow.cloneNode(true));
             };
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
@@ -267,8 +274,8 @@ function updateRow(event){
     let data = {
         id: updateID.textContent,
         name: updateEmployee.value,
-        start: updateDate.value + ' ' + updateStart.value,
-        end: updateDate.value + ' ' + updateEnd.value
+        start: updateDate.value + ' ' + updateStart.value + ':00',
+        end: updateDate.value + ' ' + updateEnd.value + ':00'
     }
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
@@ -303,7 +310,8 @@ function populateEditForm(event) {
     let tr = event.target.parentNode.parentNode; 
     let children = tr.children;
     document.getElementById('editScheduleID').textContent = children[0].textContent;
-    document.getElementById('editScheduleEmployee').value = children[1].textContent;
+    console.log(document.getElementById('editScheduleEmployee'))
+    document.getElementById('editScheduleEmployee').value = children[1].getAttribute('name');
     document.getElementById('editScheduleDate').value = children[2].textContent.replace(' ', "T");
     let time = 0; 
     // Format for datetime input

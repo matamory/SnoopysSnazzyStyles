@@ -9,7 +9,7 @@ var app     = express();            // We need to instantiate an express object 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
-PORT        = 6594;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 6595;                 // Set a port number at the top so it's easy to change in the future
 
 
 const { engine } = require('express-handlebars');
@@ -137,7 +137,7 @@ app.get('/employeesSel', function(req, res)
     
 app.get('/schedulesSel', function(req, res)
     {  
-        let query1 = "SELECT Schedules.scheduleID, Employees.name, Schedules.start, Schedules.end FROM Schedules\
+        let query1 = "SELECT Schedules.scheduleID, Employees.employeeID, Employees.name, Schedules.start, Schedules.end FROM Schedules\
             JOIN Employees ON Schedules.employee_id = Employees.employeeID\
             ORDER BY Schedules.start;";                     // Define our query
 
@@ -639,12 +639,12 @@ app.put('/put-dog-ajax', function(req,res, next){
 app.put('/put-schedule', function(req,res, next){
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
-
+    console.log(data.start)
     // Create the query and run it on the database
     query1 = `UPDATE Schedules SET 
                 employee_id = '${data.name}', 
-                start = '${data.start}', 
-                end = '${data.end}'
+                start = '${data.start}' + INTERVAL 1 HOUR, 
+                end = '${data.end}' + INTERVAL 1 HOUR
             WHERE scheduleID = ${data.id};`;
 
     db.pool.query(query1, function(error, rows, fields){

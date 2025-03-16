@@ -68,7 +68,6 @@
                 <th>Employee</th>
                 <th>Date</th>
                 <th>Day Start</th>
-                <th>From</th>
                 <th>To</th>
                 <th>From</th>
                 <th>To</th>
@@ -80,6 +79,10 @@
                 <th>To</th>
                 <th>From</th>
                 <th>To</th>
+                <th>From</th>
+                <th>To</th>
+                <th>From</th>
+                <th>Day End</th>
             </tr>
     
         </table>
@@ -88,7 +91,10 @@
                 <h3>Edit Schedule Information</h3>
                 <form id="updateScheduleForm">
                     <label>ID:</label><label id="editScheduleID"></label><br><br>
-                    <label>Employee:</label> <input type="text" id="editScheduleEmployee" required><br><br>
+                    <label for="editScheduleEmployee">Employee: </label> 
+                    <select name="employeeID" id="editScheduleEmployee" required>
+                        <option value="" disabled selected hidden>Select Employee</option>
+                    </select><br><br>
                     <label>Date:</label> <input type="date" id="editScheduleDate" required><br><br>
                     <label>Start:</label> <input type="time" id="editScheduleStart" required><br><br>
                     <label>End:</label> <input type="time" id="editScheduleEnd" required><br><br>
