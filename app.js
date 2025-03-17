@@ -142,6 +142,7 @@ app.get('/schedulesSel', function(req, res)
             ORDER BY Schedules.start;";                     // Define our query
 
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            console.log(rows);
             res.send(JSON.stringify(rows));                     // Return query as JSON string
         })                                                      
     }); 
@@ -344,11 +345,14 @@ app.post('/add-clientsDogs-ajax', function(req, res){
 app.post('/add-sessions-ajax', function(req, res){
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
-    
+    let dur = data.duration;
+    if (dur !== 'null'){
+        dur = `SEC_TO_TIME(${data.duration})`
+    }
     // Capture NULL values
     
     // Create the query and run it on the database
-    query1 = `INSERT INTO Sessions (employee_id, client_id, dog_id, session_time, actual_duration, total_price, status) VALUES ('${data.employee}','${data.client}','${data.dog}','${data.time}', SEC_TO_TIME(${data.duration}),'${data.price}','${data.status}')`;
+    query1 = `INSERT INTO Sessions (employee_id, client_id, dog_id, session_time, actual_duration, total_price, status) VALUES ('${data.employee}','${data.client}','${data.dog}','${data.time}',${dur},'${data.price}','${data.status}')`;
     db.pool.query(query1, function(error, rows, fields){
     
         // Check to see if there was an error
@@ -701,8 +705,8 @@ app.put('/put-schedule', function(req,res, next){
     // Create the query and run it on the database
     query1 = `UPDATE Schedules SET 
                 employee_id = '${data.name}', 
-                start = '${data.start}' + INTERVAL 1 HOUR, 
-                end = '${data.end}' + INTERVAL 1 HOUR
+                start = '${data.start}', 
+                end = '${data.end}'
             WHERE scheduleID = ${data.id};`;
 
     db.pool.query(query1, function(error, rows, fields){
