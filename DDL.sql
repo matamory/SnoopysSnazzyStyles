@@ -58,7 +58,7 @@ CREATE OR REPLACE TABLE Sessions (
     employee_id int,
     client_id int,
     dog_id int,
-    session_time datetime NOT NULL,
+    session_time timestamp NOT NULL,
     actual_duration time,
     total_price decimal(10,2) NOT NULL,
     status ENUM("Pending", "Completed", "Canceled", "No Show") NOT NULL,
@@ -75,8 +75,8 @@ CREATE OR REPLACE TABLE Sessions (
 CREATE OR REPLACE TABLE Schedules (
     scheduleID int AUTO_INCREMENT UNIQUE NOT NULL,
     employee_id int NOT NULL,
-    start datetime NOT NULL,
-    end datetime NOT NULL,
+    start timestamp NOT NULL,
+    end timestamp NOT NULL,
     PRIMARY KEY (scheduleID),
     FOREIGN KEY (employee_id) REFERENCES Employees(employeeID) ON DELETE CASCADE
 );
