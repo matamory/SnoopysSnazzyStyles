@@ -71,14 +71,21 @@ function refreshTable() {
 
 function createRow(data, table) {
     let newRow = document.createElement('tr');
+    let date = data['session_time'].slice(0, 10);
+    let time = formatTime(data['session_time'].slice(11), true)
+    let duration = data['actual_duration'];
+    duration = duration / 60;
+    console.log(duration);
+
+
     newRow.innerHTML = `\
     <tr>\
         <td>${data['sessionID']}</td>\
         <td name="${data['employeeID']}">${data['employeeName']}</td>\
         <td name="${data['clientID']}">${data['clientName']}</td>\
         <td name="${data['dogID']}">${data['dogName']}</td>\
-        <td>${data['session_time']}</td>\
-        <td>${data['actual_duration']}</td>\
+        <td>${date} at ${time}</td>\
+        <td>${duration} min</td>\
         <td>$${data['total_price']}</td>\
         <td>${data['status']}</td>\
         <td><button class="sessionsEdit">Edit</button></td>\
@@ -429,7 +436,7 @@ function addNewSession(event) {
         client: (inputClient.value.trim() == "") ? 'null': inputClient.value,
         dog: (inputDog.value.trim() == "") ? 'null': inputDog.value,
         time: inputTime.value,
-        duration: (inputDuration.value.trim() == "") ? 'null': inputDuration.value, 
+        duration: (inputDuration.value.trim() == "") ? 'null': inputDuration.value * 60, 
         price: inputPrice.value,
         status: inputStatus.value,
     }
@@ -603,12 +610,11 @@ function updateSession(event){
     // Put our data we want to send in a javascript object
     let data = {
         id: updateSessionID.textContent,
-    
         employee: (updateEmployee.value.trim() == "") ? 'null': updateEmployee.value,
         client: (updateClient.value.trim() == "") ? 'null': updateClient.value,
         dog: (updateDog.value.trim() == "") ? 'null': updateDog.value,
         time: updateTime.value,
-        duration: (updateDuration.value.trim() == "") ? 'null': updateDuration.value,
+        duration: (updateDog.value.trim() == "") ? 'null': updateDuration.value * 60,
         price: updatePrice.value,
         stat: updateStatus.value,
 

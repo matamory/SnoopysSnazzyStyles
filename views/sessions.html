@@ -47,7 +47,7 @@
                         </select>
                         <br><br>
                     <label>Session Time: <input type="datetime-local" name="sessionTime" required id="sessionTime"/><br><br>
-                    <label>Actual Duration:</label> <input type="number" name="duration" id="sessionDuration" placeholder="total time (minutes)" /><br><br>
+                    <label>Actual Duration:</label> <input type="number" name="duration" id="sessionDuration"  placeholder="00"/> min <br><br>
                     <label>Total Price:</label> <input type="number" name="totalPrice" id="sessionPrice" required placeholder="00.00" /><br><br>
                     
                     <div id="serviceEntry"> <label for="service_id">Services: </label> <div id="service_id" class = "service_id">
@@ -90,21 +90,21 @@
                     <label>ID:</label><label id="editSessionID"></label><br><br>
                     <label for="editSessionEmployee">Employee: </label> 
                         <select name="employeeID" id="editSessionEmployee" class= "employee-dropdown" required >
-                            <option value="" disabled selected hidden>Select Employee</option>
+                            <option value="0" disabled selected hidden>Select Employee</option>
                         </select>
                         <br><br>
                     <label for="editSessionClient">Client: </label> 
                         <select name="clientID" id="editSessionClient" class= "client-dropdown" required >
-                            <option value="" disabled selected hidden>Select Client</option>
+                            <option value="0" disabled selected hidden>Select Client</option>
                         </select>
                         <br><br>
                     <label for="editSessionDog">Dog: </label> 
                         <select name="dogID" id="editSessionDog" class= "dog-dropdown"required >
-                            <option value="" disabled selected hidden>Select Dog</option>
+                            <option value="0" disabled selected hidden>Select Dog</option>
                         </select>
                         <br><br>
                     <label>Time:</label> <input type="datetime-local" id="editSessionTime" required><br><br>
-                    <label>Duration:</label> <input type="number" id="editSessionDuration"><br><br>
+                    <label>Duration:</label> <input type="number" id="editSessionDuration"placeholder="00"/> min<br><br>
                     <label>Price:</label> <input type="number" id="editSessionPrice" required><br><br>
                     <label>Status:</label> <input type="text" id="editSessionStatus" required><br><br>
                     <br>
