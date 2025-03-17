@@ -60,26 +60,31 @@ function refreshTable() {
 
 function createRow(data, table) {
     let newRow = document.createElement('tr');
-    let date = data['start'].slice(0, 10);
-
+    let date = new Date(data['start'].slice(0, 10));
+    let offset = 8;
+    // Check for daylight savings
+    if (((date.getDay() > 0 && date.getDate() > 6 && date.getMonth() >= 3) || (date.getDate() > 13 && date.getMonth() >= 3) || date.getMonth() > 3) && ((date.getDate() < 6 && date.getMonth() <= 11 && date.getDay() < 6) || date.getMonth() < 11)) {
+        offset = 7;
+    }
+    date = data['start'].slice(0, 10);
     newRow.innerHTML = `\
     <tr>\
         <td>${data['scheduleID']}</td>\
         <td name="${data['employeeID']}">${data['name']}</td>\
         <td>${date}</td>\
-        <td>${formatTime(data['start'].slice(11), true)}</td>\
-        <td>${formatTime(data['end'].slice(11), true)}</td>\
+        <td>${formatTime(data['start'].slice(11), offset)}</td>\
+        <td>${formatTime(data['end'].slice(11), offset)}</td>\
         <td><button class="scheduleEdit">Edit</button></td>\
         <td type="button" class="scheduleDelete"><button>Delete</button></td>\
     </tr>`;
     table.appendChild(newRow);
 };
 
-function formatTime(time, minus8 = false) {
+function formatTime(time, minus) {
     if (time !== null){
         let hour = parseInt(time.slice(0, 2));
-        if (minus8) {
-            hour = (hour <= 8) ? hour + 16 : hour - 8;   // For some reason the query is adding 8 hours??
+        if (minus) {
+            hour = (hour <= minus) ? hour + 16 : hour - minus;   // For some reason the query is adding 8 hours??
         };
         let amPm = (hour > 11 && hour < 24) ? ' pm' : ' am';
         hour = (hour > 12) ? hour - 12 : hour;      // Convert to 12 hour time
