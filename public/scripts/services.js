@@ -51,12 +51,14 @@ function refreshTable() {
 
 function createRow(data, table) {
     let newRow = document.createElement('tr');
+    let duration = data['service_duration'];
+    duration = duration / 60;
 
     newRow.innerHTML = `\
     <tr>\
         <td>${data['serviceID']}</td>\
         <td>${data['service_name']}</td>\
-        <td>${data['service_duration']/60} min</td>\
+        <td>${duration} min</td>\
         <td>$${data['price']}</td>\
         <td><button class="serviceEdit">Edit</button></td>
         <td><button type="button" class="serviceDelete">Delete</button></td>
