@@ -683,8 +683,8 @@ app.put('/put-schedule', function(req,res, next){
     // Create the query and run it on the database
     query1 = `UPDATE Schedules SET 
                 employee_id = '${data.name}', 
-                start = '${data.start}' + INTERVAL 1 HOUR, 
-                end = '${data.end}' + INTERVAL 1 HOUR
+                start = '${data.start}', 
+                end = '${data.end}'
             WHERE scheduleID = ${data.id};`;
 
     db.pool.query(query1, function(error, rows, fields){
