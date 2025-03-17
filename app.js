@@ -101,7 +101,7 @@ app.get('/clientsDogsSel', function(req, res)
 
 app.get('/sessionsSel', function(req, res)
     {  
-        let query1 = "SELECT Sessions.sessionID, Employees.employeeID, Clients.clientID, Dogs.dogID, Employees.name as employeesName, Clients.name AS clientName, Dogs.name as dogName FROM ClientsDogs FROM Sessions JOIN Employees ON Sessions.employee_id = Employees.employeeID JOIN Clients ON Sessions.client_id = Clients.clientID JOIN Dogs ON Sessions.dog_id = Dogs.dogID;";                     // Define our query
+        let query1 = "SELECT Sessions.sessionID, Employees.employeeID, Clients.clientID, Dogs.dogID, Employees.name as employeeName, Clients.name AS clientName, Dogs.name as dogName, Sessions.session_time, Sessions.actual_duration, Sessions.total_price, Sessions.status FROM Sessions JOIN Employees ON Sessions.employee_id = Employees.employeeID JOIN Clients ON Sessions.client_id = Clients.clientID JOIN Dogs ON Sessions.dog_id = Dogs.dogID;";                     // Define our query
 
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
             res.send(JSON.stringify(rows));                     // Return query as JSON string
