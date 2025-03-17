@@ -63,7 +63,7 @@ function createRow(data, table) {
     let date = new Date(data['start'].slice(0, 10));
     let offset = 8;
     // Check for daylight savings
-    if (((date.getDay() > 0 && date.getDate() > 6 && date.getMonth() >= 3) || (date.getDate() > 13 && date.getMonth() >= 3) || date.getMonth() > 3) && ((date.getDate() < 6 && date.getMonth() <= 11 && date.getDay() < 6) || date.getMonth() < 11)) {
+    if (((date.getDate() - date.getDay() > 7 && date.getMonth() >= 3) || date.getMonth() > 3) && ((date.getDate() - date.getDay() < 1 && date.getMonth() <= 11) || date.getMonth() < 11)) {
         offset = 7;
     }
     date = data['start'].slice(0, 10);
