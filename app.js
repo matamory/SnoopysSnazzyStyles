@@ -101,7 +101,7 @@ app.get('/clientsDogsSel', function(req, res)
 
 app.get('/sessionsSel', function(req, res)
     {  
-        let query1 = "SELECT * FROM Sessions;";                     // Define our query
+        let query1 = "SELECT Sessions.sessionID, Employees.employeeID, Clients.clientID, Dogs.dogID, Employees.name as employeeName, Clients.name AS clientName, Dogs.name as dogName, Sessions.session_time, TIME_TO_SEC(Sessions.actual_duration) as actual_duration, Sessions.total_price, Sessions.status FROM Sessions JOIN Employees ON Sessions.employee_id = Employees.employeeID JOIN Clients ON Sessions.client_id = Clients.clientID JOIN Dogs ON Sessions.dog_id = Dogs.dogID;";                     // Define our query
 
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
             res.send(JSON.stringify(rows));                     // Return query as JSON string
@@ -348,7 +348,7 @@ app.post('/add-sessions-ajax', function(req, res){
     // Capture NULL values
     
     // Create the query and run it on the database
-    query1 = `INSERT INTO Sessions (employee_id, client_id, dog_id, session_time, actual_duration, total_price, status) VALUES ('${data.employee}','${data.client}','${data.dog}','${data.time}','${data.duration}','${data.price}','${data.status}')`;
+    query1 = `INSERT INTO Sessions (employee_id, client_id, dog_id, session_time, actual_duration, total_price, status) VALUES ('${data.employee}','${data.client}','${data.dog}','${data.time}','SEC_TO_TIME(${data.duration}),'${data.price}','${data.status}')`;
     db.pool.query(query1, function(error, rows, fields){
     
         // Check to see if there was an error
@@ -798,31 +798,47 @@ app.put('/put-clientDog-ajax', function(req,res,next){
 app.put('/put-session-ajax', function(req,res,next){
     let data = req.body;
 
-    let id = parseInt(data.id);
+    query1 = `UPDATE Sessions SET employee_id = '${data.employee}', client_id = '${data.client}', dog_id = '${data.dog}', session_time = '${data.time}', actual_duration = SEC_TO_TIME(${data.duration}), total_price = '${data.price}', status = '${data.stat}' WHERE sessionID =${data.id}`;
+
+    db.pool.query(query1, function(error, rows, fields) {
+        if (error){
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            res.send(rows);
+        }
+    })
+
+
+    /*let id = parseInt(data.id);
     
     let employee = data.employee;
     let client = data.client;
     let dog = data.dog;
     let time = data.time;
-    let duration = data.duration;
+    let duration =  SEC_TO_TIME(data.duration);
     let price = data.price;
     let stat = data.stat;
   
-     let queryUpdateSession = `
-        UPDATE Sessions 
-        SET employee_id = ?, client_id = ?, dog_id = ?, session_time = ?, actual_duration = ?, total_price = ?, status = ?
-        WHERE sessionID = ?`;
+     let queryUpdateSession = `UPDATE Sessions SET 
+                            employee_id = ?, 
+        client_id = ?, dog_id = ?, session_time = ?, actual_duration = ?, total_price = ?, status = ?
+        WHERE sessionID = ?`;*/
+
+
+
   
           // Run the 1st query
-    db.pool.query(queryUpdateSession, [employee, client, dog, time, duration, price, stat, id ], function(error, rows, fields){
-        if (error) {
+    //db.pool.query(queryUpdateSession, [employee, client, dog, time, duration, price, stat, id ], function(error, rows, fields){
+        /*if (error) {
             console.log(error);
             res.sendStatus(400);
         } else {
             res.send(rows);
         }
 
-    })
+    })*/
 });
 /*========================================================================================
     LISTENER
