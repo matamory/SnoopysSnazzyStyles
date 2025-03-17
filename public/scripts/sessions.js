@@ -8,7 +8,12 @@ document.addEventListener('DOMContentLoaded', function() {
     table.oldHtml = table.innerHTML;
     table = document.getElementById('sessionID');
     table.oldHtml = table.innerHTML;
+    table = document.getElementById('availabilityTable');
+    table.oldHtml = table.innerHTML;
+    document.getElementById('avSection').style.visibility = 'hidden';
+    document.getElementById('avSection').style.display='none';
     refreshTable();
+    refreshAvailabilityTable();
     // Get insert form
     let addSessionForm = document.getElementById('sessionForm');
     // apply insert form event listener
@@ -99,6 +104,7 @@ function delRow(event) {
                 tr.parentNode.removeChild(tr);
                 document.getElementById('editSessionForm').style.visibility = 'hidden';
                 refreshIntersectionTable();
+                refreshAvailabilityTable();
             }
             else if (xhttp.readyState == 4 && xhttp.status != 200) {
                 console.log("There was an error with the input.")
@@ -109,6 +115,10 @@ function delRow(event) {
         xhttp.send(JSON.stringify(data));
     };
 };
+
+function scrollToIntersection() {
+    document.getElementById("sessionServiceTable").scrollIntoView();
+}
 
 function refreshIntersectionTable() {
     let table = document.getElementById('sessionServiceTable');
@@ -180,6 +190,89 @@ function delIntersectionRow(event) {
         // Send the request and wait for the response
         xhttp.send(JSON.stringify(data));
     };
+};
+
+function formatTime(time, minus8 = false) {
+    if (time !== null){
+        let hour = parseInt(time.slice(0, 2));
+        if (minus8) {
+            hour = (hour <= 8) ? hour + 16 : hour - 8;   // For some reason the query is adding 8 hours??
+        };
+        let amPm = (hour > 11 && hour < 24) ? ' pm' : ' am';
+        hour = (hour > 12) ? hour - 12 : hour;      // Convert to 12 hour time
+        hour = hour.toString();
+        return hour.padStart(2, '0') + time.slice(2, 5) + amPm;
+    } else {
+        return '';
+    };
+};
+
+function refreshAvailabilityTable() {
+    let table = document.getElementById('availabilityTable');
+    // Removing old rows
+    table.innerHTML = table.oldHtml;
+    let startDate = document.getElementById('startDate').value;
+    let endDate = document.getElementById('endDate').value;
+    if (startDate !== '') {
+        document.getElementById('endDate').min = startDate;
+        startDate = '/' + startDate
+    } else {
+        document.getElementById('endDate').min = "2024-02-01";
+    }
+    if (endDate !== '') {
+        document.getElementById('startDate').max = endDate;
+        endDate = '/' + endDate
+    } else {
+        document.getElementById('startDate').max = '';
+    }
+    //alert(data['startDate'] === '');
+    var xhttp = new XMLHttpRequest();
+    //alert("test")
+    xhttp.open("GET", `/schedulesAvailability${startDate}${endDate}`, true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    // Tell our AJAX request how to resolve
+    xhttp.onreadystatechange = () => {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            console.log(JSON.parse(xhttp.responseText));
+            let data = JSON.parse(xhttp.responseText)
+            // Add the new rows to the table
+            for (let i = 0; i < data.length; i++ ) {
+                createAvailability(data[i], table);
+            };
+        }
+        else if (xhttp.readyState == 4 && xhttp.status != 200) {
+            console.log("There was an error with the input.")
+        }
+    }
+    xhttp.send();
+};
+
+function createAvailability(data, table) {
+    let newRow = document.createElement('tr');
+    let date = data['date'].slice(0, 10);
+
+    newRow.innerHTML = `\
+    <tr>\
+        <td>${data['name']}</td>\
+        <td>${date}</td>\
+        <td>${formatTime(data['start'])}</td>\
+        <td>${formatTime(data['session_start'])}</td>\
+        <td>${formatTime(data['session_end'])}</td>\
+        <td>${formatTime(data['session_start1'])}</td>\
+        <td>${formatTime(data['session_end1'])}</td>\
+        <td>${formatTime(data['session_start2'])}</td>\
+        <td>${formatTime(data['session_end2'])}</td>\
+        <td>${formatTime(data['session_start3'])}</td>\
+        <td>${formatTime(data['session_end3'])}</td>\
+        <td>${formatTime(data['session_start4'])}</td>\
+        <td>${formatTime(data['session_end4'])}</td>\
+        <td>${formatTime(data['session_start5'])}</td>\
+        <td>${formatTime(data['session_end5'])}</td>\
+        <td>${formatTime(data['session_start6'])}</td>\
+        <td>${formatTime(data['session_end6'])}</td>\
+        <td>${formatTime(data['TIME(Schedules.end)'])}</td>\
+    </tr>`;
+    table.appendChild(newRow);
 };
 
 function showEditForm() {
@@ -308,6 +401,7 @@ function addNewSession(event) {
 
             // Add the new data to the table
             refreshTable();
+            refreshAvailabilityTable();
 
             // Clear the input fields for another transaction
             document.getElementById("serviceEntry").innerHTML = document.getElementById("serviceEntry").oldHtml;

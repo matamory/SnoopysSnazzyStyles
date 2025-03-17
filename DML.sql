@@ -48,7 +48,8 @@ DELETE FROM Employees WHERE employeeID = :employee_ID_selected_from_employee_pag
 
 -- Select all schedules
 SELECT Schedules.scheduleID, Employees.employeeID, Employees.name, Schedules.start, Schedules.end FROM Schedules
-JOIN Employees ON Schedules.employee_id = Employees.employeeID;
+JOIN Employees ON Schedules.employee_id = Employees.employeeID
+ORDER BY Schedules.start;
 
 -- Select schedules based on date
 SELECT Schedules.scheduleID, Employees.employeeID, Employees.name, Schedules.start, Schedules.end FROM Schedules
@@ -95,7 +96,8 @@ LEFT JOIN (SELECT Sessions.employee_id, Sessions.session_time AS session_start, 
     JOIN Services ON Services.serviceID = SessionServices.service_id 
     GROUP BY Sessions.sessionID) AS Session7 ON Session7.employee_id = Employees.employeeID AND Session7.session_start >= Schedules.start AND Session7.session_start < Schedules.end AND Session6.session_start < Session7.session_start
 WHERE DATE(Schedules.start) = :dateInput
-GROUP BY Schedules.scheduleID;
+GROUP BY Schedules.scheduleID
+ORDER BY Schedules.start;
 
 -- Select filtered schedules on date(Probably a more efficiant way, but this works... So...)
 SELECT Schedules.scheduleID, Employees.name, DATE(Schedules.start) AS date, TIME(Schedules.start) AS start, TIME(MIN(Session1.session_start)) AS session_start, MIN(Session1.session_end) AS session_end, 
@@ -132,7 +134,8 @@ LEFT JOIN (SELECT Sessions.employee_id, Sessions.session_time AS session_start, 
     JOIN Services ON Services.serviceID = SessionServices.service_id 
     GROUP BY Sessions.sessionID) AS Session7 ON Session7.employee_id = Employees.employeeID AND Session7.session_start >= Schedules.start AND Session7.session_start < Schedules.end AND Session6.session_start < Session7.session_start
 WHERE DATE(Schedules.start) >= :fDateInput AND DATE(Schedules.end) <= :lDateInput
-GROUP BY Schedules.scheduleID;
+GROUP BY Schedules.scheduleID
+ORDER BY Schedules.start;
 
 -- Insert new schedule
 INSERT INTO Schedules(

@@ -79,6 +79,7 @@
                 </form>
             </article>
         </section>
+        <br><button onclick="scrollToIntersection()">See Session Services</button>
         <section>
             <br><br>
             <table id="sessionTable">
@@ -112,6 +113,35 @@
                 </form>
                 <br><br>
             </div>
+        </section>
+        <section class="availability" id="avSection">
+            <h3>Employee Availability</h3>
+        <label for="start">Start date:</label>
+        <input type="date" id="startDate" name="startDate" min="2024-02-01" onchange="refreshAvailabilityTable()"/>
+        <label for="start">End date:</label>
+        <input type="date" id="endDate" name="endDate" min="2024-02-01" onchange="refreshAvailabilityTable()"/>
+        <table id="availabilityTable">
+            <tr>
+                <th>Employee</th>
+                <th>Date</th>
+                <th>Day Start</th>
+                <th>To</th>
+                <th>From</th>
+                <th>To</th>
+                <th>From</th>
+                <th>To</th>
+                <th>From</th>
+                <th>To</th>
+                <th>From</th>
+                <th>To</th>
+                <th>From</th>
+                <th>To</th>
+                <th>From</th>
+                <th>To</th>
+                <th>From</th>
+                <th>Day End</th>
+            </tr>
+        </table>
         </section>
         <section>
             <h2>Sessions Services</h2>
