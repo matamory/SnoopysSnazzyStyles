@@ -83,6 +83,8 @@ function refreshDropdowns(url, dropdownClass) {
             // Add the new rows to the table
             data.forEach(function(item) {
                 dropdowns.forEach(function(dd){
+                    
+                    console.log("ID is", item.id, "Name is", item.name)
                     let option = document.createElement('option');
                     option.value = item.id;
                     option.textContent = item.name;
@@ -144,8 +146,8 @@ function populateEditForm(event) {
     let tr = event.target.parentNode.parentNode; 
     let children = tr.children;
     document.getElementById('editClientDogID').textContent = children[0].textContent;
-    document.getElementById('editClient').value = children[1].getAttribute('clientName');
-    document.getElementById('editDog').value = children[2].getAttribute('dogName');
+    document.getElementById('editClient').value = children[1].textContent;
+    document.getElementById('editDog').value = children[2].getAttribute('name');
     showEditForm('editClientDogForm');
     document.getElementById('editClientDogForm').scrollIntoView();
 }
