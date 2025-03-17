@@ -9,7 +9,7 @@ var app     = express();            // We need to instantiate an express object 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
-PORT        = 6595;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 6596;                 // Set a port number at the top so it's easy to change in the future
 
 
 const { engine } = require('express-handlebars');
@@ -348,7 +348,7 @@ app.post('/add-sessions-ajax', function(req, res){
     // Capture NULL values
     
     // Create the query and run it on the database
-    query1 = `INSERT INTO Sessions (employee_id, client_id, dog_id, session_time, actual_duration, total_price, status) VALUES ('${data.employee}','${data.client}','${data.dog}','${data.time}','SEC_TO_TIME(${data.duration}),'${data.price}','${data.status}')`;
+    query1 = `INSERT INTO Sessions (employee_id, client_id, dog_id, session_time, actual_duration, total_price, status) VALUES ('${data.employee}','${data.client}','${data.dog}','${data.time}', SEC_TO_TIME(${data.duration}),'${data.price}','${data.status}')`;
     db.pool.query(query1, function(error, rows, fields){
     
         // Check to see if there was an error
