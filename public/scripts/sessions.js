@@ -32,7 +32,11 @@ function refreshTable() {
     let table = document.getElementById('sessionTable');
     // Removing old rows
     table.innerHTML = table.oldHtml;
+    //refresh dropdowns
     refreshDropdowns();
+    refreshClientsDropdowns();
+    refreshDogsDropdowns();
+    refreshEmployeesDropdowns();
     var xhttp = new XMLHttpRequest();
     //alert("test")
     xhttp.open("GET", "/sessionsSel", true);
@@ -67,21 +71,76 @@ function refreshTable() {
 
 function createRow(data, table) {
     let newRow = document.createElement('tr');
+    let date = data['session_time'].slice(0, 10);
+    let time = formatTime(data['session_time'].slice(11), true)
+    let duration = data['actual_duration'];
+    duration = duration / 60;
+    console.log(duration);
+
+
     newRow.innerHTML = `\
     <tr>\
         <td>${data['sessionID']}</td>\
-        <td>${data['employee_id']}</td>\
-        <td>${data['client_id']}</td>\
-        <td>${data['dog_id']}</td>\
-        <td>${data['session_time']}</td>\
-        <td>${data['actual_duration']}</td>\
-        <td>${data['total_price']}</td>\
+        <td name="${data['employeeID']}">${data['employeeName']}</td>\
+        <td name="${data['clientID']}">${data['clientName']}</td>\
+        <td name="${data['dogID']}">${data['dogName']}</td>\
+        <td>${date} at ${time}</td>\
+        <td>${duration} min</td>\
+        <td>$${data['total_price']}</td>\
         <td>${data['status']}</td>\
         <td><button class="sessionsEdit">Edit</button></td>\
         <td><button type="button" class="sessionDelete">Delete</button></td>\
     </tr>`;
     table.appendChild(newRow);
 };
+
+function refreshSessionDropdowns(url, dropdownClass, idProperty = 'id') {
+    // Clear dropdowns
+    let dropdowns = document.querySelectorAll(`.${dropdownClass}`);
+
+    for (let dd of dropdowns) {
+        dd.innerHTML = "";
+    }
+
+    // Query new data
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", url, true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    // Tell our AJAX request how to resolve
+    xhttp.onreadystatechange = () => {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            //alert(xhttp.responseText);
+            let data = JSON.parse(xhttp.responseText)
+            // Add the new rows to the table
+            data.forEach(function(item) {
+                dropdowns.forEach(function(dd){
+                    
+                    console.log("ID is", item[idProperty], "Name is", item.name)
+                    let option = document.createElement('option');
+                    option.value = item[idProperty];
+                    option.textContent = item.name;
+                    dd.appendChild(option);
+                });
+            });
+        } 
+        else if (xhttp.readyState == 4 && xhttp.status != 200) {
+            console.log("There was an error with the input.")
+        }
+    };
+
+    xhttp.send();
+};
+function refreshEmployeesDropdowns() {
+    refreshSessionDropdowns("/employeesDropdown", "employee-dropdown", 'employeeID', 'employeeName')
+}
+
+function refreshClientsDropdowns() {
+    refreshSessionDropdowns("/clientsDropdown", "client-dropdown", 'clientID', 'clientName' );
+}
+
+function refreshDogsDropdowns() {
+    refreshSessionDropdowns("/dogsDropdown", "dog-dropdown", 'dogID', 'dogName')
+}
 
 function delRow(event) {
     event.preventDefault();
@@ -285,9 +344,9 @@ function populateEditForm(event) {
     let tr = event.target.parentNode.parentNode; 
     let children = tr.children;
     document.getElementById('editSessionID').textContent = children[0].textContent;
-    document.getElementById('editSessionEmployee').value = children[1].textContent;
-    document.getElementById('editSessionClient').value = children[2].textContent;
-    document.getElementById('editSessionDog').value = children[3].textContent;
+    document.getElementById('editSessionEmployee').value = children[1].getAttribute('name');
+    document.getElementById('editSessionClient').value = children[2].getAttribute('name');
+    document.getElementById('editSessionDog').value = children[3].getAttribute('name');
     document.getElementById('editSessionTime').value = children[4].textContent.replace(' ', "T");
     document.getElementById('editSessionDuration').value = children[5].textContent.slice(0, -4);
     document.getElementById('editSessionPrice').value = children[6].textContent.slice(1);
@@ -373,11 +432,11 @@ function addNewSession(event) {
 
     // Put our data we want to send in a javascript object
     let data = {        
-        employee: inputEmployee.value,
-        client: inputClient.value,
-        dog: inputDog.value,
+        employee: (inputEmployee.value.trim() == "") ? 'null': inputEmployee.value,
+        client: (inputClient.value.trim() == "") ? 'null': inputClient.value,
+        dog: (inputDog.value.trim() == "") ? 'null': inputDog.value,
         time: inputTime.value,
-        duration: inputDuration.value, 
+        duration: (inputDuration.value.trim() == "") ? 'null': inputDuration.value * 60, 
         price: inputPrice.value,
         status: inputStatus.value,
     }
@@ -406,9 +465,9 @@ function addNewSession(event) {
             // Clear the input fields for another transaction
             document.getElementById("serviceEntry").innerHTML = document.getElementById("serviceEntry").oldHtml;
             serviceFields = 1;
-            inputEmployee.value = 0;
-            inputClient.value = 0;
-            inputDog.value = 0;
+            inputEmployee.value = '';
+            inputClient.value = '';
+            inputDog.value = '';
             inputTime.value = '';
             inputDuration.value= '';
             inputPrice.value = '';
@@ -551,11 +610,11 @@ function updateSession(event){
     // Put our data we want to send in a javascript object
     let data = {
         id: updateSessionID.textContent,
-        employee: updateEmployee.value,
-        client: updateClient.value,
-        dog: updateDog.value, 
+        employee: (updateEmployee.value.trim() == "") ? 'null': updateEmployee.value,
+        client: (updateClient.value.trim() == "") ? 'null': updateClient.value,
+        dog: (updateDog.value.trim() == "") ? 'null': updateDog.value,
         time: updateTime.value,
-        duration: updateDuration.value,
+        duration: (updateDog.value.trim() == "") ? 'null': updateDuration.value * 60,
         price: updatePrice.value,
         stat: updateStatus.value,
 

@@ -135,7 +135,7 @@ function addNewClient(event) {
     let data = {
         name: inputName.value,
         phone: inputPhone.value,
-        contact: (inputContact.trim() == "") ? 'null': inputContact,
+        contact: inputContact,
         email: (inputEmail.value.trim() == "") ? 'null': inputEmail.value
     }
     
@@ -186,7 +186,7 @@ function updateClient(event) {
         name: inputName.value,
         phone: inputPhone.value,
         contact: inputContact.value,
-        email: inputEmail.value,
+        email: (inputEmail.value.trim() == "") ? 'null': inputEmail.value
         
     }
     
