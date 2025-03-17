@@ -1,7 +1,6 @@
 {
   "name": "mycode",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,11 +12,20 @@
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "express-handlebars": "^8.0.1",
-    "forever": "^1.0.1",
+    "forever": "^4.0.3",
     "my": "^0.3.3",
     "mysql": "^2.18.1",
     "node-fetch": "^2.7.0",
     "nodemon": "^3.1.0",
     "sql": "^0.78.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matamory/CS340_project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/matamory/CS340_project/issues"
+  },
+  "homepage": "https://github.com/matamory/CS340_project#readme",
+  "description": ""
 }
