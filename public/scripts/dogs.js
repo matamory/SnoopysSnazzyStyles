@@ -56,9 +56,9 @@ function createRow(data, table) {
     <tr>\
         <td>${data['dogID']}</td>\
         <td>${data['name']}</td>\
-        <td>${data['age']}</td>\
+        <td>${data['age']} years</td>\
         <td>${data['breed']}</td>\
-        <td>${data['size_lbs']}</td>\
+        <td>${data['size_lbs']} lbs</td>\
         <td>${data['groomer_notes']}</td>\
         <td><button class="dogsEdit">Edit</button></td>\
         <td><button type="button" class="dogDelete">Delete</button></td>\
