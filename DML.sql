@@ -47,16 +47,16 @@ DELETE FROM Employees WHERE employeeID = :employee_ID_selected_from_employee_pag
 -- -----------------------------------------------------
 
 -- Select all schedules
-SELECT Schedules.scheduleID, Employees.name, Schedules.start, Schedules.end FROM Schedules
+SELECT Schedules.scheduleID, Employees.employeeID, Employees.name, Schedules.start, Schedules.end FROM Schedules
 JOIN Employees ON Schedules.employee_id = Employees.employeeID;
 
 -- Select schedules based on date
-SELECT Schedules.scheduleID, Employees.name, Schedules.start, Schedules.end FROM Schedules
+SELECT Schedules.scheduleID, Employees.employeeID, Employees.name, Schedules.start, Schedules.end FROM Schedules
 JOIN Employees ON Schedules.employee_id = Employees.employeeID 
 WHERE DATE(Schedules.start) = :dateInput;
 
 -- Select schedules based on date range
-SELECT Schedules.scheduleID, Employees.name, Schedules.start, Schedules.end FROM Schedules
+SELECT Schedules.scheduleID, Employees.employeeID, Employees.name, Schedules.start, Schedules.end FROM Schedules
 JOIN Employees ON Schedules.employee_id = Employees.employeeID 
 WHERE DATE(Schedules.start) >= :fDateInput AND DATE(Schedules.end) <= :lDateInput;
 
@@ -159,7 +159,7 @@ DELETE FROM Schedules WHERE scheduleID = :schedule_ID_selected_from_schedule_pag
 -- Services table queries
 -- -----------------------------------------------------
 -- Select all services
-SELECT * FROM Services;
+SELECT serviceID, service_name, TIME_TO_SEC(service_duration) as service_duration, price FROM Services;
 
 -- Select services for dropdowns
 SELECT serviceID, service_name FROM Services;
@@ -174,14 +174,14 @@ INSERT INTO Services(
     price
 ) VALUES (
     :nameInput,
-    :durationInput,
+    SEC_TO_TIME(:durationInput),
     :priceInput
 );
 
 -- Update service
 UPDATE Services SET 
     service_name = :nameInput, 
-    service_duration = :durationInput, 
+    service_duration = SEC_TO_TIME(:durationInput), 
     price = :priceInput
 WHERE serviceID = :idInput;
 

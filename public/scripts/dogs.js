@@ -85,7 +85,7 @@ function delRow(event) {
                 // Remove row from table
                 alert('Dog has been deleted');
                 tr.parentNode.removeChild(tr)
-                document.getElementById('editDogForm').style.display='block';
+                document.getElementById('editDogForm').style.visibility = 'hidden';
             }
             else if (xhttp.readyState == 4 && xhttp.status != 200) {
                 console.log("There was an error with the input.")
@@ -115,6 +115,7 @@ function populateEditForm(event) {
     document.getElementById('editDogSize').value = children[4].textContent;
     document.getElementById('editDogNotes').value = children[5].textContent;
     showEditForm('editDogForm');
+    document.getElementById('editDogForm').scrollIntoView();
 }
 
 function addNewDog(event) {

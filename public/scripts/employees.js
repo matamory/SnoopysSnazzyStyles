@@ -220,4 +220,5 @@ function populateEditForm(event) {
     document.getElementById('editEmployeesAddress').value = children[6].textContent;
     document.getElementById('editEmployeesActive').checked = (children[7].textContent === '1') ? true : false;
     showEditForm('editEmployeesForm');
+    document.getElementById('editEmployeesForm').scrollIntoView();
 }

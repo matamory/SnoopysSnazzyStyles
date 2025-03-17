@@ -97,7 +97,7 @@ function delRow(event) {
                 // Remove row from table
                 alert('Session has be deleted');
                 tr.parentNode.removeChild(tr);
-                document.getElementById('editSessionForm').style.display='block';
+                document.getElementById('editSessionForm').style.visibility = 'hidden';
                 refreshIntersectionTable();
             }
             else if (xhttp.readyState == 4 && xhttp.status != 200) {
@@ -200,6 +200,7 @@ function populateEditForm(event) {
     document.getElementById('editSessionPrice').value = children[6].textContent.slice(1);
     document.getElementById('editSessionStatus').value = children[7].textContent;
     showEditForm('editSessionForm');
+    document.getElementById('editSessionForm').scrollIntoView();
 }
 
 function setDropdowns() { //Function for dropdowns that do not need refreshing

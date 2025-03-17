@@ -80,6 +80,7 @@ function delRow(event) {
                 // Remove row from table
                 alert('Client-dog pair has been deleted');
                 tr.parentNode.removeChild(tr)
+                document.getElementById('editClientDogForm').style.visibility = 'hidden';
             }
             else if (xhttp.readyState == 4 && xhttp.status != 200) {
                 console.log("There was an error with the input.")
@@ -99,10 +100,12 @@ function populateEditForm(event) {
     document.getElementById('editClient').value = children[1].textContent;
     document.getElementById('editDog').value = children[2].textContent;
     showEditForm('editClientDogForm');
+    document.getElementById('editClientDogForm').scrollIntoView();
 }
 function showEditForm() {
     document.getElementById('editClientDogForm').style.display='none';
     document.getElementById('editClientDogForm').style.display='block';
+    document.getElementById('editClientDogForm').style.visibility = 'visible';
 }
 
 function addNewClientDog(event) {
@@ -175,6 +178,7 @@ function updateClientDog(event) {
 
             // Add the new data to the table
             refreshTable();
+            document.getElementById('editClientDogForm').style.visibility = 'hidden';
             document.getElementById("editClientDogForm").style.display = "none";
 
         }
