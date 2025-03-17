@@ -88,9 +88,21 @@
                 <h3>Edit Session Information</h3>
                 <form id="update-session-form-ajax">
                     <label>ID:</label><label id="editSessionID"></label><br><br>
-                    <label>Employee:</label> <input type="text" id="editSessionEmployee" required><br><br>
-                    <label>Client:</label> <input type="text" id="editSessionClient" required><br><br>
-                    <label>Dog:</label> <input type="text" id="editSessionDog" required><br><br>
+                    <label for="editSessionEmployee">Employee: </label> 
+                        <select name="employeeID" id="editSessionEmployee" class= "employee-dropdown" required >
+                            <option value="" disabled selected hidden>Select Employee</option>
+                        </select>
+                        <br><br>
+                    <label for="editSessionClient">Client: </label> 
+                        <select name="clientID" id="editSessionClient" class= "client-dropdown" required >
+                            <option value="" disabled selected hidden>Select Client</option>
+                        </select>
+                        <br><br>
+                    <label for="editSessionDog">Dog: </label> 
+                        <select name="dogID" id="editSessionDog" class= "dog-dropdown"required >
+                            <option value="" disabled selected hidden>Select Dog</option>
+                        </select>
+                        <br><br>
                     <label>Time:</label> <input type="datetime-local" id="editSessionTime" required><br><br>
                     <label>Duration:</label> <input type="number" id="editSessionDuration"><br><br>
                     <label>Price:</label> <input type="number" id="editSessionPrice" required><br><br>
