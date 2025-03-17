@@ -17,6 +17,9 @@ function refreshTable() {
     let table = document.getElementById('clientsDogsTable');
     // Removing old rows
     table.innerHTML = table.oldHtml;
+    //refresh dropdowns
+    refreshClientsDropdowns();
+    refreshDogsDropdowns();
     var xhttp = new XMLHttpRequest();
     //alert("test")
     xhttp.open("GET", "/clientsDogsSel", true);
@@ -52,13 +55,57 @@ function createRow(data, table) {
     newRow.innerHTML = `\
     <tr>\
         <td>${data['clientsDogsID']}</td>\
-        <td>${data['client_id']}</td>\
-        <td>${data['dog_id']}</td>\
+        <td name="${data['clientID']}">${data['clientName']}</td>\
+        <td name="${data['dogID']}">${data['dogName']}</td>\
         <td><button class="clientsDogEdit">Edit</button></td>\
         <td><button type="button" class="clientsDogDelete">Delete</button></td>\
     </tr>`;
     table.appendChild(newRow);
 };
+
+function refreshDropdowns(url, dropdownClass) {
+    // Clear dropdowns
+    let dropdowns = document.querySelectorAll(`.${dropdownClass}`);
+
+    for (let dd of dropdowns) {
+        dd.innerHTML = "";
+    }
+
+    // Query new data
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", url, true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    // Tell our AJAX request how to resolve
+    xhttp.onreadystatechange = () => {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            //alert(xhttp.responseText);
+            let data = JSON.parse(xhttp.responseText)
+            // Add the new rows to the table
+            data.forEach(function(item) {
+                dropdowns.forEach(function(dd){
+                    let option = document.createElement('option');
+                    option.value = item.id;
+                    option.textContent = item.name;
+                    dd.appendChild(option);
+                });
+            });
+        } 
+        else if (xhttp.readyState == 4 && xhttp.status != 200) {
+            console.log("There was an error with the input.")
+        }
+    };
+
+    xhttp.send();
+};
+
+function refreshClientsDropdowns() {
+    refreshDropdowns("/clientsDropdown", "client-dropdown");
+}
+
+function refreshDogsDropdowns() {
+    refreshDropdowns("/dogsDropdown", "dog-dropdown")
+}
+
 
 
 function delRow(event) {
@@ -97,8 +144,8 @@ function populateEditForm(event) {
     let tr = event.target.parentNode.parentNode; 
     let children = tr.children;
     document.getElementById('editClientDogID').textContent = children[0].textContent;
-    document.getElementById('editClient').value = children[1].textContent;
-    document.getElementById('editDog').value = children[2].textContent;
+    document.getElementById('editClient').value = children[1].getAttribute('clientName');
+    document.getElementById('editDog').value = children[2].getAttribute('dogName');
     showEditForm('editClientDogForm');
     document.getElementById('editClientDogForm').scrollIntoView();
 }

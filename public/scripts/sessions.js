@@ -280,11 +280,11 @@ function addNewSession(event) {
 
     // Put our data we want to send in a javascript object
     let data = {        
-        employee: inputEmployee.value,
-        client: inputClient.value,
-        dog: inputDog.value,
+        employee: (inputEmployee.value.trim() == "") ? 'null': inputEmployee.value,
+        client: (inputClient.value.trim() == "") ? 'null': inputClient.value,
+        dog: (inputDog.value.trim() == "") ? 'null': inputDog.value,
         time: inputTime.value,
-        duration: inputDuration.value, 
+        duration: (inputDuration.value.trim() == "") ? 'null': inputDuration.value, 
         price: inputPrice.value,
         status: inputStatus.value,
     }
@@ -457,11 +457,12 @@ function updateSession(event){
     // Put our data we want to send in a javascript object
     let data = {
         id: updateSessionID.textContent,
-        employee: updateEmployee.value,
-        client: updateClient.value,
-        dog: updateDog.value, 
+    
+        employee: (updateEmployee.value.trim() == "") ? 'null': updateEmployee.value,
+        client: (updateClient.value.trim() == "") ? 'null': updateClient.value,
+        dog: (updateDog.value.trim() == "") ? 'null': updateDog.value,
         time: updateTime.value,
-        duration: updateDuration.value,
+        duration: (updateDuration.value.trim() == "") ? 'null': updateDuration.value,
         price: updatePrice.value,
         stat: updateStatus.value,
 

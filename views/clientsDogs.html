@@ -33,21 +33,13 @@
                 <form id="clientDogForm">
                 <fieldset>
                     <label for="clientID">Client: </label> 
-                        <select name="clientID" id="clientID" required >
-                            <option value="0">select client</option>
-                            <option value="1">Nzinga Fumnaya</option>
-                            <option value="2">Pat Yonah</option> 
-                            <option value="3">Karuna Yardena</option>
+                        <select name="clientName" id="client_id" class= "client-dropdown" required >
+                            <option value="" disabled selected hidden>Select Client</option>
                         </select>
                         <br><br>
                     <label for="dogID">Dog: </label> 
-                        <select name="dogID" id="dogID" required >
-                            <option value="0">select dog</option>
-                            <option value="1">Fido</option>
-                            <option value="2">Nalla</option>
-                            <option value="3">Ferdinand the Destroyer</option>
-                            <option value="4">Leoford</option>
-                            <option value="5">Lucky</option>
+                        <select name="dogID" id="dogID" class= "dog-dropdown"required >
+                            <option value="" disabled selected hidden>Select Dog</option>
                         </select>
                         <br><br>
                 </fieldset>
@@ -72,9 +64,16 @@
             <div id="editClientDogForm" style="display: none;">
                 <h3>Edit Client/Dog Information</h3>
                 <form id="update-clientDog-form-ajax">
-                    <label>ID:</label><label id="editClientDogID"></label><br><br>
-                    <label>Client:</label> <input type="text" id="editClient" required><br><br>
-                    <label>Dogs:</label> <input type="text" id="editDog" required><br><br>
+                    <label>ID:</label><label id="editClientDogID"></label><br><br>   
+                    <label for="editClient">Client: </label> 
+                        <select name="clientID" id="editClient" class= "client-dropdown" required >
+                            <option value="" disabled selected hidden>Select Client</option>
+                        </select>
+                        <br><br>
+                    <label for="editDog">Dog: </label> 
+                        <select name="dogID" id="editDog" class= "dog-dropdown" required >
+                            <option value="" disabled selected hidden>Select Dog</option>
+                        </select>
                     <br>
                     <button type="submit" class="UpdateInfo">Update</button>
                 </form>
