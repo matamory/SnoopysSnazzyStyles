@@ -63,7 +63,7 @@ function createRow(data, table) {
     table.appendChild(newRow);
 };
 
-function refreshDropdowns(url, dropdownClass) {
+function refreshDropdowns(url, dropdownClass, idProperty = 'id') {
     // Clear dropdowns
     let dropdowns = document.querySelectorAll(`.${dropdownClass}`);
 
@@ -84,9 +84,9 @@ function refreshDropdowns(url, dropdownClass) {
             data.forEach(function(item) {
                 dropdowns.forEach(function(dd){
                     
-                    console.log("ID is", item.id, "Name is", item.name)
+                    console.log("ID is", item[idProperty], "Name is", item.name)
                     let option = document.createElement('option');
-                    option.value = item.id;
+                    option.value = item[idProperty];
                     option.textContent = item.name;
                     dd.appendChild(option);
                 });
@@ -101,11 +101,11 @@ function refreshDropdowns(url, dropdownClass) {
 };
 
 function refreshClientsDropdowns() {
-    refreshDropdowns("/clientsDropdown", "client-dropdown");
+    refreshDropdowns("/clientsDropdown", "client-dropdown", 'clientID', 'clientName' );
 }
 
 function refreshDogsDropdowns() {
-    refreshDropdowns("/dogsDropdown", "dog-dropdown")
+    refreshDropdowns("/dogsDropdown", "dog-dropdown", 'dogID', 'dogName')
 }
 
 
@@ -146,7 +146,7 @@ function populateEditForm(event) {
     let tr = event.target.parentNode.parentNode; 
     let children = tr.children;
     document.getElementById('editClientDogID').textContent = children[0].textContent;
-    document.getElementById('editClient').value = children[1].textContent;
+    document.getElementById('editClient').value = children[1].getAttribute('name');
     document.getElementById('editDog').value = children[2].getAttribute('name');
     showEditForm('editClientDogForm');
     document.getElementById('editClientDogForm').scrollIntoView();
