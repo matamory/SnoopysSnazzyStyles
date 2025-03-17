@@ -29,6 +29,7 @@ function refreshTable() {
             //alert(xhttp.responseText);
             let data = JSON.parse(xhttp.responseText)
             // Add the new rows to the table
+                //console.log(data)
             for (let i = 0; i < data.length; i++ ) {
                 createRow(data[i], table);
             };
