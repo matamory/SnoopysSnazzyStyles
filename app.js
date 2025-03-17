@@ -92,7 +92,7 @@ app.get('/dogsSel', function(req, res)
 
 app.get('/clientsDogsSel', function(req, res)
     {  
-        let query1 = "SELECT * FROM ClientsDogs;";                     // Define our query
+        let query1 = "SELECT ClientsDogs.clientsDogsID, Clients.clientID, Dogs.dogID, Clients.name AS clientName, Dogs.name as dogName FROM ClientsDogs JOIN Clients ON ClientsDogs.client_id = Clients.clientID JOIN Dogs ON ClientsDogs.dog_id = Dogs.dogID;";                     // Define our query
 
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
             res.send(JSON.stringify(rows));                     // Return query as JSON string
@@ -157,7 +157,25 @@ app.get('/employeesDropdown', function(req, res)
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
             res.send(JSON.stringify(rows));                     // Return query as JSON string
         })                                                      
-    });                                                        
+    });       
+
+app.get('/clientsDropdown', function(req, res)
+    {  
+        let query1 = "SELECT clientID, name FROM Clients;";                     // Define our query
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            res.send(JSON.stringify(rows));                     // Return query as JSON string
+        })                                                      
+    });    
+
+app.get('/dogsDropdown', function(req, res)
+    {  
+        let query1 = "SELECT dogID, name FROM Dogs;";                     // Define our query
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            res.send(JSON.stringify(rows));                     // Return query as JSON string
+        })                                                      
+    });    
 
 app.get('/serviceDropdown', function(req, res)
     {  
@@ -306,7 +324,7 @@ app.post('/add-clientsDogs-ajax', function(req, res){
     // Capture NULL values
     
     // Create the query and run it on the database
-    query1 = `INSERT INTO ClientsDogs (client_ID, dog_ID) VALUES ('${data.client}', '${data.dog}')`;
+    query1 = `INSERT INTO ClientsDogs (client_id, dog_id) VALUES ('${data.client}', '${data.dog}')`;
     db.pool.query(query1, function(error, rows, fields){
     
         // Check to see if there was an error
