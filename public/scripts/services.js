@@ -29,6 +29,7 @@ function refreshTable() {
             //alert(xhttp.responseText);
             let data = JSON.parse(xhttp.responseText)
             // Add the new rows to the table
+                //console.log(data)
             for (let i = 0; i < data.length; i++ ) {
                 createRow(data[i], table);
             };
@@ -51,12 +52,14 @@ function refreshTable() {
 
 function createRow(data, table) {
     let newRow = document.createElement('tr');
+    let duration = data['service_duration'];
+    duration = duration / 60;
 
     newRow.innerHTML = `\
     <tr>\
         <td>${data['serviceID']}</td>\
         <td>${data['service_name']}</td>\
-        <td>${data['service_duration']/60} min</td>\
+        <td>${duration} min</td>\
         <td>$${data['price']}</td>\
         <td><button class="serviceEdit">Edit</button></td>
         <td><button type="button" class="serviceDelete">Delete</button></td>
