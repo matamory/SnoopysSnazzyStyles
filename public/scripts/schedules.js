@@ -74,19 +74,19 @@ function createRow(data, table) {
         <td>${data['scheduleID']}</td>\
         <td name="${data['employeeID']}">${data['name']}</td>\
         <td>${date}</td>\
-        <td>${formatTime(data['start'].slice(11), offset)}</td>\
-        <td>${formatTime(data['end'].slice(11), offset)}</td>\
+        <td>${formatTime(data['start'].slice(11), true)}</td>\
+        <td>${formatTime(data['end'].slice(11), true)}</td>\
         <td><button class="scheduleEdit">Edit</button></td>\
         <td type="button" class="scheduleDelete"><button>Delete</button></td>\
     </tr>`;
     table.appendChild(newRow);
 };
 
-function formatTime(time, minus) {
+function formatTime(time, minus8 = false) {
     if (time !== null){
         let hour = parseInt(time.slice(0, 2));
-        if (minus) {
-            hour = (hour <= minus) ? hour + 16 : hour - minus;   // For some reason the query is adding 8 hours??
+        if (minus8) {
+            hour = (hour <= 8) ? hour + 16 : hour - 8;   // For some reason the query is adding 8 hours??
         };
         let amPm = (hour > 11 && hour < 24) ? ' pm' : ' am';
         hour = (hour > 12) ? hour - 12 : hour;      // Convert to 12 hour time
