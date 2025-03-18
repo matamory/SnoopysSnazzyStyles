@@ -1,6 +1,13 @@
 -- Group 57: Thomas Carpenter, Yesenia Matamoros
 -- Project: Snoopy’s Snazzy Styles Management System
 
+/*
+Citation:
+        Scope: Queries to support CRUD operations were adapted from examples given in Exploration - Database Application Design
+        Date: 02/11/2025
+        Url: https://canvas.oregonstate.edu/courses/1987790/pages/exploration-database-application-design?module_item_id=25023009 
+    
+*/
 
 -- -----------------------------------------------------
 -- Employees table queries

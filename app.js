@@ -1,5 +1,14 @@
 // App.js
 
+/*
+Citation:
+        Scope: Queries to support CRUD operations were adapted from examples given in Exploration - Database Application Design
+        Date: 02/11/2025
+        Url: https://canvas.oregonstate.edu/courses/1987790/pages/exploration-database-application-design?module_item_id=25023009 
+    
+*/
+
+
 /*========================================================================================
     SETUP
 ==========================================================================================*/
@@ -9,7 +18,7 @@ var app     = express();            // We need to instantiate an express object 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
-PORT        = 6596;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 6595;                 // Set a port number at the top so it's easy to change in the future
 
 
 const { engine } = require('express-handlebars');
