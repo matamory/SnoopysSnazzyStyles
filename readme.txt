@@ -23,18 +23,3 @@ Citations
         Scope:
         Date:
         Url:
-
-    File:
-        Scope:
-        Date:
-        Url:
-    
-    File:
-        Scope:
-        Date:
-        Url:
-    
-    File:
-        Scope:
-        Date:
-        Url:
