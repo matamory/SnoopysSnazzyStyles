@@ -8,7 +8,17 @@ document.addEventListener('DOMContentLoaded', function() {
     table.oldHtml = table.innerHTML;
     table = document.getElementById('sessionID');
     table.oldHtml = table.innerHTML;
-    table = document.getElementById('availabilityTable');
+    table = document.getElementById('clientID');
+    table.oldHtml = table.innerHTML;
+    table = document.getElementById('dogID');
+    table.oldHtml = table.innerHTML;
+    table = document.getElementById('employeeID');
+    table.oldHtml = table.innerHTML;
+    table = document.getElementById('editSessionEmployee');
+    table.oldHtml = table.innerHTML;
+    table = document.getElementById('editSessionClient');
+    table.oldHtml = table.innerHTML;
+    table = document.getElementById('editSessionDog');
     table.oldHtml = table.innerHTML;
     document.getElementById('avSection').style.visibility = 'hidden';
     document.getElementById('avSection').style.display='none';
@@ -26,6 +36,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Get update form 
     let updateSessionForm = document.getElementById('update-session-form-ajax');
     updateSessionForm.addEventListener("submit", updateSession);
+    let clientSub = document.getElementById('clientID');
+    clientSub.addEventListener('change', refreshDogsDropdowns);
+    clientSub = document.getElementById('editSessionClient');
+    clientSub.addEventListener('change', refreshDogsDropdowns);
 });
 
 function refreshTable() {
@@ -93,12 +107,16 @@ function createRow(data, table) {
     table.appendChild(newRow);
 };
 
-function refreshSessionDropdowns(url, dropdownClass, idProperty = 'id') {
+function refreshSessionDropdowns(url, dropdownClass, idProperty = 'id', dropdownId='') {
     // Clear dropdowns
     let dropdowns = document.querySelectorAll(`.${dropdownClass}`);
-
-    for (let dd of dropdowns) {
-        dd.innerHTML = "";
+    if (dropdownId === '') {
+        for (let dd of dropdowns) {
+            dd.innerHTML = dd.oldHtml;
+        }
+    } else {
+        dropdowns = new Array(document.getElementById(dropdownId))
+        dropdowns[0].innerHTML = dropdowns.oldHtml;
     }
 
     // Query new data
@@ -113,8 +131,7 @@ function refreshSessionDropdowns(url, dropdownClass, idProperty = 'id') {
             // Add the new rows to the table
             data.forEach(function(item) {
                 dropdowns.forEach(function(dd){
-                    
-                    console.log("ID is", item[idProperty], "Name is", item.name)
+                    //console.log("ID is", item[idProperty], "Name is", item.name)
                     let option = document.createElement('option');
                     option.value = item[idProperty];
                     option.textContent = item.name;
@@ -129,16 +146,27 @@ function refreshSessionDropdowns(url, dropdownClass, idProperty = 'id') {
 
     xhttp.send();
 };
+
 function refreshEmployeesDropdowns() {
-    refreshSessionDropdowns("/employeesDropdown", "employee-dropdown", 'employeeID', 'employeeName')
+    refreshSessionDropdowns("/employeesDropdown", "employee-dropdown", 'employeeID')
 }
 
 function refreshClientsDropdowns() {
-    refreshSessionDropdowns("/clientsDropdown", "client-dropdown", 'clientID', 'clientName' );
+    refreshSessionDropdowns("/clientsDropdown", "client-dropdown", 'clientID');
 }
 
-function refreshDogsDropdowns() {
-    refreshSessionDropdowns("/dogsDropdown", "dog-dropdown", 'dogID', 'dogName')
+function refreshDogsDropdowns(event) {
+    let id = 'null'
+    let targetId = ''
+    console.log(event)
+    if (event) {
+        event.preventDefault();
+        target = document.getElementById(event.target.getAttribute('id'))
+        id = (event.target.value != '') ? event.target.value : 'null';
+        targetId = target.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.getAttribute('id');
+        console.log(targetId)
+    } 
+    refreshSessionDropdowns(`/dogsDropdown/${id}`, "dog-dropdown", 'dogID', targetId)
 }
 
 function delRow(event) {
@@ -346,12 +374,26 @@ function populateEditForm(event) {
     document.getElementById('editSessionEmployee').value = children[1].getAttribute('name');
     document.getElementById('editSessionClient').value = children[2].getAttribute('name');
     document.getElementById('editSessionDog').value = children[3].getAttribute('name');
-    document.getElementById('editSessionTime').value = children[4].textContent.replace(' ', "T");
+    let dateTime = children[4].textContent;
+    let datePart = dateTime.slice(0, 10);
+    let timePart = dateTime.slice(14, -3);
+    if (dateTime.slice(-2) == 'pm'){
+        let hour = parseInt(timePart.slice(0, 2))
+        hour += 12;
+        hour += (hour < 12)? 12 : 0;
+        hour = hour.toString(); 
+        hour += timePart.slice(-3);
+    }
+    datePart = datePart + "T" + timePart
+    console.log(datePart);
+    document.getElementById('editSessionTime').value = datePart;
     document.getElementById('editSessionDuration').value = children[5].textContent.slice(0, -4);
     document.getElementById('editSessionPrice').value = children[6].textContent.slice(1);
     document.getElementById('editSessionStatus').value = children[7].textContent;
     showEditForm('editSessionForm');
     document.getElementById('editSessionForm').scrollIntoView();
+    var event = new Event('change');
+    document.getElementById('editSessionClient').dispatchEvent(event, { bubbles: true });
 }
 
 function setDropdowns() { //Function for dropdowns that do not need refreshing

@@ -9,7 +9,7 @@ var app     = express();            // We need to instantiate an express object 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
-PORT        = 6595;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 6596;                 // Set a port number at the top so it's easy to change in the future
 
 
 const { engine } = require('express-handlebars');
@@ -169,11 +169,17 @@ app.get('/clientsDropdown', function(req, res)
         })                                                      
     });    
 
-app.get('/dogsDropdown', function(req, res)
+app.get('/dogsDropdown/:data?', function(req, res)
     {  
-        let query1 = "SELECT dogID, name FROM Dogs;";                     // Define our query
-
+        let data = req.params.data;
+        let where = ''
+        if (data != 'null'){
+            where = `WHERE ClientsDogs.client_id = ${data}`
+        } 
+        let query1 = `SELECT Dogs.dogID, Dogs.name FROM Dogs JOIN ClientsDogs ON ClientsDogs.dog_id = Dogs.dogID ${where};`;                     // Define our query
+        console.log(data)
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
+            console.log(JSON.stringify(rows))
             res.send(JSON.stringify(rows));                     // Return query as JSON string
         })                                                      
     });    
