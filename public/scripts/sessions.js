@@ -374,7 +374,19 @@ function populateEditForm(event) {
     document.getElementById('editSessionEmployee').value = children[1].getAttribute('name');
     document.getElementById('editSessionClient').value = children[2].getAttribute('name');
     document.getElementById('editSessionDog').value = children[3].getAttribute('name');
-    document.getElementById('editSessionTime').value = children[4].textContent.replace(' ', "T");
+    let dateTime = children[4].textContent;
+    let datePart = dateTime.slice(0, 10);
+    let timePart = dateTime.slice(14, -3);
+    if (dateTime.slice(-2) == 'pm'){
+        let hour = parseInt(timePart.slice(0, 2))
+        hour += 12;
+        hour += (hour < 12)? 12 : 0;
+        hour = hour.toString(); 
+        hour += timePart.slice(-3);
+    }
+    datePart = datePart + "T" + timePart
+    console.log(datePart);
+    document.getElementById('editSessionTime').value = datePart;
     document.getElementById('editSessionDuration').value = children[5].textContent.slice(0, -4);
     document.getElementById('editSessionPrice').value = children[6].textContent.slice(1);
     document.getElementById('editSessionStatus').value = children[7].textContent;
