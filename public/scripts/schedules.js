@@ -60,12 +60,14 @@ function refreshTable() {
 
 function createRow(data, table) {
     let newRow = document.createElement('tr');
-    let date = new Date(data['start'].slice(0, 10));
-    let offset = 8;
+    let date = data['start'].slice(0, 10);
+    
+    //let date = new Date(data['start'].slice(0, 10));
+    //let offset = 8;
     // Check for daylight savings
-    if (((date.getDate() - date.getDay() > 7 && date.getMonth() >= 3) || date.getMonth() > 3) && ((date.getDate() - date.getDay() < 1 && date.getMonth() <= 11) || date.getMonth() < 11)) {
-        offset = 7;
-    }
+    //if (((date.getDate() - date.getDay() > 7 && date.getMonth() >= 3) || date.getMonth() > 3) && ((date.getDate() - date.getDay() < 1 && date.getMonth() <= 11) || date.getMonth() < 11)) {
+    //   offset = 7;
+    //}
     date = data['start'].slice(0, 10);
     newRow.innerHTML = `\
     <tr>\

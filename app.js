@@ -9,7 +9,7 @@ var app     = express();            // We need to instantiate an express object 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
-PORT        = 6596;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 6595;                 // Set a port number at the top so it's easy to change in the future
 
 
 const { engine } = require('express-handlebars');
@@ -814,35 +814,6 @@ app.put('/put-session-ajax', function(req,res,next){
         }
     })
 
-
-    /*let id = parseInt(data.id);
-    
-    let employee = data.employee;
-    let client = data.client;
-    let dog = data.dog;
-    let time = data.time;
-    let duration =  SEC_TO_TIME(data.duration);
-    let price = data.price;
-    let stat = data.stat;
-  
-     let queryUpdateSession = `UPDATE Sessions SET 
-                            employee_id = ?, 
-        client_id = ?, dog_id = ?, session_time = ?, actual_duration = ?, total_price = ?, status = ?
-        WHERE sessionID = ?`;*/
-
-
-
-  
-          // Run the 1st query
-    //db.pool.query(queryUpdateSession, [employee, client, dog, time, duration, price, stat, id ], function(error, rows, fields){
-        /*if (error) {
-            console.log(error);
-            res.sendStatus(400);
-        } else {
-            res.send(rows);
-        }
-
-    })*/
 });
 /*========================================================================================
     LISTENER
