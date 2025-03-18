@@ -105,7 +105,7 @@ function refreshClientsDropdowns() {
 }
 
 function refreshDogsDropdowns() {
-    refreshDropdowns("/dogsDropdown", "dog-dropdown", 'dogID', 'dogName')
+    refreshDropdowns("/dogsDropdown/null", "dog-dropdown", 'dogID', 'dogName')
 }
 
 
