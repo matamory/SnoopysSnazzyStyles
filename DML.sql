@@ -1,6 +1,5 @@
 -- Group 57: Thomas Carpenter, Yesenia Matamoros
 -- Project: Snoopy’s Snazzy Styles Management System
--- Project Step 3 Draft
 
 
 -- -----------------------------------------------------
@@ -10,37 +9,35 @@
 -- Select all employees
 SELECT * FROM Employees;
 
--- Select specific employee
-SELECT * FROM Employees WHERE employeeID = :idInput;
-
 -- Get employee's data to populate a dropdown for associating with a session 
 SELECT employeeID, name FROM Employees;
 
 -- Add new employee
 INSERT INTO Employees (name, hourly_wage, years_experience, phone_number, email, address, is_active
 ) VALUES (
-    :nameInput,
-    :wageInput,
-    :experienceInput,
-    :phoneInput,
-    :emailInput,
-    :addressInput,
-    :activeInput
+    :name,
+    :wage,
+    :experience,
+    :phone,
+    :email,
+    :address,
+    :active
+
 );
 
 -- Update employee
 UPDATE Employees SET 
-    name = :nameInput, 
-    hourly_wage = :wageInput, 
-    years_experience = :experienceInput, 
-    phone_number= :phoneInput,
-    email = :emailInput, 
-    address = :addressInput, 
-    is_active = :activeInput
-WHERE employeeID = :idInput;
+    name = :name, 
+    hourly_wage = :wage, 
+    years_experience = :experience, 
+    phone_number= :phone,
+    email = :email, 
+    address = :address, 
+    is_active = :active
+WHERE employeeID = :id;
 
 -- Delete employee
-DELETE FROM Employees WHERE employeeID = :employee_ID_selected_from_employee_page;
+DELETE FROM Employees WHERE employeeID = :id;
 
 -- -----------------------------------------------------
 -- Schedules table queries
@@ -143,20 +140,20 @@ INSERT INTO Schedules(
     start,
     end
 ) VALUES (
-    :idInput,
-    :startInput,
-    :endInput
+    :employeeID,
+    :startTime,
+    :endTime
 );
 
 -- Updating a schedule by id
 UPDATE Schedules SET 
-    employee_id = :idInput, 
-    start = :startInput, 
-    end = :endInput
-WHERE scheduleID = :idInput;
+    employee_id = :name, 
+    start = :start, 
+    end = :end
+WHERE scheduleID = :id;
 
 -- Deleting a schedule
-DELETE FROM Schedules WHERE scheduleID = :schedule_ID_selected_from_schedule_page;
+DELETE FROM Schedules WHERE scheduleID = :id;
 
 -- -----------------------------------------------------
 -- Services table queries
@@ -167,8 +164,8 @@ SELECT serviceID, service_name, TIME_TO_SEC(service_duration) as service_duratio
 -- Select services for dropdowns
 SELECT serviceID, service_name FROM Services;
 
--- Select specific service
-SELECT serviceID FROM Services WHERE service_name = :service_name_input;
+-- Service ID query
+SELECT serviceID FROM Services WHERE service_name = ?;
 
 -- Insert new service
 INSERT INTO Services(
@@ -176,20 +173,20 @@ INSERT INTO Services(
     service_duration,
     price
 ) VALUES (
-    :nameInput,
-    SEC_TO_TIME(:durationInput),
-    :priceInput
+    :service_name,
+    SEC_TO_TIME(:service_duration),
+    :price
 );
 
 -- Update service
 UPDATE Services SET 
-    service_name = :nameInput, 
-    service_duration = SEC_TO_TIME(:durationInput), 
-    price = :priceInput
-WHERE serviceID = :idInput;
+    service_name = :service_name, 
+    service_duration = SEC_TO_TIME(:service_duration), 
+    price = :price
+WHERE serviceID = :id;
 
 -- Delete service
-DELETE FROM Services WHERE serviceID = :service_ID_selected_from_service_page
+DELETE FROM Services WHERE serviceID = :id;
 
 
 -- -----------------------------------------------------
@@ -198,11 +195,9 @@ DELETE FROM Services WHERE serviceID = :service_ID_selected_from_service_page
 -- Select all dogs
 SELECT * FROM Dogs;
 
--- Select specific dog
-SELECT * FROM Dogs WHERE dogID = :idInput;
 
 -- Getdog's data to populate a dropdown for associating with a session
-SELECT dogID, name FROM Dogs
+SELECT dogID, name FROM Dogs;
 
 -- Add new dog
 INSERT INTO Dogs(
@@ -212,24 +207,24 @@ INSERT INTO Dogs(
     size_lbs, 
     groomer_notes
 ) VALUES (
-    :nameInput,
-    :ageInput,
-    :breedInput,
-    :sizeInput, 
-    :notesInput
+    :name,
+    :age,
+    :breed,
+    :size_lbs, 
+    :groomer_notes
 );
 
 -- Update dog information
 UPDATE Dogs SET 
-    name = :nameInput, 
-    age = :ageInput, 
-    breed = :breedInput, 
-    size_lbs= :sizeInput,
-    groomer_notes = :notesInput, 
-WHERE dogID = :idInput;
+    name = :name, 
+    age = :age, 
+    breed = :breed, 
+    size_lbs= :size,
+    groomer_notes = :groomer_notes, 
+WHERE dogID = :id;
 
 -- Delete dog
-DELETE FROM Dogs WHERE dogID = :dog_ID_selected_from_dog_page;
+DELETE FROM Dogs WHERE dogID = :id;
 
 
 -- -----------------------------------------------------
@@ -240,7 +235,7 @@ DELETE FROM Dogs WHERE dogID = :dog_ID_selected_from_dog_page;
 SELECT * FROM Clients;
 
 -- Get client's data to populate a dropdown for associating with a session
-SELECT clientID, name FROM Clients
+SELECT clientID, name FROM Clients;
 
 -- Add new client
 INSERT INTO Clients(
@@ -249,31 +244,31 @@ INSERT INTO Clients(
     contact_method, 
     email
 ) VALUES (
-    :nameInput,
-    :phoneInput,
-    :contactInput,
-    :emailInput
+    :name,
+    :phone,
+    :contact,
+    :email
 );
 
 -- Update client information
 UPDATE Clients SET 
-    name = :nameInput, 
-    phone_number = :phoneInput, 
-    contact_method = :contactInput, 
-    email = :emailInput, 
-WHERE clientID = :idInput;
+    name = :name, 
+    phone_number = :phone, 
+    contact_method = :contact, 
+    email = :email, 
+WHERE clientID = :id;
 
 -- Delete client
-DELETE FROM Clients WHERE ClientID = :client_ID_selected_from_client_page;
+DELETE FROM Clients WHERE ClientID = :id;
 
 -- -----------------------------------------------------
 -- Sessions table queries
 -- -----------------------------------------------------
 
 -- Select all sessions
-SELECT Sessions.sessionID, Employees.name, Clients.name, Dogs.name, Sessions.session_time, Sessions.actual_duration, Sessions.total_price, Sessions.status FROM Sessions
-JOIN Employees ON Sessions.employee_id = Employees.employeeID
-JOIN Clients ON Sessions.client_id = Clients.clientID
+SELECT Sessions.sessionID, Sessions.sessionID, Employees.employeeID, Clients.clientID, Dogs.dogID, Employees.name as employeeName, Clients.name AS clientName, Dogs.name as dogName, Sessions.session_time, TIME_TO_SEC(Sessions.actual_duration) as actual_duration, Sessions.total_price, Sessions.status FROM Sessions 
+JOIN Employees ON Sessions.employee_id = Employees.employeeID 
+JOIN Clients ON Sessions.client_id = Clients.clientID 
 JOIN Dogs ON Sessions.dog_id = Dogs.dogID;
 
 -- Select sessions based on date
@@ -296,43 +291,75 @@ INSERT INTO Sessions(
     total_price,
     status
 ) VALUES (
-    :employee_id_from_dropdown_Input,
-    :client_id_from_dropdown_Input,
-    :dog_id_from_dropdown_Input,
-    :timeInput, 
-    :durationInput, 
-    :priceInput,
-    :statusInput
+    :employee,
+    :client,
+    :dog,
+    :time, 
+    SEC_TO_TIME(:duration), 
+    :price,
+    :status
 );
 
 -- Update session information
 UPDATE Sessions SET 
-    employee_ID = :employeeInput, 
-    client_ID = :clientInput, 
-    dog_ID = :dogInput, 
-    session_time= :timeInput,
-    actual_duration = :durationInput,
-    status= :statusInput,
-WHERE sessionID = :idInput;
+    employee_id= :employee, 
+    client_id = :client, 
+    dog_id = :dog, 
+    session_time= :time,
+    actual_duration = SEC_TO_TIME(:duration),
+    total_price = :price,
+    status= :stat,
+WHERE sessionID = :id;
 
 -- Delete session
-DELETE FROM Sessions WHERE sessionID = :sessions_ID_selected_from_session_page;
+DELETE FROM Sessions WHERE sessionID = :id;
 
 -- -----------------------------------------------------
 -- SessionServices table queries
 -- -----------------------------------------------------
 
 -- Select all SessionServices
-SELECT SessionServices.session_id, Services.service_name FROM SessionServices JOIN Services ON Services.serviceID = SessionServices.service_id;
+SELECT SessionServices.session_id, Services.service_name FROM SessionServices 
+JOIN Services ON Services.serviceID = SessionServices.service_id 
+ORDER BY session_id;
 
 -- Add new SessionServices
 INSERT INTO SessionServices(
     session_id,
     service_id
 ) VALUES (
-    :session_id_input,
-    :service_id_from_dropdown
+    :session_id,
+    :service_id
 );
 
 -- Delete SessionsServices
-DELETE FROM SessionServices WHERE session_id = :session_id_input AND service_id = :service_id_input;
+DELETE FROM SessionServices WHERE session_id = :session_id AND service_id = :service_id;
+
+-- -----------------------------------------------------
+-- ClientsDogs table queries
+-- -----------------------------------------------------
+
+
+-- Select all ClientsDogs
+SELECT ClientsDogs.clientsDogsID, Clients.clientID, Dogs.dogID, Clients.name AS clientName, Dogs.name as dogName FROM ClientsDogs JOIN Clients ON ClientsDogs.client_id = Clients.clientID 
+JOIN Dogs ON ClientsDogs.dog_id = Dogs.dogID;
+
+
+-- Add new ClientsDogs
+INSERT INTO ClientsDogs(
+    client_id,
+    dog_id
+) VALUES (
+    :client,
+    :dog
+);
+
+-- Update ClientsDogs information
+UPDATE ClientsDogs SET 
+    client_id= :client, 
+    dog_id = :dog, 
+WHERE clientsDogsID = :id;
+
+
+-- Delete ClientsDogs
+DELETE FROM ClientsDogs WHERE clientsDogsID = :id;

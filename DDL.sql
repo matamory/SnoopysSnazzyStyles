@@ -28,7 +28,7 @@ CREATE OR REPLACE TABLE Clients (
     clientID int AUTO_INCREMENT UNIQUE NOT NULL,
     name varchar(128) NOT NULL,
     phone_number varchar(18) NOT NULL,
-    contact_method ENUM('Call', 'Text'),
+    contact_method ENUM('Call', 'Text') NOT NULL,
     email varchar(128),
     PRIMARY KEY (clientID)
 );

@@ -75,7 +75,6 @@ function createRow(data, table) {
     let time = formatTime(data['session_time'].slice(11), true)
     let duration = data['actual_duration'];
     duration = duration / 60;
-    console.log(duration);
 
 
     newRow.innerHTML = `\
@@ -438,7 +437,7 @@ function addNewSession(event) {
         time: inputTime.value,
         duration: (inputDuration.value.trim() == "") ? 'null': inputDuration.value * 60, 
         price: inputPrice.value,
-        status: inputStatus.value,
+        status: inputStatus.value
     }
 
     // Setup our AJAX request
