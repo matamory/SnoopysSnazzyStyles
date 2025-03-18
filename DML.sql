@@ -197,7 +197,7 @@ SELECT * FROM Dogs;
 
 
 -- Getdog's data to populate a dropdown for associating with a session
-SELECT dogID, name FROM Dogs;
+SELECT Dogs.dogID, Dogs.name FROM Dogs JOIN ClientsDogs ON ClientsDogs.dog_id = Dogs.dogID WHERE ClientsDogs.client_id = :client;
 
 -- Add new dog
 INSERT INTO Dogs(
