@@ -1,3 +1,10 @@
+/*
+Citation
+        Scope: The querySelector() method for radio buttons was adapted from MDN Web Docs examples
+        Date: 02/31/2025
+        Url: https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
+*/
+    
 
 document.addEventListener('DOMContentLoaded', function() {
     // Saving table state

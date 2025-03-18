@@ -4,7 +4,7 @@ Citations
         Date: 03/15/2025
         Url: https://www.w3schools.com/howto/howto_css_responsive_header.asp
 
-    File: sessions.js, client.js
+    File: sessions.js, clients.js
         Scope: The querySelector() method for radio buttons was adapted from MDN Web Docs examples
         Date: 02/31/2025
         Url: https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
@@ -19,7 +19,3 @@ Citations
         Date: 02/15/2025
         Url: https://github.com/osu-cs340-ecampus/nodejs-starter-app 
 
-    File:
-        Scope:
-        Date:
-        Url:
