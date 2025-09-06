@@ -97,7 +97,12 @@ This relationship is facilitated by the intersection table SessionServices
 Each service may be associated with zero or many sessions
 
 
+Entity-Relationship Diagram
 
+
+Schema
+
+Example Data
 
 Demo
 
