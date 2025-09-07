@@ -98,9 +98,10 @@ Each service may be associated with zero or many sessions
 
 
 Entity-Relationship Diagram
-
+![erDiagram](images/erDiagram.png)
 
 Schema
+![schema](images/.png)
 
 Example Data
 
