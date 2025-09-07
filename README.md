@@ -101,7 +101,7 @@ Entity-Relationship Diagram
 ![erDiagram](images/erDiagram.png)
 
 Schema
-![schema](images/schema.png)
+![schema](images/Schema.png)
 
 Example Data
 
