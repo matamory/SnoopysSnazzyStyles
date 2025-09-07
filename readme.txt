@@ -1,3 +1,4 @@
+
 Citations
     File: style.css 
         Scope: Header and navigator adapted from w3schools
