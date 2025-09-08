@@ -115,6 +115,8 @@ Example Data
 
 ![schedules](images/schedulesSampleData.png)
 
+![sessions](images/sessionsSampleData.png)
+
 Demo
 
 License     
