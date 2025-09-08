@@ -111,6 +111,8 @@ Example Data
 
 ![clients](images/clientsSampleData.png)
 
+![clientsDogs](images/clientsDogsSampleData.png)
+
 Demo
 
 License     
