@@ -105,6 +105,8 @@ Schema
 
 Example Data
 
+![dogs](dogs/dogsExampleData.png)
+
 Demo
 
 License     
