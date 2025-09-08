@@ -105,9 +105,11 @@ Schema
 
 Example Data
 
-![dogs](dogs/dogsExampleData.png)
+![dogs](images/dogsSampleData.png)
 
-![employees](employees/employeesExampleData.png)
+![employees](images/employeesSampleData.png)
+
+![clients](images/clientsSampleData.png)
 
 Demo
 
